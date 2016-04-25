@@ -1,0 +1,3 @@
+main:
+    - { url: '/', text: 'Home' }
+    - { url: '/pinterest', text: 'Pinterest' }
