@@ -522,33 +522,33 @@ Muestra todas las rutas disponibles para tu aplicación. Podrás añadir más a 
       </div>
 
       <div class="form-group">
-        <%= f.label :password %> <i>(leave blank if you don't want to change it)</i>
+        <%= f.label :password %> <i>(déjala en blanco si no quieres cambiarla)</i>
         <%= f.password_field :password, class: "form-control", autocomplete: "off" %>
       </div>
 
       <div class="form-group">
-        <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i>
+        <%= f.label :current_password %> <i>(necesitamos tu contraseña actual para confirmar los cambios)</i>
         <%= f.password_field :current_password, class: "form-control" %>
       </div>
 
       <div class="form-group">
-        <%= f.submit "Update", class: "btn btn-primary" %>
+        <%= f.submit "Actualizar", class: "btn btn-primary" %>
       </div>
     <% end %>
   </div>
   <div class="panel-footer">
     <h3>Cancelar mi cuenta</h3>
 
-    <p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-warning" %></p>
+    <p>Unhappy? <%= button_to "Cancelar mi cuenta", registration_path(resource_name), data: { confirm: "¿Estás segura/o?" }, method: :delete, class: "btn btn-warning" %></p>
 
-    <%= link_to "Back", :back %>
+    <%= link_to "Volver", :back %>
   </div>
 </div>
 ```
 
 **app/views/devise/passwords/new.html.erb**
 
-```
+```rhtml
 <div class="panel panel-default">
   <div class="panel-heading">
     <div class="panel-title">
@@ -577,7 +577,7 @@ Muestra todas las rutas disponibles para tu aplicación. Podrás añadir más a 
 
 **app/views/devise/passwords/edit.html.erb**
 
-```
+```rhtml
 <div class="panel panel-default">
   <div class="panel-heading">
     <div class="panel-title">
