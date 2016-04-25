@@ -1,16 +1,16 @@
 ---
 layout: inner
 title: Pinterest
-lead_text: Crear un clone de Pinterest desde zero
+lead_text: Crea un clone de Pinterest desde zero
 permalink: /pinterest/
 ---
 
 
 
 
-## 1. Crear una aplicacíon nueva
+## 1. Crea una aplicación nueva
 
-### Crea una nueva applicacion Rails
+### Crea una nueva aplicación Rails
 
 consola
 
@@ -29,11 +29,11 @@ $ rails server
 ```
 
 
-## 2. Pagina de inicio
+## 2. Página de inicio
 
-En el navegador , vaya a la URL: [localhost:3000](localhost:3000) . Esta es la página de inicio por defecto para las aplicaciones Rails .
+En el navegador, ve a la URL: [localhost:3000](localhost:3000) . Esta es la página de inicio por defecto para las aplicaciones Rails.
 
-### Crear una nueva pagina
+### Crea una nueva página
 
 consola
 
@@ -41,82 +41,82 @@ consola
 $ rails generate controller pages home
 ```
 
-En su navegador , vaya a la URL : [localhost:3000/página/home](localhost:3000/página/home) y ver la nueva página en blanco que acaba de crear .
+En tu navegador, ve a la URL : [localhost:3000/página/home](localhost:3000/página/home) y ve la nueva página en blanco que se acaba de crear.
 
-### Actualizar el texto en la nueva pagina
+### Actualiza el texto en la nueva página
 
 **app/views/pages/home.html.erb**
 
-```
-<h1>Bienvenidos a mi aplicación!</h1>
+```html
+<h1>¡Bienvenidos a mi aplicación!</h1>
 ```
 
-## 3. Crear la raiz de la aplicacion
+## 3. Crea la raíz de la aplicación
 
-### Mostrar la página de inicio de su aplicación
+### Mostrar la página de inicio de tu aplicación
 
 **config/routes.rb**
 
 Reemplazar la linea
 
-```
+```ruby
 get "pages/home"
 ```
 
 ...por:
 
-```
+```ruby
 root "pages#home"
 ```
 
-## 4. Crear mas paginas
+## 4. Crea más paginas
 
-### Añadir una nueva acción en el controlador
+### Añade una nueva acción en el controlador
 
 **app/controllers/pages_controller.rb**
 
-```
+```ruby
 def about
 end
 ```
 
-###  Crear el código HTML en la vista
+###  Crea el código HTML en la vista
 
 **app/views/pages/about.html.erb**
 
-```
-<h1>Quien somos</h1>
-<p>Estamos trabajando en nuestra  Pinteresting aplicación</p>
+```html
+<h1>¿Quiénes somos?</h1>
+<p>Estamos trabajando en nuestra aplicación Pinteresting</p>
 ```
 
-###  Agregar la routa
+###  Agregamos la ruta
 
 **config/routes.rb**
 
-```
+```ruby
 get "about" => "pages#about"
 ```
 
-## 5. Embedded Ruby?
+## 5. ¿Embedded Ruby?
 
-### Cambiar el enlace HTML a un enlace inbebido de ruby
+### Cambia el enlace HTML a un enlace embebido de ruby
 **app/views/pages/home.html.erb**
 
-```erb
+```rhtml
 <%= link_to "here", "#" %>
 ```
 
-En HTML, un enlace es el siguiente
+En HTML, un enlace es así
 
-`` `
+```html
 <a href="#"> aquí </a>
-`` `
+```
 
-Estos son etiquetas de Ruby
+Estas son etiquetas de Ruby
 
-`` `
+```erb
 < % = % >
-`` `
+```
 
 En Ruby on Rails un enlace se verá así
 
@@ -124,17 +124,17 @@ En Ruby on Rails un enlace se verá así
 <%= link_to "aquí", "#" %>
 ```
 
-## 6. Instalar Bootstrap
+## 6. ¡Instalemos Bootstrap!
 
-### Añadir la gema de Bootstrap
+### Añade la gema de Bootstrap
 
 **/Gemfile**
 
-```
+```ruby
 gem 'bootstrap-sass'
 ```
 
-### Siempre bundle install para instalar una nueva gema
+### Siempre corre bundle install para instalar una nueva gema
 
 consola
 
@@ -147,26 +147,26 @@ $ bundle install
 **app/assets/stylesheets/application.css**
 
 
-### Crear un nuevo documento SCSS
+### Crea un nuevo documento SCSS
 
 **app/assets/stylesheets/bootstrap_and_customization.css.scss**
 
-```
+```scss
 @import 'bootstrap';
 ```
 
-### Volver a iniciar el servidor
+### Vuelve a iniciar el servidor
 
 consola
 
 ```
 CONTROL + C
-$ rails server
+rails server
 ```
 
-## 7. Añadir elementos de Bootstrap a la pagina
+## 7. Añade elementos de Bootstrap a la página
 
-### Añadir un contenedor a su aplicación!
+### ¡Añade un contenedor a tu aplicación!
 
 **views/layouts/application.html.erb**
 
@@ -178,25 +178,25 @@ $ rails server
 </div>
 ```
 
-### Crear un parcial de encabezado
+### Crea un parcial de encabezado
 
-Crear el archivo **app/views/layouts/_header.html.erb**
+Crea el archivo **app/views/layouts/_header.html.erb**
 
-### Crear un enlace al parcial
+### Crea un enlace al parcial
 
 **app/views/layouts/application.html.erb**
 
-Despues del `<body>`
+Después del `<body>`
 
-```
+```erb
 <%= render 'layouts/header' %>
 ```
 
-### Add the nav bar
+### Añade la barra de navegación
 
 **app/views/layouts/_header.html.erb**
 
-```
+```rhtml
 <nav class="navbar navbar-default" role="navigation">
   <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -221,11 +221,11 @@ Despues del `<body>`
 </nav>
 ```
 
-### Require Bootstrap's JavaScript
+### Importa la el Javascript para Bootstrap
 **app/assets/javascripts/application.js**
 
-```
-...
+```js
+
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap-sprockets
@@ -233,22 +233,22 @@ Despues del `<body>`
 //= require_tree .
 ```
 
-### Añadir viewport
+### Añade el viewport
 **views/layouts/application.html.erb**
 
-Despues del `<head>` y antes del `<title>`.
+Después del `<head>` y antes del `<title>`.
 
-Insertar:
+Inserta:
 
-```
+```html
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 ```
 
-### Añadir el intitulado a la página de inicio
+### Añade el encabezado a la página de inicio
 
 **views/pages/home.html.erb**
 
-```
+```rhtml
 <div class="jumbotron">
 	<h1>Bienvenido a mi aplicación!</h1>
 	Haz clic aquí para <%= link_to "Registrar", "#", class: "btn btn-primary" %>
@@ -257,21 +257,21 @@ Insertar:
 
 ## 8. Personalizar Bootstrap
 
-### Por ejemplo , actualizar la barra de navegación
+### Por ejemplo, actualicemos la barra de navegación
 
 **app/views/layouts/_header.html.erb**
 
-```
+```html
 <nav class="navbar navbar-inverse navbar-default" role="navigation">
 ```
 
-## 9. Mejorar el diseño
+## 9. Mejoremos el diseño
 
 ### Cambios de estilo
 
 **app/assets/stylesheets/bootstrap_and_customization.css.scss**
 
-```
+```scss
 @import url(http://fonts.googleapis.com/css?family=Lato:400,700);
 
 $body-bg:                          #ecf0f1;
@@ -295,11 +295,11 @@ $jumbotron-bg:                     white;
 ```
 
 
-### Añadir una clase "center" y botón "Iniciar sesion"
+### Añadimos una clase "center" y un botón "Iniciar sesión"
 
 **/app/views/pages/home.html.erb**
 
-```
+```rhtml
 <div class="jumbotron center">
   <h1>Bienvenidos a mi aplicación!</h1>
   <p>
@@ -309,34 +309,34 @@ $jumbotron-bg:                     white;
 </div>
 ```
 
-### Cambiar el enlace principal de la navegacíon de HTML a Ruby
+### Cambia el enlace principal de la navegacíon de HTML a Ruby
 
 **app/views/layouts/_header.html.erb**
 
-```
+```rhtml
 <%= link_to "Pinteresting", root_path, class: "navbar-brand" %>
 ```
 
 ## 10. Añadir Devise
 
-### Añadir la gema de Devise
+### Añade la gema de Devise
 
 **/Gemfile**
 
-```
+```ruby
 gem 'devise'
 ```
 
 consola
 
 ```
-$ bundle install
+bundle install
 ```
 
 ### Instalar Devise
 
 ```
-$ rails generate devise:install
+rails generate devise:install
 ```
 
 ## 11. Configuración de Devise
@@ -345,24 +345,24 @@ $ rails generate devise:install
 
 **config/environments/development.rb**
 
-```
+```ruby
 config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 ```
 
 **config/environments/production.rb**
 
-```
-config.action_mailer.default_url_options = { host:    'http://pinteresting-commits.herokuapp.com/' }
+```ruby
+config.action_mailer.default_url_options = { host: 'http://pinteresting-commits.herokuapp.com/' }
 ```
 
 
 ### Mensajes flash
 
-Los mensajes flash son los mensajes en sitios web que dicen " Gracias por registrar en " o "Gracias por suscribirse a "
+Los mensajes flash son los mensajes en sitios web que dicen " Gracias por registrarse en " o "Gracias por suscribirse a"
 
 **app/views/layouts/application.html.erb**
 
-```
+```rhtml
 <div class="container">
 
   <% flash.each do |name, msg| %>
@@ -374,109 +374,111 @@ Los mensajes flash son los mensajes en sitios web que dicen " Gracias por regist
 </div>
 ```
 
-### Set precompile to "false"
+### Desactiva la precompilación
 
 **config/application.rb**
 
-```
+```ruby
 config.assets.initialize_on_precompile = false
 ```
 
-### Crear las vistas de Devise
+### Crea las vistas de Devise
 
 consola
 
 ```
-$ rails g devise:views
+rails g devise:views
 ```
 
-## 12. Crear usuarios con Devise
+## 12. Crea usuarios con Devise
 
-### Crear un modelo de usuario
+### Crea un modelo de usuario
 
 ```
-$ rails generate devise user
+rails generate devise user
 ```
 
 Esta línea de arriba crea un modelo de usuario y un nuevo archivo: **app/models/user.rb**
 
-Go to **db/migration** y deberias tener en los archivos algo así como **db/migration/20130922022322_devise_create_users.rb** # El número es la fecha de creacíon
+Ve a **db/migration** y deberías tener en los archivos algo así como **db/migration/20130922022322_devise_create_users.rb**
 
-### Migrar la base de datos
+El número es la fecha de creacíon
+
+### Migra la base de datos
 
 consola
 
 ```
-$ rake db:migrate
+rake db:migrate
 ```
 
-Este comando toma el archivo de migración y lo ejecuta , de manera que genere tablas en la base de datos
+Este comando toma el archivo de migración y lo ejecuta, de manera que genere tablas en la base de datos
 
-### Volver a iniciar el servidor
+### Vuelve a iniciar el servidor
 
 ```
-CONTROL + C para parar el servidor
-$ rails server # para volver a iniciar el servidor
+CONTROL + C (para parar el servidor)
+rails server (para volver a iniciar el servidor)
 ```
 
-Tendrá que reiniciar la aplicación cada vez que se instala una gema o cada vez que se ejecuta `$rake db:migrate`
+Tendrás que reiniciar la aplicación cada vez que se instales una gema o cada vez que ejecutes `rake db:migrate`
 
 ## 13. Registrar nuevos usuarios o iniciar sesíon
 
 ```
-$ rake routes
+rake routes
 ```
 
-Muestra todas las rutas disponibles para su aplicación . Podrás añadir más a lo largo del camino
+Muestra todas las rutas disponibles para tu aplicación. Podrás añadir más a lo largo del camino
 
-### Modificar la vista de inicio
+### Modifica la vista de inicio
 
 **app/views/pages/home.html.erb**
 
-```
+```rhtml
 <div class="jumbotron center">
- <h1>Bienvenidos a mi aplicación!</h1>
+ <h1>¡Bienvenidos a mi aplicación!</h1>
  <% if user_signed_in? %>
       # haz algo
  <% else %>
    <p>
-     <%= link_to "Iniciar sesíon", new_user_session_path, class: "btn btn-default btn-lg" %>
-     <%= link_to "Registrar", new_user_registration_path, class: "btn btn-primary btn-lg" %>
+     <%= link_to "Iniciar sesión", new_user_session_path, class: "btn btn-default btn-lg" %>
+     <%= link_to "Regístrate", new_user_registration_path, class: "btn btn-primary btn-lg" %>
    </p>
   <% end %>  
 </div>
 ```
 
-### Modificar el parcial de navegacíon
+### Modifica el parcial de navegacíon
 
 **app/views/layout/_header.html.erb**
 
-```
+```rhtml
 <ul class="nav navbar-nav navbar-right">
   <li><%= link_to "Home", root_path %></li>
   <li><%= link_to "About", about_path %></li>
   <% if user_signed_in? %>
-    <li><%= link_to "Cerrar sesíon", destroy_user_session_path, method: :delete %></li>
+    <li><%= link_to "Cerrar sesión", destroy_user_session_path, method: :delete %></li>
   <% else %>
-    <li><%= link_to "iniciar sesíon", new_user_session_path %></li>
+    <li><%= link_to "Iniciar sesión", new_user_session_path %></li>
   <% end %>
 </ul>
 ```
 
-## 14. Cambiar las vistas de Devise
+## 14. Cambia las vistas de Devise
 
-### Modifica el codigo para cada una de las vistas de Devise
+### Modifica el código para cada una de las vistas de Devise
 
 **app/views/devise/registrations/new.html.erb**
 
-```
+```rhtml
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h1>Registrar</h1>
+    <h1>Regístrate</h1>
   </div>
 
   <div class="panel-body">
-    <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       <%= devise_error_messages! %>
 
       <div class="form-group">
@@ -490,7 +492,7 @@ Muestra todas las rutas disponibles para su aplicación . Podrás añadir más a
       </div>
 
       <div class="form-group">
-        <%= f.submit "Registrar", class: "btn btn-primary" %>
+        <%= f.submit "Regístrate", class: "btn btn-primary" %>
       </div>
     <% end %>
   </div>
@@ -503,50 +505,50 @@ Muestra todas las rutas disponibles para su aplicación . Podrás añadir más a
 
 **app/views/devise/registrations/edit.html.erb**
 
-```
+```rhtml
 <div class="panel panel-default">
   <div class="panel-heading">
     <div class="panel-title">
-      <h1>Edit <%= resource_name.to_s.humanize %></h1>
+      <h1>Editar <%= resource_name.to_s.humanize %></h1>
     </div>
   </div>
   <div class="panel-body">
-    <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
+    <%= form_for(resource, :as => resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
       <%= devise_error_messages! %>
 
       <div class="form-group">
         <%= f.label :email %>
-        <%= f.email_field :email, class: "form-control", :autofocus => true %>
+        <%= f.email_field :email, class: "form-control", autofocus: true %>
       </div>
 
       <div class="form-group">
-        <%= f.label :password %> <i>(leave blank if you don't want to change it)</i>
-        <%= f.password_field :password, class: "form-control", :autocomplete => "off" %>
+        <%= f.label :password %> <i>(déjala en blanco si no quieres cambiarla)</i>
+        <%= f.password_field :password, class: "form-control", autocomplete: "off" %>
       </div>
 
       <div class="form-group">
-        <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i>
+        <%= f.label :current_password %> <i>(necesitamos tu contraseña actual para confirmar los cambios)</i>
         <%= f.password_field :current_password, class: "form-control" %>
       </div>
 
       <div class="form-group">
-        <%= f.submit "Update", class: "btn btn-primary" %>
+        <%= f.submit "Actualizar", class: "btn btn-primary" %>
       </div>
     <% end %>
   </div>
   <div class="panel-footer">
-    <h3>Cancel my account</h3>
+    <h3>Cancelar mi cuenta</h3>
 
-    <p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, class: "btn btn-warning" %></p>
+    <p>Unhappy? <%= button_to "Cancelar mi cuenta", registration_path(resource_name), data: { confirm: "¿Estás segura/o?" }, method: :delete, class: "btn btn-warning" %></p>
 
-    <%= link_to "Back", :back %>
+    <%= link_to "Volver", :back %>
   </div>
 </div>
 ```
 
 **app/views/devise/passwords/new.html.erb**
 
-```
+```rhtml
 <div class="panel panel-default">
   <div class="panel-heading">
     <div class="panel-title">
@@ -575,7 +577,7 @@ Muestra todas las rutas disponibles para su aplicación . Podrás añadir más a
 
 **app/views/devise/passwords/edit.html.erb**
 
-```
+```rhtml
 <div class="panel panel-default">
   <div class="panel-heading">
     <div class="panel-title">
