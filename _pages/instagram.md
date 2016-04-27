@@ -620,7 +620,7 @@ Muestra todas las rutas disponibles para tu aplicación. Podrás añadir más a 
 ```
 ### Añade unos estilos
 
-```
+```css
 .form-wrapper {
   width: 60%;
   margin: 20px auto;
@@ -637,7 +637,7 @@ Muestra todas las rutas disponibles para tu aplicación. Podrás añadir más a 
 
 Debajo de `<% if user_signed_in? %>`:
 
-```
+```rhtml
 <li><%= link_to "Configuración de cuenta", edit_user_registration_path %></li>
 
 ```
@@ -656,7 +656,7 @@ $ rake db:migrate #run the migration
 
 **app/controllers/posts_controller.rb**
 
-```
+```ruby
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
@@ -715,13 +715,13 @@ end
 
 **apps/views/posts/new.html.erb**
 
-```
+```rhtml
 <%= render 'form' %>
 ```
 
 **apps/views/posts/_form.html.erb**
 
-```
+```rhtml
 <%= form_for(@post) do |f| %>
   <% if @post.errors.any? %>
     <div id="error_explanation">
@@ -755,7 +755,7 @@ end
 
 Debajo de `<% if user_signed_in? %>`:
 
-```
+```rhtml
 <li><%= link_to 'Nuevo post', new_post_path %></li>
 ```
 
@@ -771,7 +771,7 @@ Un Post belongs_to un Usuario
 
 **app/models/post.rb**
 
-```
+```ruby
 class Post < ActiveRecord::Base
 	belongs_to :user
 end
@@ -810,7 +810,7 @@ CONTROL + D #closes the Console
 
 **app/models/user.rb**
 
-```
+```ruby
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -843,7 +843,7 @@ De vuelta en la consola de Rails (en nuestra consola) vamos a configurar un ID d
 
 **app/controllers/posts_controller.rb**
 
-```
+```ruby
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
@@ -905,30 +905,28 @@ end
 
 Recursos: https://github.com/plataformatec/devise
 
-Añadir before_action al Controlador Posts
+Añadir `before_action` al Controlador Posts
 
 **app/controllers/posts_controller.rb**
 
-```
+```ruby
 before_action :authenticate_user!, except: [:index, :show]
 ```
 
 
 ### Add correct_user method
 
-Add the before_action to your Posts Controller
+Add the `before_action` to your Posts Controller
 
 **app/controllers/posts_controller.rb**
 
+```ruby
 before_action :correct_user, only: [:edit, :update, :destroy]
-
-
-## Paperclip ImageMagick Install
-
+```
 
 ## 20. Image Upload with Paperclip
 
-### Instalar el procesador de imagenes
+### Instalar el procesador de imagenes ImageMagick
 
 En la consola
 
@@ -936,13 +934,13 @@ En la consola
 $ sudo apt-get install imagemagick
 ```
 
-### Install the paperclip gem
+### Install the Paperclip gem
 
 https://github.com/thoughtbot/paperclip
 
 **/Gemfile**
 
-```
+```ruby
 gem 'paperclip', '~> 4.2'
 ```
 
@@ -954,7 +952,7 @@ $ bundle install
 
 **/app/models/post.rb**
 
-```
+```ruby
 class Post < ActiveRecord::Base
   belongs_to :user
   has_attached_file :image, :styles => { :medium => "300x300>", :thumb => "100x100>" }
@@ -985,7 +983,7 @@ $ rails server
 ### Edit the post form
 **/app/views/posts/_form.html.erb**
 
-```
+```rhtml
 <%= form_for @post, html: { multipart: true } do |f| %>
 .
 .
@@ -1003,7 +1001,7 @@ $ rails server
 
 **/app/controllers/concerns/posts_controller.rb**
 
-```
+```ruby
 
 .
   def post_params
@@ -1038,7 +1036,7 @@ $ rails server
 ```
 ### Con el estilo Instagram
 
-```
+```css
 .posts-wrapper {
   padding-top: 40px;
   margin: 0 auto;
@@ -1081,7 +1079,7 @@ $ rails server
 
 ### Delete posts made by non users
 
-```
+```shell
 $ rails console
 $ Post.first
 $ post = Post.first
@@ -1093,7 +1091,7 @@ $ Post.first.destroy
 
 **/app/views/posts/show.html.erb**
 
-```
+```rhtml
 <div class="posts-wrapper row">
   <div class="post">
     <div class="post-head">
@@ -1120,7 +1118,7 @@ $ Post.first.destroy
 
 Dentro de `<div class="post">` abajo colocamos:
 
-```
+```rhtml
 <div class="text-center edit-links">
   <%= link_to "← Volver", posts_path %>
   |
@@ -1132,7 +1130,7 @@ y añade los siguiente estilos
 
 **app/assets/stylesheets/bootstrap_and_customization.css.scss**
 
-```
+```css
 .edit-links {
   margin-top: 20px;
   margin-bottom: 40px;
@@ -1141,7 +1139,7 @@ y añade los siguiente estilos
 
 y en **app/views/posts/show.html.erb**, lo mas arriba añade
 
-```
+```rhtml
 <div class="text-center">
   <%= image_tag @post.image.url(:medium) %>
 </div>
@@ -1153,7 +1151,7 @@ y en **app/views/posts/show.html.erb**, lo mas arriba añade
 
 Completamente abajo colocamos:
 
-```
+```rhtml
 <div class="text-center edit-links">
   <%= link_to "Borrar Post", post_path(@post), method: :delete, data: { confirm: "Esta segura que quieres eliminar este post?" } %>
   |
@@ -1167,7 +1165,7 @@ Completamente abajo colocamos:
 
 consola
 
-```
+```shell
 $ rails generate migration AddNameToUsers name:string
 ```
 
@@ -1175,15 +1173,15 @@ $ rails generate migration AddNameToUsers name:string
 
 consola
 
-```
-rake db:migrate
+```shell
+$ rake db:migrate
 ```
 
 ### Añade al fomulario de registro el campo nombre  
 
 **app/views/devise/registrations/edit.html.erb**
 
-```
+```rhtml
 .
      <div class="form-group">
        <%= f.label :name %>
@@ -1197,7 +1195,7 @@ rake db:migrate
 **app/controllers/application_controller.rb**
 
 
-```
+```ruby
 class ApplicationController < ActionController::Base
  # Prevent CSRF attacks by raising an exception.
  # For APIs, you may want to use :null_session instead.
@@ -1217,7 +1215,7 @@ end
 
 **app/views/devise/registrations/new.html.erb**, **app/views/devise/registrations/edit.html.erb**
 
-```
+```rhtml
 .
   <div class="form-group">
     <%= f.label :name %>
@@ -1230,7 +1228,7 @@ end
 
 Crear el archivo **app/controllers/registrations_controller.rb**:
 
-```
+```ruby
 class RegistrationsController < Devise::RegistrationsController
 
   private
@@ -1249,13 +1247,13 @@ end
 
 Reemplaza
 
-```
+```ruby
 devise_for :users
 ```
 
 con...
 
-```
+```ruby
 devise_for :users, :controllers => { registrations: 'registrations' }
 ```
 
@@ -1265,13 +1263,13 @@ devise_for :users, :controllers => { registrations: 'registrations' }
 
 Reemplaza
 
-```
+```rhtml
 <%= post.user.email if post.user %>
 ```
 
 con...
 
-```
+```rhtml
 <%= post.user.name if post.user %>
 ```
 
@@ -1284,7 +1282,7 @@ De esta manera sólo se puede ver tus posts . Para poner esto de otra manera: Un
 
 **app/views/posts/show.html.erb**
 
-```
+```rhtml
 <% if post.user == current_user %>
   <div class="text-center edit-links">
     <%= link_to "← Volver", posts_path %>
@@ -1302,7 +1300,7 @@ De esta manera sólo se puede ver tus posts . Para poner esto de otra manera: Un
 
 **app/controllers/posts_controller.rb**
 
-```
+```ruby
 private
 
 def owned_post  
@@ -1315,6 +1313,6 @@ end
 
 Despues inserte un before_action en la parte superior del controlador , especificando el método owned_post solamente para las acciones de edición , actualización y destruir.
 
-```
+```ruby
 before_action :owned_post, only: [:edit, :update, :destroy]
 ```
