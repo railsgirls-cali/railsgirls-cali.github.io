@@ -1669,17 +1669,17 @@ git push -u origin master
 
 ¿Cómo subir nuestra aplicación en la web, de forma que otros puedan verla? Con un servicio llamado Heroku que permite subir su aplicación en un hosting gratis en cuestión de segundos .
 
-1. Registrate en Heroku
+### Registrate en Heroku
 
 [https://www.heroku.com/](https://www.heroku.com/)
 
-2. C9 ya tiene una erramienta que se llama Heroku toolbelt. Solo necesitamos actualizarla
+### C9 ya tiene una erramienta que se llama Heroku toolbelt. Solo necesitamos actualizarla
 
 ```bash
 wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 ```
 
-3. Inicia sesion en Heroku desde la consola
+### Inicia sesion en Heroku desde la consola
 
 ```bash
 $ heroku login
@@ -1687,14 +1687,14 @@ Email: (Introduce tu correo electrónico)
 Password ( introduzca tu contraseña - se mostrará en blanco y es normal )
 ```
 
-4. Añade las claves a Heroku
+### Añade las claves a Heroku
 
 ```bash
 $ heroku keys:add
 $ heroku create #creauna nueva URL para la aplicacion
 ```
 
-5. Añade las nuevas gemas y grupos de gemas para Heroku
+### Añade las nuevas gemas y grupos de gemas para Heroku
 
 **/gemfile**
 
@@ -1711,13 +1711,13 @@ end
 
 Nota : Después de crear un grupo `producción` a su Gemfile debe cambiar a utilizar "bundle install --without production"
 
-6. Entonces instalamos las gemas
+### Entonces instalamos las gemas
 
 ```bash
 $ bundle install --without production
 ```
 
-7. El baile de git
+### El baile de git
 
 ```bash
 $ git add --all
@@ -1725,7 +1725,7 @@ $ git commit -m "Listo para subir a Heroku"
 $ git push origin master
 ```
 
-8. Sube a Heroku
+### Sube a Heroku
 
 ```bash
 $ git push heroku master
