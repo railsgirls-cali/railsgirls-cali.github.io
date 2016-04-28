@@ -149,7 +149,7 @@ $ bundle install
 
 ### Crea un nuevo documento SCSS
 
-**app/assets/stylesheets/bootstrap_and_customization.css.scss**
+**app/assets/stylesheets/custom_bootstrap.css.scss**
 
 ```scss
 @import 'bootstrap';
@@ -269,7 +269,7 @@ Inserta:
 
 ### Cambios de estilo
 
-**app/assets/stylesheets/bootstrap_and_customization.css.scss**
+**app/assets/stylesheets/custom_bootstrap.css.scss**
 
 ```scss
 @import url(http://fonts.googleapis.com/css?family=Lato:400,700);
@@ -590,14 +590,8 @@ Muestra todas las rutas disponibles para tu aplicación. Podrás añadir más a 
 
 ```rhtml
 <div class="form-wrapper">
-<<<<<<< HEAD
   <h1>Iniciar Sesion</h1>
   <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-=======
-  <h1>Sign in</h1>
-  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
->>>>>>> b1880ff4bf71cf9d6191c3419e37f5c16b600fe1
-
     <div class="form-group">
       <%= f.label :email %>
       <%= f.email_field :email, class: "form-control", autofocus: true %>
@@ -761,6 +755,10 @@ Debajo de `<% if user_signed_in? %>`:
 ```rhtml
 <li><%= link_to 'Nuevo post', new_post_path %></li>
 ```
+
+### Redireccionamos la raiz de nuestra applicacion al `index` de Posts
+
+reemplaza `root "pages#home"` por `root "posts#index"`
 
 ## 18. Posts, Usuarios y Asociacíon
 
@@ -958,13 +956,8 @@ bundle install
 ```ruby
 class Post < ActiveRecord::Base
   belongs_to :user
-<<<<<<< HEAD
   has_attached_file :image, :styles => { :medium => "640x", :thumb => "100x100>" }
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
-=======
-  has_attached_file :image, styles: { medium: "300x300>", thumb: "100x100>" }
-  validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
->>>>>>> b1880ff4bf71cf9d6191c3419e37f5c16b600fe1
 end
 ```
 
@@ -1029,7 +1022,7 @@ rails server
     <div class="post">
       <div class="post-head">
         <div class="name">
-          <%= pin.user.email if pin.user %>
+          <%= post.user.email if post.user %>
         </div>
       </div>
       <div class="image center-block">
@@ -1136,7 +1129,7 @@ Dentro de `<div class="post">` abajo colocamos:
 
 y añade los siguiente estilos
 
-**app/assets/stylesheets/bootstrap_and_customization.css.scss**
+**app/assets/stylesheets/custom_bootstrap.css.scss**
 
 ```css
 .edit-links {
@@ -1242,11 +1235,11 @@ class RegistrationsController < Devise::RegistrationsController
   private
 
   def sign_up_params
-    params.require(:user).permit(:email, :user_name, :password, :password_confirmation)
+    params.require(:user).permit(:email, :name, :password, :password_confirmation)
   end
 
   def account_update_params
-    params.require(:user).permit(:email, :user_name, :password, :password_confirmation, :current_password)
+    params.require(:user).permit(:email, :name, :password, :password_confirmation, :current_password)
   end
 end  
 ```
@@ -1325,4 +1318,314 @@ Después, inserta un `before_action` en la parte superior del controlador, espec
 before_action :owned_post, only: [:edit, :update, :destroy]
 ```
 
-## Añadir la posibilidad de comentar nuestros posts
+## Añadir la opcion de comentar nuestros posts
+
+### Empezado por generar un modelo
+
+```bash
+$ rails g model Comment user:references post:references content:text
+```
+
+Este comando nos genera una migracion **db/migrate/** para añadir los campos en la base de datos y un modelo **app/model/comment.rb**.
+
+### Migra la base de datos
+
+consola
+
+```bash
+rake db:migrate
+```
+
+### Associar los comentarios
+
+Ahora nuestro modelo **app/model/comment.rb** esta configurado para indicar a quien pertenecen los comentarios.
+
+```ruby
+class Comment < ActiveRecord::Base  
+  belongs_to :user
+  belongs_to :post
+end
+```
+
+Por último, en **app/models/user.rb** and **app/models/post.rb** añadir la siguiente línea a cada uno:
+
+```ruby
+has_many :comments, dependent: :destroy
+```
+
+### Crear la ruta por los comentarios
+
+En **config/routes.rb** Reemplaza
+
+```ruby
+resources :posts
+```
+por
+
+```ruby
+resources :posts do  
+  resources :comments
+end
+```
+
+### Para terminar con la logica creamos el controlador
+
+```bash
+$ rails g controller comments
+```
+
+El controlador de comentarios solo va a tener las acciones de crear y borrar comentarios
+
+```ruby
+class CommentsController < ApplicationController
+  before_action :set_post
+
+  def create  
+    @comment = @post.comments.build(comment_params)
+    @comment.user_id = current_user.id
+
+    if @comment.save
+      flash[:success] = "You commented that post!"
+      redirect_to :back
+    else
+      flash[:alert] = "Check the comment form, something went wrong."
+      render root_path
+    end
+  end
+
+  def destroy  
+    @comment = @post.comments.find(params[:id])
+
+    @comment.destroy
+    flash[:success] = "Comment deleted :("
+    redirect_to root_path
+  end
+
+  private
+
+  def comment_params  
+    params.require(:comment).permit(:content)
+  end
+
+  def set_post  
+    @post = Post.find(params[:post_id])
+  end
+end
+```
+
+## las vistas y los estilos de los comentarios
+
+### DRY Don't Repeat Yourself
+
+El principio **No te repitas** (en inglés **Don't Repeat Yourself** o **DRY**, también conocido como Una vez y sólo una) es una filosofía de definición de procesos que promueve la reducción de la duplicación especialmente en computación.
+
+### Post parcial
+
+Creamos un parcial para simplificar las vistas de `show` y `index`
+
+Crear un nuevo archivo `_post.html.erb` en **app/views/posts/**
+
+```rhtml
+<div class="posts-wrapper">
+  <div class="post">
+    <div class="post-head">
+      <div class="thumb-img"></div>
+      <div class="user-name">
+        <%= post.user.name %>
+      </div>
+    </div>
+    <div class="image center-block">
+      <%= link_to (image_tag post.image.url(:medium), class:'img-responsive'), post_path(post) %>
+    </div>
+    <div class="post-bottom">
+      <div class="description">
+        <div class="user-name">
+          <%= post.user.name %>
+        </div>
+        <%= post.description %>
+      </div>
+      <% if post.comments %>
+        <% post.comments.each do |comment| %>
+          <div class="comment">
+            <div class="user-name">
+              <%= comment.user.name %>
+            </div>
+            <div class="comment-content">
+              <%= comment.content %>
+            </div>
+            <% if comment.user == current_user %>
+              <%= link_to post_comment_path(post, comment), method: :delete, data: { confirm: "Are you sure?" } do %>
+                <span class="glyphicon glyphicon-remove delete-comment"></span>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="comment-like-form row">
+      <div class="like-button col-sm-1">
+        <span class="glyphicon glyphicon-heart-empty"></span>
+      </div>
+      <div class="comment-form col-sm-11">
+        <%= form_for [post, post.comments.new] do |f| %>
+          <%= f.text_field :content, placeholder: 'Add a comment...' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+Reemplaza **app/views/posts/show.html.erb**
+
+```rhtml
+<%= render 'post', post: @post %>
+<% if @post.user.id == current_user.id %>
+  <div class="text-center edit-links">
+    <%= link_to "Cancel", posts_path %>
+    |
+    <%= link_to "Edit Post", edit_post_path(@post) %>
+  </div>
+<% else %>
+  <div class="text-center edit-links">
+    <%= link_to "Cancel", posts_path %>
+  </div>
+<% end %>
+```
+
+Y tambien reemplaza **app/views/posts/index.html.erb**
+
+```rhtml
+<% @posts.each do |post| %>
+  <%= render 'post', post: post %>
+<% end %>
+```
+
+### Los estilos para ponerlo bonito
+
+En **app/assets/stylesheets/custom_bootstrap.scss**
+
+Borra los estilos debajo de
+
+```css
+.navbar-brand {
+  font-weight: bold;
+}
+```
+
+Y reemplaza con
+
+```css
+
+
+.posts-wrapper {
+  padding-top: 40px;
+  margin: 0 auto;
+  max-width: 642px;
+  width: 100%;
+}
+
+.post {
+  background-color: #fff;
+  border-color: #edeeee;
+  border-style: solid;
+  border-radius: 3px;
+  border-width: 1px;
+  margin-bottom: 60px;
+  .post-head {
+    flex-direction: row;
+    height: 64px;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 24px;
+    color: #125688;
+    font-size: 15px;
+    line-height: 18px;
+    .user-name, .time-ago {
+      display: inline;
+    }
+    .user-name {
+      font-weight: 500;
+    }
+    .time-ago {
+      color: #A5A7AA;
+      float: right;
+    }
+  }
+  .image {
+    border-bottom: 1px solid #eeefef;
+    border-top: 1px solid #eeefef;
+  }
+}
+
+.post-bottom {
+  .user-name, .comment-content {
+    display: inline;
+  }
+  .description {
+    margin-bottom: 7px;
+  }
+  .user-name {
+    font-weight: 500;
+    margin-right: 0.3em;
+    color: #125688;
+    font-size: 15px;
+  }
+  .user-name, .caption-content {
+    display: inline;
+  }
+  .comment {
+    margin-top: 7px;
+    .user-name {
+      font-weight: 500;
+      margin-right: 0.3em;
+    }
+    .delete-comment {
+      float: right;
+      color: #515151;
+    }
+  }
+  margin-bottom: 7px;
+  padding-top: 24px;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-bottom: 10px;
+  font-size: 15px;
+  line-height: 18px;
+}
+
+.comment_content {
+  font-size: 15px;
+  line-height: 18px;
+  border: medium none;
+  width: 100%;
+  color: #4B4F54;
+}
+
+.comment-like-form {
+  padding-top: 24px;
+  margin-top: 13px;
+  margin-left: 24px;
+  margin-right: 24px;
+  min-height: 68px;
+  align-items: center;
+  border-top: 1px solid #EEEFEF;
+  flex-direction: row;
+  justify-content: center;
+}
+
+
+.form-wrapper {
+  width: 60%;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 40px;
+  border: 1px solid #eeefef;
+  border-radius: 3px;
+}
+
+.edit-links {
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+```
