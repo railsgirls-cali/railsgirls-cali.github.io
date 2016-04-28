@@ -1614,7 +1614,6 @@ Y reemplaza con
   justify-content: center;
 }
 
-
 .form-wrapper {
   width: 60%;
   margin: 20px auto;
@@ -1635,16 +1634,12 @@ Y reemplaza con
 Ahora veremos en sequencia los pasos necesarios para subir su primer proyecto a la plataforma Github.
 
 1. En la parte superior derecha de tu espacio de trabajo en C9 click en tu foto para abrir el panel de configuracion y click en `Dashboard`.
-```
-https://c9.io/account/ssh
-```
+[https://c9.io/account/ssh](https://c9.io/account/ssh)
 2. Click en el circulo arriba que tiene un engranage y despues en el menu lateral que dice `SSH keys`
 3. Copia todas las lineas que empezan por `ssh-rsa...`
 4. Crea una cuenta en GitHub [https://github.com](https://github.com)
 7. Entra en [https://github.com/settings/profile](tu perfil de usuario) y haga click en `SSH and GPG keys`.
-```
-https://github.com/settings/ssh
-```
+[https://github.com/settings/ssh](https://github.com/settings/ssh)
 8. click “Add SSH Key”. Introduzca el título " C9 " , pegue la clave SSH en el cuadro "key" , y haga clic en "Add key".
 9. Crear un repositorio nuevo vacío para su nuevo proyecto. Desde su repositorio , copie el enlace SSH . Por defecto GitHub muestra el enlace HTTPS , tendrá que cambiarlo a ssh primero! Se verá algo como:
 ```
@@ -1669,3 +1664,71 @@ git push -u origin master
 ```
 
 **Ahora tienes tu repositorio actualizado en GitHub**
+
+## Tener nuestra aplicacion en la web
+
+¿Cómo subir nuestra aplicación en la web, de forma que otros puedan verla? Con un servicio llamado Heroku que permite subir su aplicación en un hosting gratis en cuestión de segundos .
+
+1. Registrate en Heroku
+
+[https://www.heroku.com/](https://www.heroku.com/)
+
+2. C9 ya tiene una erramienta que se llama Heroku toolbelt. Solo necesitamos actualizarla
+
+```bash
+wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+```
+
+3. Inicia sesion en Heroku desde la consola
+
+```bash
+$ heroku login
+Email: (Introduce tu correo electrónico)
+Password ( introduzca tu contraseña - se mostrará en blanco y es normal )
+```
+
+4. Añade las claves a Heroku
+
+```bash
+$ heroku keys:add
+$ heroku create #creauna nueva URL para la aplicacion
+```
+
+5. Añade las nuevas gemas y grupos de gemas para Heroku
+
+**/gemfile**
+
+```ruby
+group :development, :test do
+     gem 'sqlite3'
+end
+
+group :production do
+     gem 'pg'
+     gem 'rails_12factor'
+end
+```
+
+Nota : Después de crear un grupo `producción` a su Gemfile debe cambiar a utilizar "bundle install --without production"
+
+6. Entonces instalamos las gemas
+
+```bash
+$ bundle install --without production
+```
+
+7. El baile de git
+
+```bash
+$ git add --all
+$ git commit -m "Listo para subir a Heroku"
+$ git push origin master
+```
+
+8. Sube a Heroku
+
+```bash
+$ git push heroku master
+$ heroku open
+$ heroku rename instagram #Reemplaza "instagram" con el nombre de su proyecto
+```
