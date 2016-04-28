@@ -1629,3 +1629,43 @@ Y reemplaza con
   margin-bottom: 40px;
 }
 ```
+
+## El baile de Github
+
+Ahora veremos en sequencia los pasos necesarios para subir su primer proyecto a la plataforma Github.
+
+1. En la parte superior derecha de tu espacio de trabajo en C9 click en tu foto para abrir el panel de configuracion y click en `Dashboard`.
+```
+https://c9.io/account/ssh
+```
+2. Click en el circulo arriba que tiene un engranage y despues en el menu lateral que dice `SSH keys`
+3. Copia todas las lineas que empezan por `ssh-rsa...`
+4. Crea una cuenta en GitHub [https://github.com](https://github.com)
+7. Entra en [https://github.com/settings/profile](tu perfil de usuario) y haga click en `SSH and GPG keys`.
+```
+https://github.com/settings/ssh
+```
+8. click “Add SSH Key”. Introduzca el título " C9 " , pegue la clave SSH en el cuadro "key" , y haga clic en "Add key".
+9. Crear un repositorio nuevo vacío para su nuevo proyecto. Desde su repositorio , copie el enlace SSH . Por defecto GitHub muestra el enlace HTTPS , tendrá que cambiarlo a ssh primero! Se verá algo como:
+```
+git@github.com:sunombre/nombredelproyecto.git
+```
+10. Convierte su directorio actual en un repositorio git ejecutando en la consola de C9:
+```
+git init
+```
+11. Utilizando el enlace SSH que copió en el paso 9 , añadir el repositorio remoto como origen:
+```
+git remote add origin git@github.com:sunombre/nombredelproyecto.git
+```
+12. Añadir sus archivos y hacer commit
+```
+git add .
+git commit -m "Primer commit"
+```
+13. Sube sus archivos:
+```
+git push -u origin master
+```
+
+**Ahora tienes tu repositorio actualizado en GitHub**
