@@ -590,7 +590,7 @@ Muestra todas las rutas disponibles para tu aplicación. Podrás añadir más a 
 
 ```rhtml
 <div class="form-wrapper">
-  <h1>Sign in</h1>
+  <h1>Iniciar Sesion</h1>
   <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
 
     <div class="form-group">
@@ -603,11 +603,9 @@ Muestra todas las rutas disponibles para tu aplicación. Podrás añadir más a 
       <%= f.password_field :password, class: "form-control" %>
     </div>
 
-    <div class="form-group">
-      <div class="checkbox">
-        <%= f.check_box :remember_me %>
-        <%= f.label :remember_me %>
-      </div>
+    <div class="checkbox">
+      <%= f.check_box :remember_me %>
+      <%= f.label :remember_me %>
     </div>
 
     <div class="form-group">
@@ -955,7 +953,7 @@ $ bundle install
 ```ruby
 class Post < ActiveRecord::Base
   belongs_to :user
-  has_attached_file :image, :styles => { :medium => "300x300>", :thumb => "100x100>" }
+  has_attached_file :image, :styles => { :medium => "640x", :thumb => "100x100>" }
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
 end
 ```
@@ -1316,3 +1314,5 @@ Despues inserte un before_action en la parte superior del controlador , especifi
 ```ruby
 before_action :owned_post, only: [:edit, :update, :destroy]
 ```
+
+## Añadir la posibilidad de comentar nuestros posts
