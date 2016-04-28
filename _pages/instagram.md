@@ -57,7 +57,7 @@ En tu navegador, ve a la URL : [localhost:3000/página/home](localhost:3000/pág
 
 **config/routes.rb**
 
-Reemplazar la linea
+Reemplazar la línea
 
 ```ruby
 get "pages/home"
@@ -134,7 +134,7 @@ En Ruby on Rails un enlace se verá así
 gem 'bootstrap-sass'
 ```
 
-### Siempre corre bundle install para instalar una nueva gema
+### Siempre corre `bundle install` para instalar una nueva gema
 
 consola
 
@@ -142,7 +142,7 @@ consola
 $ bundle install
 ```
 
-### Entender el documento Application.css
+### Entendamos el documento application.css
 
 **app/assets/stylesheets/application.css**
 
@@ -159,7 +159,7 @@ $ bundle install
 
 consola
 
-```
+```bash
 CONTROL + C
 rails server
 ```
@@ -221,7 +221,7 @@ Después del `<body>`
 </nav>
 ```
 
-### Importa la el Javascript para Bootstrap
+### Importa el Javascript para Bootstrap
 **app/assets/javascripts/application.js**
 
 ```js
@@ -255,7 +255,7 @@ Inserta:
 </div>
 ```
 
-## 8. Personalizar Bootstrap
+## 8. Personalicemos Bootstrap
 
 ### Por ejemplo, actualicemos la barra de navegación
 
@@ -299,10 +299,10 @@ $jumbotron-bg:                     white;
 
 ```rhtml
 <div class="jumbotron text-center">
-  <h1>Bienvenidos a mi aplicación!</h1>
+  <h1>¡Bienvenidos a mi aplicación!</h1>
   <p>
    <%= link_to "Iniciar sesion", "#", class: "btn btn-default btn-lg" %>
-   <%= link_to "Registrar", "#", class: "btn btn-primary btn-lg" %>
+   <%= link_to "Regístrate", "#", class: "btn btn-primary btn-lg" %>
   </p>    
 </div>
 ```
@@ -331,9 +331,9 @@ consola
 bundle install
 ```
 
-### Instalar Devise
+### Instala Devise
 
-```
+```bash
 rails generate devise:install
 ```
 
@@ -392,7 +392,7 @@ rails g devise:views
 
 ### Crea un modelo de usuario
 
-```
+```bash
 rails generate devise user
 ```
 
@@ -406,7 +406,7 @@ El número es la fecha de creacíon
 
 consola
 
-```
+```bash
 rake db:migrate
 ```
 
@@ -414,7 +414,7 @@ Este comando toma el archivo de migración y lo ejecuta, de manera que genere ta
 
 ### Vuelve a iniciar el servidor
 
-```
+```bash
 CONTROL + C (para parar el servidor)
 rails server (para volver a iniciar el servidor)
 ```
@@ -537,18 +537,18 @@ Muestra todas las rutas disponibles para tu aplicación. Podrás añadir más a 
 
 ```rhtml
 <div class="form-wrapper">
-  <h1>Forgot your password?</h1>
+  <h1>¿Olvidaste tu contraseña?</h1>
 
-  <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
+  <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
     <%= devise_error_messages! %>
 
     <div class="form-group">
       <%= f.label :email %>
-      <%= f.email_field :email, class: "form-control", :autofocus => true %>
+      <%= f.email_field :email, class: "form-control", autofocus: true %>
     </div>
 
     <div class="form-group">
-      <%= f.submit "Send me reset password instructions", class: "btn btn-success" %>
+      <%= f.submit "Envíame las instrucciones para restablecer mi contraseña", class: "btn btn-success" %>
     </div>
   <% end %>
 
@@ -561,24 +561,24 @@ Muestra todas las rutas disponibles para tu aplicación. Podrás añadir más a 
 
 ```rhtml
 <div class="form-wrapper">
-  <h1>Change your password</h1>
+  <h1>Cambia tu contraseña</h1>
 
-  <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f| %>
+  <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
     <%= devise_error_messages! %>
     <%= f.hidden_field :reset_password_token %>
 
     <div class="form-group">
-      <%= f.label :password, "New password" %>
-      <%= f.password_field :password, class: "form-control", :autofocus => true %>
+      <%= f.label :password, "Nueva contraseña" %>
+      <%= f.password_field :password, class: "form-control", autofocus: true %>
     </div>
 
     <div class="form-group">
-      <%= f.label :password_confirmation, "Confirm new password" %>
+      <%= f.label :password_confirmation, "Confirmar nueva contraseña" %>
       <%= f.password_field :password_confirmation %>
     </div>
 
     <div class="form-group">
-      <%= f.submit "Change my password", class: "btn btn-success" %>
+      <%= f.submit "Cambiar mi contraseña", class: "btn btn-success" %>
     </div>
   <% end %>
 
@@ -590,12 +590,17 @@ Muestra todas las rutas disponibles para tu aplicación. Podrás añadir más a 
 
 ```rhtml
 <div class="form-wrapper">
+<<<<<<< HEAD
   <h1>Iniciar Sesion</h1>
   <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+=======
+  <h1>Sign in</h1>
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+>>>>>>> b1880ff4bf71cf9d6191c3419e37f5c16b600fe1
 
     <div class="form-group">
       <%= f.label :email %>
-      <%= f.email_field :email, class: "form-control", :autofocus => true %>
+      <%= f.email_field :email, class: "form-control", autofocus: true %>
     </div>
 
     <div class="form-group">
@@ -609,7 +614,7 @@ Muestra todas las rutas disponibles para tu aplicación. Podrás añadir más a 
     </div>
 
     <div class="form-group">
-      <%= f.submit "Sign in", class: "btn btn-success" %>
+      <%= f.submit "Ingresa", class: "btn btn-success" %>
     </div>
   <% end %>
 
@@ -629,7 +634,7 @@ Muestra todas las rutas disponibles para tu aplicación. Podrás añadir más a 
 }
 ```
 
-### Añadir un enlace de "Configuración de cuenta" al parcial de navegacíon
+### Añade un enlace de "Configuración de cuenta" al parcial de navegacíon
 
 **app/views/layouts/_header.html.erb**
 
@@ -640,13 +645,13 @@ Debajo de `<% if user_signed_in? %>`:
 
 ```
 
-## 15. Generate Posts Scaffold
+## 15. Genera el scaffold para Posts
 
-### Generate a posts scaffold
+### Genera un scaffold para Posts
 
-```
-$ rails generate scaffold posts description:string
-$ rake db:migrate #run the migration
+```bash
+rails generate scaffold posts description:string
+rake db:migrate #corre la migración
 ```
 
 
@@ -675,7 +680,7 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     if @post.save
-      redirect_to @post, notice: 'Post was successfully created.'
+      redirect_to @post, notice: '¡Post creado satisfactoriamente!'
     else
       render :new
     end
@@ -683,7 +688,7 @@ class PostsController < ApplicationController
 
   def update
     if @post.update(post_params)
-      redirect_to @post, notice: 'Post was successfully updated.'
+      redirect_to @post, notice: '¡Post actualizado satisfactoriamente!'
     else
       render :edit
     end
@@ -723,7 +728,7 @@ end
 <%= form_for(@post) do |f| %>
   <% if @post.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+      <h2><%= pluralize(@post.errors.count, "error") %> no permiten que este post sea guardado:</h2>
 
       <ul>
       <% @post.errors.full_messages.each do |msg| %>
@@ -757,7 +762,7 @@ Debajo de `<% if user_signed_in? %>`:
 <li><%= link_to 'Nuevo post', new_post_path %></li>
 ```
 
-## 18. Posts, Usuarios y asociacíon
+## 18. Posts, Usuarios y Asociacíon
 
 Recursos
 
@@ -776,35 +781,35 @@ end
 ```
 
 
-### Generar una nueva migración de índice de un usuario
+### Genera una nueva migración de índice de un usuario
 
-```
-$ rails generate migration add_user_id_to_posts user_id:integer:index
+```bash
+rails generate migration add_user_id_to_posts user_id:integer:index
 ```
 
 
 ### Inicie la consola de Rails
 
-La consola de Rails nos permite interactuar directamente con los datos en la base de datos . Usa la consola para actualizar directamente los datos  , o  sólo para probar el código Ruby antes de integrarlo a su proyecto
+La consola de Rails nos permite interactuar directamente con los datos en la base de datos. Usa la consola para actualizar directamente los datos , o  solo para probar el código Ruby antes de integrarlo a tu proyecto
 
 ```
-$ rails console
+rails console
 ```
 
 Una vez en la consola ...
 
-```
+```bash
 > Post.connection #Esto establece una conexión con la base de datos ( y escupe una gran cantidad de datos innecesarios)
 > Post.inspect #muestra todos los parámetros para un Post
 > post = Post.first #Nos trae el primer Post asegurate que la primer letra es MAYÚSCULA
-> post.user
+> post.user #Nos muestra el usuario del post.
 ```
 
-Stop the Console when you're done
+Detén la consola cuando termines
 
-CONTROL + D #closes the Console
+CONTROL + D #cierra la consola
 
-### Un usuario has_many Posts  
+### Un Usuario has_many Posts  
 
 **app/models/user.rb**
 
@@ -821,11 +826,11 @@ end
 ```
 
 
-### A ver si funciono
+### Verificamos que funcione...
 
 De vuelta en la consola de Rails (en nuestra consola) vamos a configurar un ID de usuario en un Post.
 
-```
+```bash
 > post = Post.first
 > post #echar una mirada al post
 > post.user_id = 1
@@ -835,9 +840,9 @@ De vuelta en la consola de Rails (en nuestra consola) vamos a configurar un ID d
 > user.posts
 ```
 
-## 19. Autorización : ¿Quién puede? Quién no puede?
+## 19. Autorización : ¿Quién puede? ¿Quién no puede?
 
-### Actualizar el controlador Posts
+### Actualiza el controlador Posts
 
 **app/controllers/posts_controller.rb**
 
@@ -862,7 +867,7 @@ class PostsController < ApplicationController
   def create
     @post = current_user.posts.build(post_params)
     if @post.save
-      redirect_to @post, notice: 'Post was successfully created.'
+      redirect_to @post, notice: '¡Post creado satisfactoriamente!'
     else
       render :new
     end
@@ -870,7 +875,7 @@ class PostsController < ApplicationController
 
   def update
     if @post.update(post_params)
-      redirect_to @post, notice: 'Post was successfully updated.'
+      redirect_to @post, notice: '¡Post actualizado satisfactoriamente!'
     else
       render :edit
     end
@@ -889,7 +894,7 @@ class PostsController < ApplicationController
 
     def correct_user
       @post = current_user.posts.find_by(id: params[:id])
-      redirect_to posts_path, notice: "Not authorized to edit this post" if @post.nil?
+      redirect_to posts_path, notice: "¡No estás autorizada/o para editar este post!" if @post.nil?
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -899,11 +904,11 @@ class PostsController < ApplicationController
 end
 ```
 
-### Add devise User authentication
+### Agreguemos autenticación de usuarios con Devise
 
 Recursos: https://github.com/plataformatec/devise
 
-Añadir `before_action` al Controlador Posts
+Añade `before_action` al Controlador Posts
 
 **app/controllers/posts_controller.rb**
 
@@ -912,9 +917,9 @@ before_action :authenticate_user!, except: [:index, :show]
 ```
 
 
-### Add correct_user method
+### Añade el método `correct_user`
 
-Add the `before_action` to your Posts Controller
+Añade el método `before_action` a tu controlador de Posts
 
 **app/controllers/posts_controller.rb**
 
@@ -922,17 +927,17 @@ Add the `before_action` to your Posts Controller
 before_action :correct_user, only: [:edit, :update, :destroy]
 ```
 
-## 20. Image Upload with Paperclip
+## 20. Sube imágenes con Paperclip
 
-### Instalar el procesador de imagenes ImageMagick
+### Instala el procesador de imagenes ImageMagick
 
 En la consola
 
-```
-$ sudo apt-get install imagemagick
+```bash
+sudo apt-get install imagemagick
 ```
 
-### Install the Paperclip gem
+### Instala la gema Paperclip
 
 https://github.com/thoughtbot/paperclip
 
@@ -942,10 +947,10 @@ https://github.com/thoughtbot/paperclip
 gem 'paperclip', '~> 4.2'
 ```
 
-Then run:
+Ejecuta en tu consola:
 
 ```
-$ bundle install
+bundle install
 ```
 
 **/app/models/post.rb**
@@ -953,32 +958,37 @@ $ bundle install
 ```ruby
 class Post < ActiveRecord::Base
   belongs_to :user
+<<<<<<< HEAD
   has_attached_file :image, :styles => { :medium => "640x", :thumb => "100x100>" }
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
+=======
+  has_attached_file :image, styles: { medium: "300x300>", thumb: "100x100>" }
+  validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
+>>>>>>> b1880ff4bf71cf9d6191c3419e37f5c16b600fe1
 end
 ```
 
-### Generate a paperclip migration
+### Genera la migración de paperclip
 
 ```
-$ rails generate paperclip post image
+rails generate paperclip post image
 ```
 
-Run and check the migration
+Ejecuta y verifica la migración
 
-```
-$ rake db:migrate
-$ rake db:migrate:status
-```
-
-### Volver a iniciar el servidor after adding a gem file
-
-```
-$ CONTROL + C
-$ rails server
+```bash
+rake db:migrate
+rake db:migrate:status
 ```
 
-### Edit the post form
+### Vuelve a iniciar el servidor después de agregar una librería (gema)
+
+```bash
+CONTROL + C
+rails server
+```
+
+### Edita el formulario de Post
 **/app/views/posts/_form.html.erb**
 
 ```rhtml
@@ -995,7 +1005,7 @@ $ rails server
 .
 ```
 
-### Update the Posts Controller for strong parameters
+### Actualiza el controlador de Posts para parámetros "strong"
 
 **/app/controllers/concerns/posts_controller.rb**
 
@@ -1009,7 +1019,7 @@ $ rails server
 
 ```
 
-### Update the posts index
+### Actualiza la vista `index` de Posts
 
 **/app/views/posts/index.html.erb**
 
@@ -1075,17 +1085,17 @@ $ rails server
 }
 ```
 
-### Delete posts made by non users
+### Elimina los Posts creados por usuarios No Registrados
 
-```shell
-$ rails console
-$ Post.first
-$ post = Post.first
-$ post.destroy
-$ Post.first.destroy
+```bash
+rails console
+Post.first
+post = Post.first
+post.destroy
+Post.first.destroy
 ```
 
-### Update the posts show view
+### Actualiza la vista `show` de Posts
 
 **/app/views/posts/show.html.erb**
 
@@ -1135,7 +1145,7 @@ y añade los siguiente estilos
 }
 ```
 
-y en **app/views/posts/show.html.erb**, lo mas arriba añade
+y en **app/views/posts/show.html.erb**, lo más arriba, añade
 
 ```rhtml
 <div class="text-center">
@@ -1143,7 +1153,7 @@ y en **app/views/posts/show.html.erb**, lo mas arriba añade
 </div>
 ```
 
-### Y si queremos borrar nuestro post?
+### ¿Y si queremos borrar nuestro post?
 
 **app/views/posts/show.html.erb**
 
@@ -1151,28 +1161,28 @@ Completamente abajo colocamos:
 
 ```rhtml
 <div class="text-center edit-links">
-  <%= link_to "Borrar Post", post_path(@post), method: :delete, data: { confirm: "Esta segura que quieres eliminar este post?" } %>
+  <%= link_to "Borrar Post", post_path(@post), method: :delete, data: { confirm: "¿Estás segura que quieres eliminar este post?" } %>
   |
   <%= link_to "cancelar", posts_path %>
 </div>
 ```
 
-## Añade un nombre de usuario para personalizar la aplicacíon
+## Añade un nombre de usuario para personalizar la aplicación
 
-### Crea la migracion en base de datos
+### Crea la migración en la base de datos
 
 consola
 
-```shell
-$ rails generate migration AddNameToUsers name:string
+```bash
+rails generate migration AddNameToUsers name:string
 ```
 
 ### Migra la base de datos
 
 consola
 
-```shell
-$ rake db:migrate
+```bash
+rake db:migrate
 ```
 
 ### Añade al fomulario de registro el campo nombre  
@@ -1183,12 +1193,12 @@ $ rake db:migrate
 .
      <div class="form-group">
        <%= f.label :name %>
-       <%= f.text_field :name, class: "form-control", :autofocus => true %>
+       <%= f.text_field :name, class: "form-control", autofocus: true %>
      </div>
 .
 ```
 
-### Indica a Devise autorizar este nuevo parametro  
+### Indica a Devise autorizar este nuevo parámetro  
 
 **app/controllers/application_controller.rb**
 
@@ -1209,7 +1219,7 @@ protected
 end
 ```
 
-### Y tambien agregamos el campo en las vistas
+### Y también agregamos el campo en las vistas
 
 **app/views/devise/registrations/new.html.erb**, **app/views/devise/registrations/edit.html.erb**
 
@@ -1224,7 +1234,7 @@ end
 
 ### Terminamos con un nuevo controlador
 
-Crear el archivo **app/controllers/registrations_controller.rb**:
+Creaa el archivo **app/controllers/registrations_controller.rb**:
 
 ```ruby
 class RegistrationsController < Devise::RegistrationsController
@@ -1271,11 +1281,11 @@ con...
 <%= post.user.name if post.user %>
 ```
 
-## Proteger su posts
+## Protege tus posts
 
-### Rodea el enlace de edición con un "si " condicional
+### Rodea el enlace de edición con un "si" condicional
 
-De esta manera sólo se puede ver tus posts . Para poner esto de otra manera: Un usuario sólo puede ver sus posts (y no los posts de otros usuarios ) . ¿Tiene algun sentido?
+De esta manera sólo se pueden ver tus posts. Para poner esto de otra manera: Un usuario sólo puede ver sus posts (y no los posts de otros usuarios ). ¿Tiene algun sentido?
 
 
 **app/views/posts/show.html.erb**
@@ -1294,7 +1304,7 @@ De esta manera sólo se puede ver tus posts . Para poner esto de otra manera: Un
   <% end  %>
 ```
 
-### Proteger los posts tambien desde el controlador
+### Proteger los posts también desde el controlador
 
 **app/controllers/posts_controller.rb**
 
@@ -1303,13 +1313,13 @@ private
 
 def owned_post  
   unless current_user == @post.user
-    flash[:alert] = "That post doesn't belong to you!"
+    flash[:alert] = "¡Este post no te pertenece!"
     redirect_to root_path
   end
 end
 ```
 
-Despues inserte un before_action en la parte superior del controlador , especificando el método owned_post solamente para las acciones de edición , actualización y destruir.
+Después, inserta un `before_action` en la parte superior del controlador, especificando el método `owned_post` solamente para las acciones de edición, actualización y destruir.
 
 ```ruby
 before_action :owned_post, only: [:edit, :update, :destroy]
