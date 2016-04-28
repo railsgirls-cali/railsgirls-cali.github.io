@@ -221,7 +221,7 @@ Después del `<body>`
 </nav>
 ```
 
-### Importa la el Javascript para Bootstrap
+### Importa el Javascript para Bootstrap
 **app/assets/javascripts/application.js**
 
 ```js
@@ -1079,7 +1079,7 @@ $ rails server
 
 ### Delete posts made by non users
 
-```shell
+```bash
 $ rails console
 $ Post.first
 $ post = Post.first
@@ -1165,7 +1165,7 @@ Completamente abajo colocamos:
 
 consola
 
-```shell
+```bash
 $ rails generate migration AddNameToUsers name:string
 ```
 
@@ -1173,7 +1173,7 @@ $ rails generate migration AddNameToUsers name:string
 
 consola
 
-```shell
+```bash
 $ rake db:migrate
 ```
 
