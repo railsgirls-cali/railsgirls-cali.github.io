@@ -2,3 +2,4 @@ main:
     - { url: '/', text: 'Home' }
     - { url: '/instagram', text: 'Instagram' }
     - { url: '/forum', text: 'Foro' }
+    - { url: '/location', text: '¿Cómo llegar?' }
