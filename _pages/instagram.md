@@ -1318,15 +1318,15 @@ Después, inserta un `before_action` en la parte superior del controlador, espec
 before_action :owned_post, only: [:edit, :update, :destroy]
 ```
 
-## Añadir la opcion de comentar nuestros posts
+## Añadiremos la opción de comentar nuestros posts
 
-### Empezado por generar un modelo
+### Empezamos por generar un modelo
 
 ```bash
-$ rails g model Comment user:references post:references content:text
+rails g model Comment user:references post:references content:text
 ```
 
-Este comando nos genera una migracion **db/migrate/** para añadir los campos en la base de datos y un modelo **app/model/comment.rb**.
+Este comando nos genera una migración **db/migrate/** para añadir los campos en la base de datos y un modelo **app/model/comment.rb**.
 
 ### Migra la base de datos
 
@@ -1336,9 +1336,9 @@ consola
 rake db:migrate
 ```
 
-### Associar los comentarios
+### Asocia los comentarios
 
-Ahora nuestro modelo **app/model/comment.rb** esta configurado para indicar a quien pertenecen los comentarios.
+Ahora nuestro modelo **app/model/comment.rb** está configurado para indicar a quién pertenecen los comentarios.
 
 ```ruby
 class Comment < ActiveRecord::Base  
@@ -1347,13 +1347,13 @@ class Comment < ActiveRecord::Base
 end
 ```
 
-Por último, en **app/models/user.rb** and **app/models/post.rb** añadir la siguiente línea a cada uno:
+Por último, en **app/models/user.rb** and **app/models/post.rb** añade la siguiente línea a cada uno:
 
 ```ruby
 has_many :comments, dependent: :destroy
 ```
 
-### Crear la ruta por los comentarios
+### Crea la ruta para los comentarios
 
 En **config/routes.rb** Reemplaza
 
@@ -1368,10 +1368,10 @@ resources :posts do
 end
 ```
 
-### Para terminar con la logica creamos el controlador
+### Para terminar con la lógica, creamos el controlador
 
 ```bash
-$ rails g controller comments
+rails g controller comments
 ```
 
 El controlador de comentarios solo va a tener las acciones de crear y borrar comentarios
@@ -1385,10 +1385,10 @@ class CommentsController < ApplicationController
     @comment.user_id = current_user.id
 
     if @comment.save
-      flash[:success] = "You commented that post!"
+      flash[:success] = "¡Has comentado este post!"
       redirect_to :back
     else
-      flash[:alert] = "Check the comment form, something went wrong."
+      flash[:alert] = "Revisa el formulario de comentarios, algo salió mal :/"
       render root_path
     end
   end
@@ -1397,7 +1397,7 @@ class CommentsController < ApplicationController
     @comment = @post.comments.find(params[:id])
 
     @comment.destroy
-    flash[:success] = "Comment deleted :("
+    flash[:success] = "Comentario eliminado :("
     redirect_to root_path
   end
 
@@ -1413,17 +1413,17 @@ class CommentsController < ApplicationController
 end
 ```
 
-## las vistas y los estilos de los comentarios
+## Las vistas y los estilos de los comentarios
 
-### DRY Don't Repeat Yourself
+### DRY: Don't Repeat Yourself
 
-El principio **No te repitas** (en inglés **Don't Repeat Yourself** o **DRY**, también conocido como Una vez y sólo una) es una filosofía de definición de procesos que promueve la reducción de la duplicación especialmente en computación.
+El principio **No te repitas** (en inglés **Don't Repeat Yourself** ó **DRY**, también conocido como: Una vez y sólo una) es una filosofía de definición de procesos que promueve la reducción de la duplicación, especialmente en computación.
 
 ### Post parcial
 
-Creamos un parcial para simplificar las vistas de `show` y `index`
+Creamos un parcial para simplificar las vistas de `show` e `index`
 
-Crear un nuevo archivo `_post.html.erb` en **app/views/posts/**
+Crea un nuevo archivo `_post.html.erb` en **app/views/posts/**
 
 ```rhtml
 <div class="posts-wrapper">
@@ -1454,7 +1454,7 @@ Crear un nuevo archivo `_post.html.erb` en **app/views/posts/**
               <%= comment.content %>
             </div>
             <% if comment.user == current_user %>
-              <%= link_to post_comment_path(post, comment), method: :delete, data: { confirm: "Are you sure?" } do %>
+              <%= link_to post_comment_path(post, comment), method: :delete, data: { confirm: "¿Estás segura?" } do %>
                 <span class="glyphicon glyphicon-remove delete-comment"></span>
               <% end %>
             <% end %>
@@ -1468,7 +1468,7 @@ Crear un nuevo archivo `_post.html.erb` en **app/views/posts/**
       </div>
       <div class="comment-form col-sm-11">
         <%= form_for [post, post.comments.new] do |f| %>
-          <%= f.text_field :content, placeholder: 'Add a comment...' %>
+          <%= f.text_field :content, placeholder: 'Añade un comentario...' %>
         <% end %>
       </div>
     </div>
@@ -1482,18 +1482,18 @@ Reemplaza **app/views/posts/show.html.erb**
 <%= render 'post', post: @post %>
 <% if @post.user.id == current_user.id %>
   <div class="text-center edit-links">
-    <%= link_to "Cancel", posts_path %>
+    <%= link_to "Cancelar", posts_path %>
     |
-    <%= link_to "Edit Post", edit_post_path(@post) %>
+    <%= link_to "Editar el post", edit_post_path(@post) %>
   </div>
 <% else %>
   <div class="text-center edit-links">
-    <%= link_to "Cancel", posts_path %>
+    <%= link_to "Cancelar", posts_path %>
   </div>
 <% end %>
 ```
 
-Y tambien reemplaza **app/views/posts/index.html.erb**
+Y también reemplaza **app/views/posts/index.html.erb**
 
 ```rhtml
 <% @posts.each do |post| %>
@@ -1631,67 +1631,67 @@ Y reemplaza con
 
 ## El baile de Github
 
-Ahora veremos en sequencia los pasos necesarios para subir su primer proyecto a la plataforma Github.
+¡Ahora veremos en secuencia los pasos necesarios para subir tu primer proyecto a la plataforma Github!
 
-1. En la parte superior derecha de tu espacio de trabajo en C9 click en tu foto para abrir el panel de configuracion y click en `Dashboard`.
+1. En la parte superior derecha de tu espacio de trabajo en [C9](http://c9.io), haz clic en tu foto para abrir el panel de configuración y clic en `Dashboard`.
 [https://c9.io/account/ssh](https://c9.io/account/ssh)
-2. Click en el circulo arriba que tiene un engranage y despues en el menu lateral que dice `SSH keys`
+2. Ahora click en el círculo de arriba que tiene un engranaje y después en el menú lateral que dice `SSH keys`
 3. Copia todas las lineas que empezan por `ssh-rsa...`
-4. Crea una cuenta en GitHub [https://github.com](https://github.com)
-7. Entra en [https://github.com/settings/profile](tu perfil de usuario) y haga click en `SSH and GPG keys`.
+4. Crea una cuenta en GitHub: [https://github.com](https://github.com)
+7. Entra en [tu perfil de usuario](https://github.com/settings/profile) y haz clicc en `SSH and GPG keys`.
 [https://github.com/settings/ssh](https://github.com/settings/ssh)
-8. click “Add SSH Key”. Introduzca el título " C9 " , pegue la clave SSH en el cuadro "key" , y haga clic en "Add key".
-9. Crear un repositorio nuevo vacío para su nuevo proyecto. Desde su repositorio , copie el enlace SSH . Por defecto GitHub muestra el enlace HTTPS , tendrá que cambiarlo a ssh primero! Se verá algo como:
+8. Ahora Clic en “Add SSH Key”. Introduce el título: " C9 ", pega la clave SSH en el cuadro "key", y haz clic en "Add key".
+9. Crea un repositorio nuevo vacío para tu nuevo proyecto. Desde tu repositorio, copia el enlace SSH. Por defecto GitHub muestra el enlace HTTPS; ¡tendrás que cambiarlo a ssh primero! Se verá algo como:
 ```
 git@github.com:sunombre/nombredelproyecto.git
 ```
-10. Convierte su directorio actual en un repositorio git ejecutando en la consola de C9:
+10. Convierte tu directorio actual en un repositorio git ejecutando en la consola de C9:
 ```
 git init
 ```
-11. Utilizando el enlace SSH que copió en el paso 9 , añadir el repositorio remoto como origen:
+11. Utilizando el enlace SSH que copiaste en el paso 9, añade el repositorio remoto como origen:
 ```
 git remote add origin git@github.com:sunombre/nombredelproyecto.git
 ```
-12. Añadir sus archivos y hacer commit
+12. Añade tus archivos y haz commit
 ```
 git add .
-git commit -m "Primer commit"
+git commit -m "Mi Primer commit"
 ```
-13. Sube sus archivos:
+13. Sube los archivos:
 ```
 git push -u origin master
 ```
 
 **Ahora tienes tu repositorio actualizado en GitHub**
 
-## Tener nuestra aplicacion en la web
+## Tener nuestra aplicación en la web
 
-¿Cómo subir nuestra aplicación en la web, de forma que otros puedan verla? Con un servicio llamado Heroku que permite subir su aplicación en un hosting gratis en cuestión de segundos .
+¿Cómo subir nuestra aplicación en la web, de forma que otros puedan verla? Con un servicio llamado [Heroku](http://heroku.com) que permite subir tu aplicación en un servidor gratis en cuestión de segundos.
 
-### Registrate en Heroku
+### Regístrate en Heroku
 
 [https://www.heroku.com/](https://www.heroku.com/)
 
-### C9 ya tiene una erramienta que se llama Heroku toolbelt. Solo necesitamos actualizarla
+### C9 ya tiene una herramienta que se llama Heroku toolbelt. Solo necesitamos actualizarla
 
 ```bash
 wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 ```
 
-### Inicia sesion en Heroku desde la consola
+### Inicia sesión en Heroku desde la consola
 
 ```bash
-$ heroku login
+heroku login
 Email: (Introduce tu correo electrónico)
-Password ( introduzca tu contraseña - se mostrará en blanco y es normal )
+Password ( Introduce tu contraseña - se mostrará en blanco y es normal )
 ```
 
 ### Añade las claves a Heroku
 
 ```bash
-$ heroku keys:add
-$ heroku create #creauna nueva URL para la aplicacion
+heroku keys:add
+heroku create #crea una nueva URL para la aplicación
 ```
 
 ### Añade las nuevas gemas y grupos de gemas para Heroku
@@ -1709,26 +1709,26 @@ group :production do
 end
 ```
 
-Nota : Después de crear un grupo `producción` a su Gemfile debe cambiar a utilizar "bundle install --without production"
+Nota: Después de crear un grupo `producción` a tu Gemfile, debes cambiar a utilizar `bundle install --without production`
 
 ### Entonces instalamos las gemas
 
 ```bash
-$ bundle install --without production
+bundle install --without production
 ```
 
 ### El baile de git
 
 ```bash
-$ git add --all
-$ git commit -m "Listo para subir a Heroku"
-$ git push origin master
+git add --all
+git commit -m "¡Lista para subir a Heroku!"
+git push origin master
 ```
 
 ### Sube a Heroku
 
 ```bash
-$ git push heroku master
-$ heroku open
-$ heroku rename instagram #Reemplaza "instagram" con el nombre de su proyecto
+git push heroku master
+heroku open
+heroku rename instagram #Reemplaza "instagram" con el nombre de tu proyecto
 ```
