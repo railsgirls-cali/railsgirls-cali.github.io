@@ -419,7 +419,7 @@ CONTROL + C (para parar el servidor)
 rails server (para volver a iniciar el servidor)
 ```
 
-Tendrás que reiniciar la aplicación cada vez que se instales una gema o cada vez que ejecutes `rake db:migrate`
+Tendrás que reiniciar la aplicación cada vez que instales una gema o cada vez que ejecutes `rake db:migrate`
 
 ## 13. Registrar nuevos usuarios o iniciar sesíon
 

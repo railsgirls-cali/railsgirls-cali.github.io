@@ -10,14 +10,14 @@ http://cali-coder-girls.herokuapp.com/
 
 ## 1. Crea una aplicación nueva
 
-### Crea una nueva aplicación 
+### ¡Vamos a crear  una nueva aplicación!
 
 consola
 
 ```bash
-$ rails new cali-coder-girls --skip-active-record --skip-bundle --skip-test-unit
+rails new cali-coder-girls --skip-active-record --skip-bundle --skip-test-unit
 
-$ cd cali-coder-girls
+cd cali-coder-girls
 ```
 
 ## 2. Página de inicio
@@ -29,7 +29,7 @@ En el navegador, ve a la URL: [localhost:3000](localhost:3000) . Esta es la pág
 consola
 
 ```
-$ rails generate controller pages home
+rails generate controller pages home
 ```
 
 En tu navegador, ve a la URL : [localhost:3000/página/home](localhost:3000/página/home) y ve la nueva página en blanco que se acaba de crear.
@@ -44,11 +44,11 @@ En tu navegador, ve a la URL : [localhost:3000/página/home](localhost:3000/pág
 
 ## 3. Crea la raíz de la aplicación
 
-### Mostrar la página de inicio de tu aplicación
+### Muestra la página de inicio de tu aplicación
 
 **config/routes.rb**
 
-Reemplazar la linea
+Reemplaza la línea
 
 ```ruby
 get "pages/home"
@@ -60,7 +60,7 @@ get "pages/home"
 root "pages#home"
 ```
 
-## 4. Crea más paginas
+## 4. Crea más páginas
 
 ### Añade una nueva acción en el controlador
 
@@ -132,7 +132,7 @@ gem 'bootstrap-sass'
 consola
 
 ```
-$ bundle install
+bundle install
 ```
 
 ### Entender el documento Application.css
@@ -148,7 +148,7 @@ $ bundle install
 @import 'bootstrap';
 ```
 
-### Importa la el Javascript para Bootstrap
+### Importa el Javascript para Bootstrap
 **app/assets/javascripts/application.js**
 
 ```js
@@ -192,7 +192,7 @@ rails server
 <div class="container">
   <% if notice %>
     <div class="alert alert-info alert-dismissible fade in" role="alert">
-       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> 
+       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
        <p><%= notice %></p>
     </div>
   <%end%>
@@ -250,10 +250,10 @@ Después del `<body>`
 ```rhtml
 <div class="jumbotron">
   <h1>Foro Rails Girls Cali</h1>
-  Haz clic aquí para <%= link_to "Registrar", "#", class: "btn btn-primary" %>
+  Haz clic aquí para <%= link_to "Regístrate", "#", class: "btn btn-primary" %>
 </div>
 ```
-### Añadimos una clase "text-center" 
+### Añadimos una clase "text-center"
 
 **/app/views/pages/home.html.erb**
 
@@ -261,20 +261,20 @@ Después del `<body>`
 <div class="jumbotron text-center">
   <h1>Foro Rails Girls Cali</h1>
   <p>
-   <%= link_to "Iniciar sesion", "#", class: "btn btn-default btn-lg" %>
-   <%= link_to "Registrar", "#", class: "btn btn-primary btn-lg" %>
+   <%= link_to "Iniciar sesión", "#", class: "btn btn-default btn-lg" %>
+   <%= link_to "Regístrate", "#", class: "btn btn-primary btn-lg" %>
   </p>    
 </div>
 
 ```
-### Personalizamos el encabezado con botones de autenticacion y algunas imagenes
+### Personalizamos el encabezado con botones de autenticación y algunas imagenes
 **/app/views/pages/home.html.erb**
 
 ```rhtml
 <div class='jumbotron text-center'>
   <h1>Foro Rails Girls Cali</h1>
-  <%= link_to "Registrarse", "#", class: "btn btn-info btn-auth" %>
-  <%= link_to "Iniciar Sesion", "#", class: "btn btn-info btn-auth" %>
+  <%= link_to "Regístrate", "#", class: "btn btn-info btn-auth" %>
+  <%= link_to "Iniciar Sesión", "#", class: "btn btn-info btn-auth" %>
 </div>
 <div class="container text-center">
   <div class='row banner'>
@@ -303,7 +303,7 @@ Los recursos se pueden descargar en el [link](https://drive.google.com/open?id=0
 
 ## 7. Mejoremos el diseño
 
-### Personalizacion de Bootstrap
+### Personalización de Bootstrap
 
 **app/assets/stylesheets/bootstrap_and_customization.css.scss**
 
@@ -349,38 +349,38 @@ $alert-info-text:                  #D3360B;
 }
 ```
 
-## 8. Instalacion Mongoid
+## 8. Instalación Mongoid
 
-### Añadimos gemas 
+### Añadimos las gemas
 
 **/Gemfile**
 
 ```ruby
-  gem 'mongoid', '~> 5.1.0' 
+  gem 'mongoid', '~> 5.1.0'
   gem 'bson_ext'
 ```
 consola
 
 ```bash
-$ bundle install
+bundle install
 ```
 
-### Generamos archivo de configuración de mongoid
+### Generamos el archivo de configuración de mongoid
 
 ```bash
-  $ rails g mongoid:config
+rails g mongoid:config
 ```
-## 9. Crear scaffold para Topic
+## 9. Crea el scaffold para Topic
 
-La herramienta  *scaffold* de rails permite generar facilmente versiones iniciales de modelos, controladores y vistas, tan solo con indicarle el nombre y los campos del modelo. Acontinuación creamos un scaffold para los Topics de nuestro foro
+La herramienta  *scaffold* de rails permite generar fácilmente versiones iniciales de modelos, controladores y vistas, tan solo con indicarle el nombre y los campos del modelo. A continuación, creamos un scaffold para los Topics de nuestro foro
 
 consola
 
 ```bash
-  $ rails g scaffold Topic title:string description:string
+rails g scaffold Topic title:string description:string
 ```
 
-##10. Añadimos el modulo *Timestamp* al modelo Topic
+##10. Añadimos el módulo *Timestamp* al modelo Topic
 
 Este modulo permite acceder a los campos created_at y updated_at para nuestro modelo. De esta forma podremos saber cuando fue creado el Topic.
 
@@ -397,24 +397,24 @@ Este modulo permite acceder a los campos created_at y updated_at para nuestro mo
 
 ## 10. Creamos un link para la vista de Topics
 
-Por ahora utilizaremos el boton iniciar sesion para ver la lista de topicos 
+Por ahora utilizaremos el botón iniciar sesión para ver la lista de tópicos
 
 En la vista **/app/views/pages/home.html.erb**
 
 reemplazamos
 
 ```rhtml
-  <%= link_to "Iniciar Sesion", "#", class: "btn btn-info btn-auth" %>
+  <%= link_to "Iniciar Sesión", "#", class: "btn btn-info btn-auth" %>
 ```
-por 
+por
 
 ```rhtml
-  <%= link_to "Iniciar Sesion", topics_path, class: "btn btn-info btn-auth" %>
+  <%= link_to "Iniciar Sesión", topics_path, class: "btn btn-info btn-auth" %>
 ```
 
 ## 11. Modificamos la vista de Topics
 
-Usamos bootstrap para personalizar la lista de topicos actuales, [aqui](http://bootsnipp.com/snippets/featured/bookmarks-reading-list) se pueden encontrar snippets que pueden reutilizarse en cualquiera de nuestras aplicaciones. 
+Usamos bootstrap para personalizar la lista de tópicos actuales, [aquí](http://bootsnipp.com/snippets/featured/bookmarks-reading-list) se pueden encontrar snippets que pueden reutilizarse en cualquiera de nuestras aplicaciones.
 
 reemplazamos el contenido de
 **/app/views/topics/index.html.erb**
@@ -484,14 +484,15 @@ añadimos en
 
 ## 12. Añadimos un modal para crear Topics
 
-Gracias a bootstrap podemos tener acceso a componentes que interactuan con el usuario mediante javascript. Acontinuacion usaremos un Modal o 'Popup' para crear un nuevo topic
+Gracias a bootstrap podemos tener acceso a componentes que interactúan con el usuario mediante Javascript.
+A continuación usaremos un Modal o 'Popup' para crear un nuevo topic
 
 En **app/views/topics/index.html.erb**
 
 reemplazamos el link
 
 ```rhtml
-  <%= link_to 'New Topic', new_topic_path %>
+  <%= link_to 'Nuevo Topic', new_topic_path %>
 ```
   por:
 
@@ -501,7 +502,7 @@ reemplazamos el link
   </button>
 ```
 
-### Creamos el parcial _form_new.html.erb para nuestro modal
+### Creamos el parcial `_form_new.html.erb` para nuestro modal
 
 **app/views/topics/_form_new.html.erb**
 
@@ -518,7 +519,7 @@ reemplazamos el link
             <% if @topic.errors.any? %>
               <div id="error_explanation">
                 <h2>
-                  <%= "#{pluralize(@topic.errors.count, "error")} prohibited this topic from being saved:" %>
+                  <%= "#{pluralize(@topic.errors.count, "error")} no permitieron guardar este topic:" %>
                 </h2>
                 <ul>
                   <% @topic.errors.full_messages.each do |msg| %>
@@ -554,11 +555,11 @@ Al final del archivo **app/views/topics/index.html.erb** añadimos lo siguiente:
 ```rhtml
 ...
 
-<%=render "form_new"%>
+<%= render "form_new" %>
 
 ```
 
-### Añadimos la variable de instancia @topic en la acción index del controlador topics_controller
+### Añadimos la variable de instancia `@topic` en la acción index del controlador `topics_controller`
 
 **app/controllers/topics/topics_controller.rb**
 
@@ -570,9 +571,9 @@ Al final del archivo **app/views/topics/index.html.erb** añadimos lo siguiente:
   end
 ...
 ```
-### Por último, redireccionamos a la lista de topics despues de creado un nuevo Topic 
+### Por último, redireccionamos a la lista de topics después de creado un nuevo Topic
 
-reemplazamos la accion *create* del controlador **app/controllers/topics/topics_controller.rb**
+reemplazamos la acción *create* del controlador **app/controllers/topics/topics_controller.rb**
 
 ```ruby
 ...
@@ -580,7 +581,7 @@ def create
   @topic = Topic.new(topic_params)
   respond_to do |format|
     if @topic.save
-      format.html { redirect_to topics_path, notice: 'Se ha creado un nuevo Topic!' }
+      format.html { redirect_to topics_path, notice: '¡Se ha creado un nuevo Topic!' }
       format.json { render :show, status: :created, location: @topic }
     else
       format.html { render :new }
@@ -593,7 +594,7 @@ end
 
 ## 13. Organizamos la lista de Topics
 
-Modificamos la acción index del controlador topics_controller para listar todos los topics ordenados del mas reciente al más antiguo
+Modificamos la acción index del controlador `topics_controller` para listar todos los topics ordenados del más reciente al más antiguo
 
 **app/controllers/topics/topics_controller.rb**
 
@@ -605,7 +606,7 @@ Modificamos la acción index del controlador topics_controller para listar todos
     @topic = Topic.new
   end
 ...
-``
+```
 
 ## 14. Añadir Devise
 
@@ -654,7 +655,7 @@ Esta línea de arriba crea un modelo de usuario y un nuevo archivo: **app/models
 CONTROL + C (para parar el servidor)
 rails server (para volver a iniciar el servidor)
 ```
-Tendrás que reiniciar la aplicación cada vez que se instales una gema 
+Tendrás que reiniciar la aplicación cada vez que instales una gema
 
 
 ### Lista de rutas
@@ -673,8 +674,8 @@ Muestra todas las rutas disponibles para tu aplicación. Podrás añadir más a 
 ...
 <div class='jumbotron text-center'>
   <h1>Foro Rails Girls Cali</h1>
-  <%= link_to "Registrarse", new_user_registration_path, class: "btn btn-info btn-auth" %>
-  <%= link_to "Iniciar Sesion", new_user_session_path, class: "btn btn-info btn-auth" %>
+  <%= link_to "Regístrate", new_user_registration_path, class: "btn btn-info btn-auth" %>
+  <%= link_to "Iniciar Sesión", new_user_session_path, class: "btn btn-info btn-auth" %>
 </div>
 ...
 ```
@@ -701,9 +702,9 @@ Muestra todas las rutas disponibles para tu aplicación. Podrás añadir más a 
 </ul>
 ...
 ```
-### Rederccionamos a la paina topics despues de iniciar sesion
+### Redireccionamos a la página topics después de iniciar sesión
 
-Añadimos el siguiente metodo en **app/controllers/application_controller.rb**
+Añadimos el siguiente método en **app/controllers/application_controller.rb**
 
 
 ```ruby
@@ -711,12 +712,12 @@ Añadimos el siguiente metodo en **app/controllers/application_controller.rb**
     topics_path
   end
 ```
-Ahora cada vez que se encuentre activa una sesion siempre se redrecciona a la vista de topics
+Ahora cada vez que se encuentre activa una sesión, siempre se redirecciona a la vista de topics
 
-### Modificamos la ruta raiz por defecto cuando alguien esta logeado
+### Modificamos la ruta raíz por defecto cuando alguien esté logeado
 
 **config/routes.rb**
-adicionar la ruta el siguiente codigo
+Adiciona a la ruta el siguiente código
 
 ```ruby
 ...
@@ -727,7 +728,7 @@ adicionar la ruta el siguiente codigo
 ...
 ```
 
-### Añadir un enlace de "Configuración de cuenta" al parcial de navegacíon
+### Añade un enlace de "Configuración de cuenta" al parcial de navegación
 
 **app/views/layouts/_header.html.erb**
 
@@ -742,7 +743,7 @@ Debajo de `<li><%= link_to "Topics", topics_path %></li>`:
 <li><%= link_to "Mi cuenta", edit_user_registration_path %></li>
 
 
-## 16. Autorización : ¿Quién puede? Quién no puede?
+## 16. Autorización : ¿Quién puede? ¿Quién no puede?
 
 ### Actualizar el controlador Topics
 
@@ -763,9 +764,9 @@ Recursos
 asociacíon: http://guides.rubyonrails.org/association_basics.html
 
 
-### Configure sus asociaciones
+### Configura tus asociaciones
 
-Un Topic belongs_to un Usuario
+Un Topic `belongs_to` un Usuario
 
 **app/models/post.rb**
 
@@ -779,13 +780,13 @@ Un Topic belongs_to un Usuario
   end
 ```
 
-### Un usuario has_many Topics  
+### Un usuario `has_many` Topics  
 
 **app/models/user.rb**
 
 ```ruby
-class User 
-  
+class User
+
   ...
   has_many :topics
   ...
@@ -795,13 +796,13 @@ end
 
 ## 18. Asignamos un usuario a los topics creados
 
-Modificamos la accion create del controlador **app/controllers/topics_controller.rb**
+Modificamos la acción `create` del controlador **app/controllers/topics_controller.rb**
 
 ```ruby
   def create
     @topic = Topic.new(topic_params)
-    @topic.user = current_user 
-  
+    @topic.user = current_user
+
   ...
 ```
 
@@ -824,16 +825,16 @@ por:
     Por: <strong><%=topic.user.try(:email)%></strong> - <%=topic.created_at.to_date%>
   </p>
 ```
-## 19. Ahora añadiremos nuestro último modelo llamado Post. 
+## 19. Ahora añadiremos nuestro último modelo llamado Post.
 
-consola 
+consola
 
 ```bash
-  rails g scaffold Post body
+rails g scaffold Post body
 ```
 
 añadimos el modulo *Timestamps* para el modelo Post
-**app/models/post.rb **
+**app/models/post.rb**
 
 ```ruby
   ...
@@ -843,7 +844,7 @@ añadimos el modulo *Timestamps* para el modelo Post
 
 ### Configure las asociaciones User - Topic - Post
 
-Topic has_many Posts
+Topic `has_many` Posts
 
 añadimos en **app/models/topic.rb**
 
@@ -853,7 +854,7 @@ añadimos en **app/models/topic.rb**
   ...
 ```
 
-User has_many Posts
+User `has_many` Posts
 
 añadimos en **app/models/user.rb**
 
@@ -863,8 +864,8 @@ añadimos en **app/models/user.rb**
   ...
 ```
 
-Post belongs_to Topics  
-Post belongs_to User
+Post `belongs_to` Topics  
+Post `belongs_to` User
 
 añadimos en **app/models/post.rb**
 
@@ -883,7 +884,7 @@ reemplazamos el codigo en
 **app/views/topics/show.html.erb**
 
 ```rhtml
-  <div class="text-center"> 
+  <div class="text-center">
     <%=link_to @topic do %>
       <h1>
         <strong><%= @topic.title %></strong>
@@ -893,8 +894,8 @@ reemplazamos el codigo en
       <strong>Description:</strong>
       <%= @topic.description %>
     </p>
-      <%= link_to 'Edit', edit_topic_path(@topic) %> |
-      <%= link_to 'Back', topics_path %>
+      <%= link_to 'Editar', edit_topic_path(@topic) %> |
+      <%= link_to 'Volver', topics_path %>
   </div>
   <div class="container">
     <div class="row">
@@ -930,7 +931,7 @@ reemplazamos el codigo en
     </div>
   </div>
 ```
-añadimos estilos  **app/assets/stylesheets/bootstrap_and_customization.css.scss**
+añadimos estilos en  **app/assets/stylesheets/bootstrap_and_customization.css.scss**
 
 ```scss
 
@@ -1018,7 +1019,7 @@ añadimos estilos  **app/assets/stylesheets/bootstrap_and_customization.css.scss
 ```
 
 
-## 20. Creacion de Posts
+## 20. Creación de Posts
 
 creamos el parcial **app/views/topics/_post_form.html.erb**
 
@@ -1026,7 +1027,7 @@ creamos el parcial **app/views/topics/_post_form.html.erb**
   <%= form_for(@new_post) do |f| %>
     <% if @new_post.errors.any? %>
       <div id="error_explanation">
-        <h2><%= pluralize(@new_post.errors.count, "error") %> prohibited this post from being saved:</h2>
+        <h2><%= pluralize(@new_post.errors.count, "error") %> no permitieron almacenar este post:</h2>
         <ul>
         <% @new_post.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -1051,11 +1052,11 @@ creamos el parcial **app/views/topics/_post_form.html.erb**
 ```rhtml
   ...
     </section>
-    <%=render "post_form"%>
+    <%= render "post_form" %>
   ...
 ```
 
-## Definimos la variable @new_post en el controlador topics_controller
+## Definimos la variable `@new_post` en el controlador topics_controller
 
 **app/controllers/topics_controller.rb**
 
@@ -1067,9 +1068,9 @@ creamos el parcial **app/views/topics/_post_form.html.erb**
 ...
 ```
 
-##  Modificamos el controlador posts_controllers
+##  Modificamos el controlador `posts_controllers`
 
-Se asigna el usuario actual para el post y se redicciona al topic al que pertenece
+Se asigna el usuario actual para el post y se redirecciona al topic al que pertenece
 
 **app/controllers/posts_controller.rb**
 
@@ -1079,10 +1080,10 @@ Se asigna el usuario actual para el post y se redicciona al topic al que pertene
     @post = Post.new(post_params)
     @post.user = current_user
     @topic = Topic.find(post_params[:topic_id])
-    
+
     respond_to do |format|
       if @post.save
-        format.html { redirect_to @topic, notice: 'Post was successfully created.' }
+        format.html { redirect_to @topic, notice: '¡Post creado satisfactoriamente!' }
         format.json { render :show, status: :created, location: @post }
       else
         format.html { render :new }
@@ -1093,38 +1094,38 @@ Se asigna el usuario actual para el post y se redicciona al topic al que pertene
 ...
 ```
 
-## Strong Paramteres
+## Strong Parameters
 
 Recursos: https://github.com/rails/strong_parameters
 
-Añadimos topic_id a la  lista de parametros permitidos por el formulario de posts
+Añadimos `topic_id` a la  lista de parámetros permitidos por el formulario de posts
 **app/controllers/posts_controller.rb**
- 
+
 ```ruby
   def post_params
-    params.require(:post).permit(:body,:topic_id)
+    params.require(:post).permit(:body, :topic_id)
   end
 ```
 
-## 21. Visualizacion de numero de posts
+## 21. Visualización de número de posts
 
-Adicionamos el numero de post totales para el topic
+Adicionamos el número de posts totales para el topic
 **app/views/topics/show.html.erb**
 
 ```rhtml
 ...
-  <h3 class="page-header"><%=@topic.posts.count%> Posts</h3>
+  <h3 class="page-header"><%= @topic.posts.count %> Posts</h3>
 ...
 
 ```
 
-De igual forma en el index de topics 
+De igual forma, en el index de topics
 
 **app/views/topics/index.html.erb**
 
 ```rhtml
   ...
-    <span class="glyphicon glyphicon-comment"></span><%=topic.posts.count%> Posts
+    <span class="glyphicon glyphicon-comment"></span><%= topic.posts.count %> Posts
   ...
 ```
 
@@ -1194,18 +1195,18 @@ De igual forma en el index de topics
                 <%= f.password_field :password_confirmation, autocomplete: "off" , class: "form-control"%>
               </div>
               <div class="field">
-                <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+                <%= f.label :current_password %> <i>(Necesitamos tu contraseña actual para confirmar tus cambios)</i><br />
                 <%= f.password_field :current_password, autocomplete: "off", class: "form-control" %>
               </div>
               <br>  
               <div class="actions">
-                <%= f.submit "Update" , class: "btn btn-primary" %>
+                <%= f.submit "Actualizar" , class: "btn btn-primary" %>
               </div>
             </div>
             <% end %>
             <div class="col-md-6">
-              <h3>Cancel my account</h3>
-              <p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
+              <h3>Cancelar mi cuenta</h3>
+              <p>Unhappy? <%= button_to "Cancelar mi cuenta", registration_path(resource_name), data: { confirm: "¿Estás segura?" }, method: :delete %></p>
             </div>
           </div>            
         </div>
@@ -1220,7 +1221,7 @@ De igual forma en el index de topics
 <div class="container">
   <div class="col-md-6 col-md-offset-3">
     <div class="panel panel-default ">
-      <div class="panel-heading text-center"><h2>Iniciar Sesion</h2></div>
+      <div class="panel-heading text-center"><h2>Iniciar Sesión</h2></div>
       <div class="panel-body">
         <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
           <div class="field">
@@ -1239,7 +1240,7 @@ De igual forma en el index de topics
           <% end %>
           <br>
           <div class="actions">
-            <%= f.submit "Iniciar Sesion", class: "btn btn-primary" %>
+            <%= f.submit "Iniciar Sesión", class: "btn btn-primary" %>
           </div>
         <% end %>
       </div>
@@ -1248,5 +1249,3 @@ De igual forma en el index de topics
   </div>
 </div>
 ```
-
-
