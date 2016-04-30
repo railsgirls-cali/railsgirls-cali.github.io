@@ -2,4 +2,5 @@ main:
     - { url: '/', text: 'Home' }
     - { url: '/instagram', text: 'Instagram' }
     - { url: '/forum', text: 'Foro' }
+#    - { url: '/tienda', text: 'Tienda' }
     - { url: '/location', text: '¿Cómo llegar?' }
