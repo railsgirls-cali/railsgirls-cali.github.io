@@ -342,7 +342,7 @@ rails generate devise:install
 
 ### URLs por defecto
 
-**config/environments/development.rb**
+<!-- **config/environments/development.rb**
 
 ```ruby
 config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
@@ -352,7 +352,7 @@ config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
 ```ruby
 config.action_mailer.default_url_options = { host: 'http://instagram.herokuapp.com/' }
-```
+``` -->
 
 
 ### Mensajes flash
