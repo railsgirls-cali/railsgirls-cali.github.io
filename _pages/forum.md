@@ -32,7 +32,7 @@ consola
 rails generate controller pages home
 ```
 
-En tu navegador, ve a la URL : [localhost:3000/página/home](localhost:3000/página/home) y ve la nueva página en blanco que se acaba de crear.
+En tu navegador, ve a la URL : [localhost:3000/página/home](localhost:3000/pages/home) y ve la nueva página en blanco que se acaba de crear.
 
 ### Actualiza el texto en la nueva página
 
