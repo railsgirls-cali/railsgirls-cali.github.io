@@ -790,6 +790,7 @@ end
 
 ```bash
 rails generate migration add_user_id_to_posts user_id:integer:index
+rake db:migrate
 ```
 
 
@@ -1289,7 +1290,7 @@ De esta manera sólo se pueden ver tus posts. Para poner esto de otra manera: Un
 **app/views/posts/show.html.erb**
 
 ```rhtml
-<% if post.user == current_user %>
+<% if @post.user == current_user %>
   <div class="text-center edit-links">
     <%= link_to "← Volver", posts_path %>
     |
