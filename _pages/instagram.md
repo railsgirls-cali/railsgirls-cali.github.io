@@ -41,7 +41,7 @@ consola
 $ rails generate controller pages home
 ```
 
-En tu navegador, ve a la URL : [localhost:3000/página/home](localhost:3000/página/home) y ve la nueva página en blanco que se acaba de crear.
+En tu navegador, ve a la URL : [localhost:3000/página/home](localhost:3000/pages/home) y ve la nueva página en blanco que se acaba de crear.
 
 ### Actualiza el texto en la nueva página
 
@@ -628,14 +628,14 @@ Muestra todas las rutas disponibles para tu aplicación. Podrás añadir más a 
 }
 ```
 
-### Añade un enlace de "Configuración de cuenta" al parcial de navegacíon
+### Añade un enlace "Mi cuenta" al parcial de navegacíon
 
 **app/views/layouts/_header.html.erb**
 
 Debajo de `<% if user_signed_in? %>`:
 
 ```rhtml
-<li><%= link_to "Configuración de cuenta", edit_user_registration_path %></li>
+<li><%= link_to "Mi cuenta", edit_user_registration_path %></li>
 
 ```
 
@@ -1731,4 +1731,182 @@ git push origin master
 git push heroku master
 heroku open
 heroku rename instagram #Reemplaza "instagram" con el nombre de tu proyecto
+```
+
+## Bonus: Comentarios con AJAX
+
+¿Cómo intercambiar información con el servidor sin tener que refrescar la página? Ese es el problema que soluciona [Ajax](https://es.wikipedia.org/wiki/AJAX).
+En nuestro caso seria como añadir comentarios sin tener que refrescar la pagina.
+
+- recursos: [JavaScript, jQuery y Ajax](http://blog.makeitreal.camp/javascript-jquery-y-ajax)
+
+### Mover los comentarios en un parcial
+
+Ajax en rails se maneja con parciales entonces...
+
+**app/views/comments/_comment.html.erb**
+
+```rhtml
+<div class="comment" id="comment_<%= comment.id %>">
+  <div class="user-name">
+    <%= comment.user.name %>
+  </div>
+  <div class="comment-content">
+    <%= comment.content %>
+  </div>
+  <% if comment.user == current_user %>
+    <%= link_to post_comment_path(post, comment), method: :delete, data: { confirm: "¿Estás segura?" } do %>
+      <span class="glyphicon glyphicon-remove delete-comment"></span>
+    <% end %>
+  <% end %>
+</div>
+```
+
+### Ahora podemos cambiar `_post.html.erb`
+
+Acabamos de mudar el comentario aparte de nuestro formulario en un archivo separado . Ahora , vamos a tener que ajustar nuestra post parcial para seguir monstrando los comentarios de manera apropiada.
+
+En **app/views/posts/_post.html.erb**
+
+Reemplaza
+
+```rhtml
+<% post.comments.each do |comment| %>
+  <div class="comment">
+    <div class="user-name">
+      <%= comment.user.name %>
+    </div>
+    <div class="comment-content">
+      <%= comment.content %>
+    </div>
+    <% if comment.user == current_user %>
+      <%= link_to post_comment_path(post, comment), method: :delete, data: { confirm: "¿Estás segura?" } do %>
+        <span class="glyphicon glyphicon-remove delete-comment"></span>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
+```
+
+por
+
+
+```rhtml
+<%= render post.comments, post: post %>
+```
+
+Y sigue funcionando igual.
+
+
+### Añadiendo `remote: true` a nuestro formulario
+
+En **app/views/posts/_post.html.erb**
+
+reemplaza
+
+```rhtml
+<% if post.comments %>
+  <%= render post.comments, post: post %>
+<% end %>
+```
+
+por
+
+```rhtml
+<div class="comments" id="comments_<%= post.id %>">
+  <% if post.comments %>
+    <%= render post.comments, post: post %>
+  <% end %>
+</div>
+```
+
+y las lineas
+
+```rhtml
+<%= form_for [post, post.comments.new] do |f| %>
+  <%= f.text_field :content, placeholder: 'Añade un comentario...' %>
+<% end %>
+```
+
+por
+
+```rhtml
+<%= form_for([post, post.comments.build], remote: true) do |f| %>
+  <%= f.text_field :content, placeholder: 'Añade un comentario...', id: "comment_content_#{post.id}" %>
+<% end %>
+```
+
+### Tenemos que ajustar tambien el controlador
+
+**app/controllers/comments_controller.rb**
+
+Reemplaza el action para crear con:
+
+```ruby
+def create
+  @comment = @post.comments.build(comment_params)
+  @comment.user_id = current_user.id
+
+  if @comment.save
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.js
+    end
+  else
+    flash[:alert] = "Revisa el formulario de comentarios, algo salió mal :/"
+    render root_path
+  end
+end
+```
+
+### Crear la respuesta Javascript .
+
+jQuery al rescate! Crear un nuevo archivo en la carpeta **app/views/commnts/** un archivo **create.js.erb**.En ese archivo , agregue la siguiente combinación de Javascript / ruby
+
+```ruby
+$('#comments_<%= @post.id %>').append("<%=j render 'comments/comment', post: @post, comment: @comment %>");
+$('#comment_content_<%= @post.id %>').val('')
+```
+
+### Ahora tambien para borrar comentarios
+
+Añadir `remote: true` a el enlace para borrar
+
+**app/views/comments/_comment.html**
+
+Al final de esta linea y antes de `do` añade `remote: true`
+
+```rhtml<%= link_to post_comment_path(post, comment), method: :delete, data: { confirm: "¿Estás segura?" } do %>
+```
+
+### Añadir la respuesta javascript para la acción del controlador
+
+Al igual que antes, ahora podemos asegurar que rails responde no sólo con html, sino también con javascript .
+
+Añadir el método responds_to al acción `destroy` dentro del `comments_controller`
+
+```ruby
+def destroy
+  @comment = @pin.comments.find(params[:id])
+
+  if @comment.user_id == current_user.id
+   @comment.delete
+   respond_to do |format|
+     format.html { redirect_to root_path }
+     format.js
+   end
+  end
+end
+```
+
+Y por último pero no menos importante..
+
+### Finalizar con jQuery
+
+Simplemente estamos añadiendo nuestra lista de comentarios actualizada!
+
+Crear el nuevo archivo **destroy.js.erb** dentro de la carpeta **app/views/comments/** ( en la misma ubicación que el archivo create.js.erb ).
+
+```ruby
+$('#comments_<%= @post.id %>').html("<%= j render @post.comments, post: @post, comment: @comment %>");
 ```
