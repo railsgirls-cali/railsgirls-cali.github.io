@@ -751,7 +751,7 @@ end
 
 ### Además, elimina el archivo
 
-**app/views/assets/stylesheets/scaffolds.scss**
+**app/assets/stylesheets/scaffolds.scss**
 
 ### Añade un enlace para crear un nuevo post al navbar
 
