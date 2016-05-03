@@ -5,6 +5,11 @@ lead_text: Crea un clon de Instagram desde zero
 permalink: /instagram/
 ---
 
+<div class="repo">
+  <h3>Repostitorio de la aplicación</h3>
+  <a href="https://github.com/railsgirls-cali/example-instagram">
+    https://github.com/railsgirls-cali/example-instagram</a>
+</div>
 
 
 ## 1. Crea una aplicación nueva
