@@ -44,6 +44,3 @@ DEPENDENCIES
   jekyll-paginate
   pygments.rb
   redcarpet
-
-BUNDLED WITH
-   1.11.2

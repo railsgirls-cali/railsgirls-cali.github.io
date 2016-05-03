@@ -7,7 +7,6 @@ permalink: /instagram/
 
 
 
-
 ## 1. Crea una aplicación nueva
 
 ### Crea una nueva aplicación Rails
@@ -76,7 +75,12 @@ root "pages#home"
 **app/controllers/pages_controller.rb**
 
 ```ruby
-def about
+class PagesController < ApplicationController
+  def home
+  end
+
+  def about
+  end
 end
 ```
 
@@ -92,6 +96,15 @@ end
 ###  Agregamos la ruta
 
 **config/routes.rb**
+
+Debajo de
+
+```ruby
+root "pages#home"
+
+```
+
+Añade:
 
 ```ruby
 get "about" => "pages#about"
@@ -149,10 +162,33 @@ $ bundle install
 
 ### Crea un nuevo documento SCSS
 
-**app/assets/stylesheets/custom_bootstrap.css.scss**
+**app/assets/stylesheets/custom_bootstrap.scss**
 
 ```scss
 @import 'bootstrap';
+```
+
+### Importa el Javascript para Bootstrap
+**app/assets/javascripts/application.js**
+
+```js
+
+//= require jquery
+//= require jquery_ujs
+//= require bootstrap-sprockets
+//= require turbolinks
+//= require_tree .
+```
+
+### Añade el viewport
+**views/layouts/application.html.erb**
+
+Después del `<head>` y antes del `<title>`.
+
+Inserta:
+
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 ```
 
 ### Vuelve a iniciar el servidor
@@ -172,7 +208,7 @@ rails server
 
 ```rhtml
 <%= link_to "Home", root_path %>
-<%= link_to "About", about_path %>
+<%= link_to "Quiénes somos", about_path %>
 <div class="container">
     <%= yield %>
 </div>
@@ -214,35 +250,13 @@ Después del `<body>`
     <div class="collapse navbar-collapse navbar-ex1-collapse">
       <ul class="nav navbar-nav navbar-right">
         <li><%= link_to "Home", root_path %></li>
-        <li><%= link_to "About", about_path %></li>
+        <li><%= link_to "Quiénes somos", about_path %></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div>
 </nav>
 ```
 
-### Importa el Javascript para Bootstrap
-**app/assets/javascripts/application.js**
-
-```js
-
-//= require jquery
-//= require jquery_ujs
-//= require bootstrap-sprockets
-//= require turbolinks
-//= require_tree .
-```
-
-### Añade el viewport
-**views/layouts/application.html.erb**
-
-Después del `<head>` y antes del `<title>`.
-
-Inserta:
-
-```html
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-```
 
 ### Añade el encabezado a la página de inicio
 
@@ -257,21 +271,20 @@ Inserta:
 
 ## 8. Personalicemos Bootstrap
 
-### Por ejemplo, actualicemos la barra de navegación
-
-**app/views/layouts/_header.html.erb**
-
-```html
-<nav class="navbar navbar-default" role="navigation">
-```
-
-## 9. Mejoremos el diseño
-
 ### Cambios de estilo
 
 **app/assets/stylesheets/custom_bootstrap.css.scss**
 
+Reemplaza
+
 ```scss
+@import 'bootstrap';
+```
+
+por los siguientes estilos:
+
+```scss
+
 @import url(http://fonts.googleapis.com/css?family=Lato:400,700);
 
 $body-bg:                          #fafafa !important;
@@ -307,15 +320,8 @@ $jumbotron-bg:                     white;
 </div>
 ```
 
-### Cambia el enlace principal de la navegacíon de HTML a Ruby
 
-**app/views/layouts/_header.html.erb**
-
-```rhtml
-<%= link_to "Instagram", root_path, class: "navbar-brand" %>
-```
-
-## 10. Añadir Devise
+## 10. Añadir Devise para Autenticación de usuarios
 
 ### Añade la gema de Devise
 
@@ -339,45 +345,25 @@ rails generate devise:install
 
 ## 11. Configuración de Devise
 
-### URLs por defecto
-
-**config/environments/development.rb**
-
-```ruby
-config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
-```
-
-**config/environments/production.rb**
-
-```ruby
-config.action_mailer.default_url_options = { host: 'http://instagram.herokuapp.com/' }
-```
-
-
 ### Mensajes flash
 
 Los mensajes flash son los mensajes en sitios web que dicen " Gracias por registrarse en " o "Gracias por suscribirse a"
 
 **app/views/layouts/application.html.erb**
 
+Debajo de `<div class="container">` y antes de `<%= yield %>`
+
 ```rhtml
-<div class="container">
 
-  <% flash.each do |name, msg| %>
-     <%= content_tag(:div, msg, class: "alert alert-#{name}") %>
+<% flash.each do |name, msg| %>
+  <% if msg.is_a?(String) %>
+    <div class="alert alert-<%= name.to_s == 'notice' ? 'success' : 'danger' %> fade in">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= content_tag :div, msg, :id => "flash_#{name}" %>
+    </div>
   <% end %>
+<% end %>
 
-  <%= yield %>
-
-</div>
-```
-
-### Desactiva la precompilación
-
-**config/application.rb**
-
-```ruby
-config.assets.initialize_on_precompile = false
 ```
 
 ### Crea las vistas de Devise
@@ -433,6 +419,8 @@ Muestra todas las rutas disponibles para tu aplicación. Podrás añadir más a 
 
 **app/views/pages/home.html.erb**
 
+Actualiza la página de inicio
+
 ```rhtml
 <div class="jumbotron text-center">
  <h1>¡Bienvenidos a mi aplicación!</h1>
@@ -451,6 +439,16 @@ Muestra todas las rutas disponibles para tu aplicación. Podrás añadir más a 
 
 **app/views/layout/_header.html.erb**
 
+Reemplaza
+
+```rhtml
+<ul class="nav navbar-nav navbar-right">
+  <li><%= link_to "Home", root_path %></li>
+  <li><%= link_to "Quiénes somos", about_path %></li>
+</ul>
+```
+por
+
 ```rhtml
 <ul class="nav navbar-nav navbar-right">
   <li><%= link_to "Home", root_path %></li>
@@ -458,9 +456,17 @@ Muestra todas las rutas disponibles para tu aplicación. Podrás añadir más a 
   <% if user_signed_in? %>
     <li><%= link_to "Cerrar sesión", destroy_user_session_path, method: :delete %></li>
   <% else %>
-    <li><%= link_to "Iniciar sesión", new_user_session_path %></li>
+    <li><%= link_to "Regístrate", new_user_session_path %></li>
+    <li><%= link_to "Iniciar sesión", new_user_registration_path %></li>
   <% end %>
 </ul>
+```
+
+Actualiza el archivo **app/views/layouts/application.html.erb** y quita las siguientes lineas:
+
+```rhtml
+<%= link_to "Home", root_path %>
+<%= link_to "About", about_path %>
 ```
 
 ## 14. Cambia las vistas de Devise
@@ -617,6 +623,8 @@ Muestra todas las rutas disponibles para tu aplicación. Podrás añadir más a 
 ```
 ### Añade unos estilos
 
+Abajo del archivo **app/assets/stylesheets/custom_bootstrap.scss**
+
 ```css
 .form-wrapper {
   width: 60%;
@@ -645,7 +653,7 @@ Debajo de `<% if user_signed_in? %>`:
 
 ```bash
 rails generate scaffold posts description:string
-rake db:migrate #corre la migración
+rake db:migrate
 ```
 
 
@@ -710,24 +718,22 @@ end
 
 ### Esto se llama el parcial "formulario"
 
-**apps/views/posts/new.html.erb**
+Actualiza el archivo **apps/views/posts/new.html.erb**
 
 ```rhtml
 <%= render 'form' %>
 ```
 
-**apps/views/posts/_form.html.erb**
+Y crea un parcial **apps/views/posts/_form.html.erb**
 
 ```rhtml
 <%= form_for(@post) do |f| %>
   <% if @post.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@post.errors.count, "error") %> no permiten que este post sea guardado:</h2>
-
-      <ul>
-      <% @post.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
+    <div class="alert alert-danger alert-dismissable"><button aria-hidden="true" class="close" data-dismiss="alert" type="button">×</button>
+      <ul class="list-unstyled">
+        <% @post.errors.full_messages.each do |msg| %>
+          <%= content_tag :li, msg, :id => "error_#{msg}" if msg.is_a?(String) %>
+        <% end %>
       </ul>
     </div>
   <% end %>
@@ -745,6 +751,14 @@ end
 ### Para mantener nuestros estilos, añade las siguientes vistas dentro de un form-wrapper
 
 **app/views/posts/edit.html.erb**, **app/views/posts/new.html.erb**
+
+```rhtml
+<div class="form-wrapper">
+
+  <%= render 'form' %>
+
+</div>
+```
 
 ### Añade un enlace para crear un nuevo post al navbar
 
@@ -786,27 +800,6 @@ rails generate migration add_user_id_to_posts user_id:integer:index
 ```
 
 
-### Inicie la consola de Rails
-
-La consola de Rails nos permite interactuar directamente con los datos en la base de datos. Usa la consola para actualizar directamente los datos , o  solo para probar el código Ruby antes de integrarlo a tu proyecto
-
-```
-rails console
-```
-
-Una vez en la consola ...
-
-```bash
-> Post.connection #Esto establece una conexión con la base de datos ( y escupe una gran cantidad de datos innecesarios)
-> Post.inspect #muestra todos los parámetros para un Post
-> post = Post.first #Nos trae el primer Post asegurate que la primer letra es MAYÚSCULA
-> post.user #Nos muestra el usuario del post.
-```
-
-Detén la consola cuando termines
-
-CONTROL + D #cierra la consola
-
 ### Un Usuario has_many Posts  
 
 **app/models/user.rb**
@@ -823,20 +816,6 @@ class User < ActiveRecord::Base
 end
 ```
 
-
-### Verificamos que funcione...
-
-De vuelta en la consola de Rails (en nuestra consola) vamos a configurar un ID de usuario en un Post.
-
-```bash
-> post = Post.first
-> post #echar una mirada al post
-> post.user_id = 1
-> post.save
-
-> user = User.first
-> user.posts
-```
 
 ## 19. Autorización : ¿Quién puede? ¿Quién no puede?
 
@@ -897,7 +876,7 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:description, :image)
+      params.require(:post).permit(:description)
     end
 end
 ```
@@ -910,16 +889,20 @@ Añade `before_action` al Controlador Posts
 
 **app/controllers/posts_controller.rb**
 
+Debajo de `before_action :set_post ...`
+
+
 ```ruby
 before_action :authenticate_user!, except: [:index, :show]
 ```
 
-
-### Añade el método `correct_user`
+### Añade el `:correct_user`
 
 Añade el método `before_action` a tu controlador de Posts
 
 **app/controllers/posts_controller.rb**
+
+Debajo de `before_action :authenticate_user! ...`
 
 ```ruby
 before_action :correct_user, only: [:edit, :update, :destroy]
@@ -971,7 +954,6 @@ Ejecuta y verifica la migración
 
 ```bash
 rake db:migrate
-rake db:migrate:status
 ```
 
 ### Vuelve a iniciar el servidor después de agregar una librería (gema)
@@ -984,23 +966,33 @@ rails server
 ### Edita el formulario de Post
 **/app/views/posts/_form.html.erb**
 
+Reemplaza la  primera linea por
+
 ```rhtml
 <%= form_for @post, html: { multipart: true } do |f| %>
-.
-.
-.
+```
+
+Y justo antes de
+
+```rhtml
+<div class="form-group">
+    <%= f.label :description %>
+```
+
+Añade:
+
+```rhtml
   <div class="form-group">
     <%= f.label :image %>
-    <%= f.file_field :image, class: "form-control" %>
+    <%= f.file_field :image %>
   </div>
-.
-.
-.
 ```
 
 ### Actualiza el controlador de Posts para parámetros "strong"
 
 **/app/controllers/concerns/posts_controller.rb**
+
+`def post_params`
 
 ```ruby
 
@@ -1036,6 +1028,8 @@ rails server
 </div>
 ```
 ### Con el estilo Instagram
+
+Abajo del archivo **app/assets/stylesheets/custom_bootstrap.scss**
 
 ```css
 .posts-wrapper {
@@ -1077,6 +1071,13 @@ rails server
   line-height: 18px;
 }
 ```
+### Inicie la consola de Rails
+
+La consola de Rails nos permite interactuar directamente con los datos en la base de datos. Usa la consola para actualizar directamente los datos , o  solo para probar el código Ruby antes de integrarlo a tu proyecto
+
+```
+rails console
+```
 
 ### Elimina los Posts creados por usuarios No Registrados
 
@@ -1087,6 +1088,11 @@ post = Post.first
 post.destroy
 Post.first.destroy
 ```
+
+Detén la consola cuando termines
+
+CONTROL + D #cierra la consola
+
 
 ### Actualiza la vista `show` de Posts
 
@@ -1129,7 +1135,7 @@ Dentro de `<div class="post">` abajo colocamos:
 
 y añade los siguiente estilos
 
-**app/assets/stylesheets/custom_bootstrap.css.scss**
+**app/assets/stylesheets/custom_bootstrap.scss**
 
 ```css
 .edit-links {
@@ -1138,7 +1144,7 @@ y añade los siguiente estilos
 }
 ```
 
-y en **app/views/posts/show.html.erb**, lo más arriba, añade
+y en **app/views/posts/edit.html.erb**, lo más arriba, añade
 
 ```rhtml
 <div class="text-center">
@@ -1148,7 +1154,7 @@ y en **app/views/posts/show.html.erb**, lo más arriba, añade
 
 ### ¿Y si queremos borrar nuestro post?
 
-**app/views/posts/show.html.erb**
+**app/views/posts/edit.html.erb**
 
 Completamente abajo colocamos:
 
@@ -1178,22 +1184,10 @@ consola
 rake db:migrate
 ```
 
-### Añade al fomulario de registro el campo nombre  
-
-**app/views/devise/registrations/edit.html.erb**
-
-```rhtml
-.
-     <div class="form-group">
-       <%= f.label :name %>
-       <%= f.text_field :name, class: "form-control", autofocus: true %>
-     </div>
-.
-```
 
 ### Indica a Devise autorizar este nuevo parámetro  
 
-**app/controllers/application_controller.rb**
+Actualiza **app/controllers/application_controller.rb**
 
 
 ```ruby
@@ -1260,7 +1254,7 @@ devise_for :users, :controllers => { registrations: 'registrations' }
 
 ### Ahora cambiamos el correo por el nombre
 
-**app/views/posts/index.html.erb**, **app/views/posts/index.html.erb**
+**app/views/posts/index.html.erb**
 
 Reemplaza
 
@@ -1272,6 +1266,14 @@ con...
 
 ```rhtml
 <%= post.user.name if post.user %>
+```
+
+y **app/views/posts/index.html.erb**
+
+con...
+
+```rhtml
+<%= @post.user.name if @post.user %>
 ```
 
 ## Protege tus posts
@@ -1290,11 +1292,11 @@ De esta manera sólo se pueden ver tus posts. Para poner esto de otra manera: Un
     |
     <%= link_to "Edit post", edit_post_path(@post) %>
   </div>
-  <% else %>
+<% else %>
   <div class="text-center edit-links">
     <%= link_to "← Volver", posts_path %>
   </div>
-  <% end  %>
+<% end  %>
 ```
 
 ### Proteger los posts también desde el controlador
@@ -1360,7 +1362,7 @@ En **config/routes.rb** Reemplaza
 ```ruby
 resources :posts
 ```
-por
+con...
 
 ```ruby
 resources :posts do  
@@ -1517,7 +1519,6 @@ Y reemplaza con
 
 ```css
 
-
 .posts-wrapper {
   padding-top: 40px;
   margin: 0 auto;
@@ -1641,7 +1642,7 @@ Y reemplaza con
 7. Entra en [tu perfil de usuario](https://github.com/settings/profile) y haz clicc en `SSH and GPG keys`.
 [https://github.com/settings/ssh](https://github.com/settings/ssh)
 8. Ahora Clic en “Add SSH Key”. Introduce el título: " C9 ", pega la clave SSH en el cuadro "key", y haz clic en "Add key".
-9. Crea un repositorio nuevo vacío para tu nuevo proyecto. Desde tu repositorio, copia el enlace SSH. Por defecto GitHub muestra el enlace HTTPS; ¡tendrás que cambiarlo a ssh primero! Se verá algo como:
+9. Crea un repositorio nuevo vacío para tu nuevo proyecto. Desde tu repositorio, copia el enlace SSH:
 ```
 git@github.com:sunombre/nombredelproyecto.git
 ```
@@ -1656,6 +1657,8 @@ git remote add origin git@github.com:sunombre/nombredelproyecto.git
 12. Añade tus archivos y haz commit
 ```
 git add .
+```
+```
 git commit -m "Mi Primer commit"
 ```
 13. Sube los archivos:
@@ -1731,6 +1734,7 @@ git push origin master
 git push heroku master
 heroku open
 heroku rename instagram #Reemplaza "instagram" con el nombre de tu proyecto
+heroku run rake db:migrate #Para correr las migraciones
 ```
 
 ## Bonus: Comentarios con AJAX
@@ -1788,7 +1792,7 @@ Reemplaza
 <% end %>
 ```
 
-por
+con...
 
 
 ```rhtml
@@ -1810,7 +1814,7 @@ reemplaza
 <% end %>
 ```
 
-por
+con...
 
 ```rhtml
 <div class="comments" id="comments_<%= post.id %>">
@@ -1828,7 +1832,7 @@ y las lineas
 <% end %>
 ```
 
-por
+con...
 
 ```rhtml
 <%= form_for([post, post.comments.build], remote: true) do |f| %>
