@@ -1,7 +1,7 @@
 ---
 layout: inner
 title: Instagram
-lead_text: Crea un clone de Instagram desde zero
+lead_text: Crea un clon de Instagram desde zero
 permalink: /instagram/
 ---
 
@@ -14,9 +14,9 @@ permalink: /instagram/
 consola
 
 ```
-$ rails new instagram
+rails new instagram
 
-$ cd instagram
+cd instagram
 ```
 
 ### Arranca el servidor de Rails
@@ -24,7 +24,7 @@ $ cd instagram
 consola
 
 ```
-$ rails server
+rails server
 ```
 
 
@@ -37,10 +37,11 @@ En el navegador, ve a la URL: [localhost:3000](localhost:3000) . Esta es la pág
 consola
 
 ```
-$ rails generate controller pages home
+rails generate controller pages home
 ```
 
-En tu navegador, ve a la URL : [localhost:3000/página/home](localhost:3000/pages/home) y ve la nueva página en blanco que se acaba de crear.
+En tu navegador, ve a la URL : [localhost:3000/pages/home](localhost:3000/pages/home) y ve la nueva página en blanco que se acaba de crear.
+
 
 ### Actualiza el texto en la nueva página
 
@@ -152,7 +153,7 @@ gem 'bootstrap-sass'
 consola
 
 ```
-$ bundle install
+bundle install
 ```
 
 ### Entendamos el documento application.css
@@ -205,6 +206,14 @@ rails server
 ### ¡Añade un contenedor a tu aplicación!
 
 **views/layouts/application.html.erb**
+
+Dentro de la etiqueta `<body>`, reemplaza
+
+```rhtml
+<%= yield %>
+```
+
+por...
 
 ```rhtml
 <%= link_to "Home", root_path %>
@@ -264,8 +273,8 @@ Después del `<body>`
 
 ```rhtml
 <div class="jumbotron">
-	<h1>Bienvenido a mi aplicación!</h1>
-	Haz clic aquí para <%= link_to "Registrar", "#", class: "btn btn-primary" %>
+	<h1>¡Bienvenidos a mi aplicación!</h1>
+	Haz clic aquí para <%= link_to "Registrarte", "#", class: "btn btn-primary" %>
 </div>
 ```
 
@@ -770,7 +779,7 @@ Debajo de `<% if user_signed_in? %>`:
 <li><%= link_to 'Nuevo post', new_post_path %></li>
 ```
 
-### Redireccionamos la raiz de nuestra applicacion al `index` de Posts
+### Redireccionamos la raíz de nuestra aplicación al `index` de Posts
 
 reemplaza `root "pages#home"` por `root "posts#index"`
 
@@ -780,9 +789,9 @@ Recursos
 
 asociacíon: http://guides.rubyonrails.org/association_basics.html
 
-### Configure sus asociaciones
+### Configura tus asociaciones
 
-Un Post belongs_to un Usuario
+Un Post `belongs_to` un Usuario
 
 **app/models/post.rb**
 
@@ -797,18 +806,38 @@ end
 
 ```bash
 rails generate migration add_user_id_to_posts user_id:integer:index
+rake db:migrate
 ```
 
 
-### Un Usuario has_many Posts  
+### Inicia la consola de Rails
+
+La consola de Rails nos permite interactuar directamente con los datos en la base de datos. Usa la consola para actualizar directamente los datos , o  solo para probar el código Ruby antes de integrarlo a tu proyecto
+
+```
+rails console
+```
+
+Una vez en la consola ...
+
+```bash
+> Post.connection #Esto establece una conexión con la base de datos ( y escupe una gran cantidad de datos innecesarios)
+> Post.inspect #muestra todos los parámetros para un Post
+> post = Post.first #Nos trae el primer Post asegurate que la primer letra es MAYÚSCULA
+> post.user #Nos muestra el usuario del post.
+```
+
+Detén la consola cuando termines
+
+CONTROL + D #cierra la consola
+
+### Un Usuario `has_many` Posts  
 
 **app/models/user.rb**
 
 ```ruby
 class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable,
-  # :lockable, :timeoutable and :omniauthable
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
@@ -1286,7 +1315,7 @@ De esta manera sólo se pueden ver tus posts. Para poner esto de otra manera: Un
 **app/views/posts/show.html.erb**
 
 ```rhtml
-<% if post.user == current_user %>
+<% if @post.user == current_user %>
   <div class="text-center edit-links">
     <%= link_to "← Volver", posts_path %>
     |
@@ -1740,13 +1769,13 @@ heroku run rake db:migrate #Para correr las migraciones
 ## Bonus: Comentarios con AJAX
 
 ¿Cómo intercambiar información con el servidor sin tener que refrescar la página? Ese es el problema que soluciona [Ajax](https://es.wikipedia.org/wiki/AJAX).
-En nuestro caso seria como añadir comentarios sin tener que refrescar la pagina.
+En nuestro caso sería como añadir comentarios sin tener que refrescar la página.
 
 - recursos: [JavaScript, jQuery y Ajax](http://blog.makeitreal.camp/javascript-jquery-y-ajax)
 
-### Mover los comentarios en un parcial
+### Mueve los comentarios en un parcial
 
-Ajax en rails se maneja con parciales entonces...
+Ajax en Rails se maneja con parciales, entonces...
 
 **app/views/comments/_comment.html.erb**
 
@@ -1768,7 +1797,7 @@ Ajax en rails se maneja con parciales entonces...
 
 ### Ahora podemos cambiar `_post.html.erb`
 
-Acabamos de mudar el comentario aparte de nuestro formulario en un archivo separado . Ahora , vamos a tener que ajustar nuestra post parcial para seguir monstrando los comentarios de manera apropiada.
+Acabamos de mudar el comentario aparte de nuestro, formulario en un archivo separado. Ahora, vamos a tener que ajustar nuestro post parcial para seguir monstrando los comentarios de manera apropiada.
 
 En **app/views/posts/_post.html.erb**
 
@@ -1824,7 +1853,7 @@ con...
 </div>
 ```
 
-y las lineas
+y las líneas
 
 ```rhtml
 <%= form_for [post, post.comments.new] do |f| %>
@@ -1840,11 +1869,11 @@ con...
 <% end %>
 ```
 
-### Tenemos que ajustar tambien el controlador
+### Tenemos que ajustar también el controlador
 
 **app/controllers/comments_controller.rb**
 
-Reemplaza el action para crear con:
+Reemplaza el `action` para crear con:
 
 ```ruby
 def create
@@ -1863,31 +1892,33 @@ def create
 end
 ```
 
-### Crear la respuesta Javascript .
+### Creamos la respuesta Javascript
 
-jQuery al rescate! Crear un nuevo archivo en la carpeta **app/views/commnts/** un archivo **create.js.erb**.En ese archivo , agregue la siguiente combinación de Javascript / ruby
+¡jQuery al rescate!
+Crea un nuevo archivo en la carpeta **app/views/comments/** un archivo **create.js.erb**. En ese archivo, agrega la siguiente combinación de Javascript / Ruby
 
-```ruby
+```erb
 $('#comments_<%= @post.id %>').append("<%=j render 'comments/comment', post: @post, comment: @comment %>");
 $('#comment_content_<%= @post.id %>').val('')
 ```
 
-### Ahora tambien para borrar comentarios
+### Ahora también para borrar comentarios
 
-Añadir `remote: true` a el enlace para borrar
+Añadir `remote: true` al enlace para borrar
 
 **app/views/comments/_comment.html**
 
-Al final de esta linea y antes de `do` añade `remote: true`
+Al final de esta línea y antes de `do`, añade `remote: true`
 
-```rhtml<%= link_to post_comment_path(post, comment), method: :delete, data: { confirm: "¿Estás segura?" } do %>
+```rhtml
+<%= link_to post_comment_path(post, comment), method: :delete, data: { confirm: "¿Estás segura?" } do %>
 ```
 
-### Añadir la respuesta javascript para la acción del controlador
+### Añade la respuesta Javascript para la acción del controlador
 
-Al igual que antes, ahora podemos asegurar que rails responde no sólo con html, sino también con javascript .
+Al igual que antes, ahora podemos asegurar que rails responde no sólo con HTML, sino también con Javascript.
 
-Añadir el método responds_to al acción `destroy` dentro del `comments_controller`
+Añade el método `responds_to` a la acción `destroy` dentro del `comments_controller`
 
 ```ruby
 def destroy
@@ -1907,10 +1938,10 @@ Y por último pero no menos importante..
 
 ### Finalizar con jQuery
 
-Simplemente estamos añadiendo nuestra lista de comentarios actualizada!
+¡Simplemente estamos añadiendo nuestra lista de comentarios actualizada!
 
-Crear el nuevo archivo **destroy.js.erb** dentro de la carpeta **app/views/comments/** ( en la misma ubicación que el archivo create.js.erb ).
+Crea el nuevo archivo **destroy.js.erb** dentro de la carpeta **app/views/comments/** ( en la misma ubicación que el archivo create.js.erb ).
 
-```ruby
+```erb
 $('#comments_<%= @post.id %>').html("<%= j render @post.comments, post: @post, comment: @comment %>");
 ```
