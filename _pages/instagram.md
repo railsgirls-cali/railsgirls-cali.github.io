@@ -747,7 +747,13 @@ end
 
 ### Para mantener nuestros estilos, añade las siguientes vistas dentro de un form-wrapper
 
-**app/views/posts/edit.html.erb**, **app/views/posts/new.html.erb**
+Encierra todo lo que hay en estos archivos **app/views/posts/edit.html.erb**, **app/views/posts/new.html.erb** en estas etiquetas:
+
+```html
+<div class="form-wrapper">
+
+</div>
+```
 
 ### Además, elimina el archivo
 
@@ -962,7 +968,7 @@ bundle install
 ```ruby
 class Post < ActiveRecord::Base
   belongs_to :user
-  has_attached_file :image, :styles => { :medium => "640x", :thumb => "100x100>" }
+  has_attached_file :image, styles: { medium: "640x", thumb: "100x100" }
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
 end
 ```
