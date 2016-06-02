@@ -3,13 +3,11 @@
 @import '../_sass/bootstrap';
 @import '../_sass/syntax-highlighting';
 
-
-$color-railsgirls: #D3360B;
+$color-railsgirls: #DD390D;
 $color-grey: #777777;
 
 %oswald { font-family: 'Oswald', sans-serif; }
 %roboto { font-family: 'Roboto Condensed', sans-serif; }
-
 
 body {
     @extend %roboto;
@@ -62,9 +60,17 @@ nav.navbar {
           color: #fff;
           transform: scale(1);
         }
-
         &:hover i {
           transform: scale(1.35);
+        }
+    }
+    .navbar-header{
+        a.navbar-brand {
+            img.logo{
+                display: inline-block;
+                margin-left: 10px;
+                margin-top: -5px;
+            }
         }
     }
 }
