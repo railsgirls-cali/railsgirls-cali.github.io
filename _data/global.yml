@@ -1,9 +1,10 @@
 # Site Settings
 title: 'RailsGirls Cali'
-description: 'Rails Girls llega a Cali por primera vez!. Participa de un taller gratuito donde aprenderás a desarrollar aplicaciones web con Ruby on Rails.'
+description: 'Aquí encontrarás las guías de los talleres realizados en nuestro primer evento en 2016.'
 url: 'http://railsgirlscali.com' # the base hostname & protocol for your site
-footer_text: 'Rails Girls Cali 2016.'
+footer_text: 'Rails Girls Cali 2017.'
+new_event_message: 'Inscríbete a Rails Girls Cali 2017 <a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSd6ZyY2oepczFxmBkXGpNZ5_-2Ad5HbbRzK4Fxby1e4TaYH0Q/viewform">aquí</a>'
 
 # Admin Settings
 admin_name: 'Christophe Estanol'
-admin_email: 'cestanol@gmail.com'
+admin_email: 'hello@railsgirlscali.com'
