@@ -90,16 +90,18 @@ class PagesController < ApplicationController
 end
 ```
 
-###  Crea el código HTML en la vista
+###  Crea el siguiente archivo:
 
 **app/views/pages/about.html.erb**
 
+#### y agrega lo siguiente:
+
 ```html
-<h1>¿Quiénes somos?</h1>
-<p>Estamos trabajando en nuestra aplicación Instagram</p>
+<h1>¿Quién soy?</h1>
+<p>¡Una Rails Girl creando mi propia app de Instagram!</p>
 ```
 
-###  Agregamos la ruta
+###  Vamos a Agregar una ruta
 
 **config/routes.rb**
 
