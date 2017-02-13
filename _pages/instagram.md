@@ -341,7 +341,7 @@ $jumbotron-bg:                     white;
 <div class="jumbotron text-center">
   <h1>¡Bienvenidos a mi aplicación!</h1>
   <p>
-   <%= link_to "Iniciar sesion", "#", class: "btn btn-default btn-lg" %>
+   <%= link_to "Iniciar sesión", "#", class: "btn btn-default btn-lg" %>
    <%= link_to "Regístrate", "#", class: "btn btn-primary btn-lg" %>
   </p>    
 </div>
@@ -378,7 +378,7 @@ Los mensajes flash son los mensajes en sitios web que dicen " Gracias por regist
 
 **app/views/layouts/application.html.erb**
 
-Debajo de `<div class="container">` y antes de `<%= yield %>`
+Agrega lo siguiente Debajo de `<div class="container">` y antes de `<%= yield %>`:
 
 ```rhtml
 
@@ -405,13 +405,15 @@ rails g devise:views
 
 ### Crea un modelo de usuario
 
+consola
+
 ```bash
 rails generate devise user
 ```
 
-Esta línea de arriba crea un modelo de usuario y un nuevo archivo: **app/models/user.rb**
+La línea de arriba crea un modelo de usuario y un nuevo archivo: **app/models/user.rb**
 
-Ve a **db/migration** y deberías tener en los archivos algo así como **db/migration/20130922022322_devise_create_users.rb**
+Ve a **db/migration** y deberías tener en los archivos algo así como **db/migration/20170218022322_devise_create_users.rb**
 
 El número es la fecha de creacíon
 
@@ -440,13 +442,13 @@ Tendrás que reiniciar la aplicación cada vez que instales una gema o cada vez 
 rake routes
 ```
 
-Muestra todas las rutas disponibles para tu aplicación. Podrás añadir más a lo largo del camino
+Muestra todas las rutas disponibles para tu aplicación. Podrás añadir más a lo largo del camino.
 
 ### Modifica la vista de inicio
 
 **app/views/pages/home.html.erb**
 
-Actualiza la página de inicio
+¡Actualicemos la página de inicio!
 
 ```rhtml
 <div class="jumbotron text-center">
@@ -462,7 +464,7 @@ Actualiza la página de inicio
 </div>
 ```
 
-### Modifica el parcial de navegacíon
+### Modifica el parcial de navegación
 
 **app/views/layout/_header.html.erb**
 
@@ -483,17 +485,10 @@ por
   <% if user_signed_in? %>
     <li><%= link_to "Cerrar sesión", destroy_user_session_path, method: :delete %></li>
   <% else %>
-    <li><%= link_to "Regístrate", new_user_session_path %></li>
-    <li><%= link_to "Iniciar sesión", new_user_registration_path %></li>
+    <li><%= link_to "Regístrate", new_user_registration_path %></li>
+    <li><%= link_to "Iniciar sesión", new_user_session_path %></li>
   <% end %>
 </ul>
-```
-
-Actualiza el archivo **app/views/layouts/application.html.erb** y quita las siguientes lineas:
-
-```rhtml
-<%= link_to "Home", root_path %>
-<%= link_to "About", about_path %>
 ```
 
 ## 14. Cambia las vistas de Devise
@@ -501,6 +496,8 @@ Actualiza el archivo **app/views/layouts/application.html.erb** y quita las sigu
 ### Modifica el código para cada una de las vistas de Devise
 
 **app/views/devise/registrations/new.html.erb**
+
+#### *Esta vista se encarga del formulario de registro de usuarios en tu app.*
 
 ```rhtml
 <div class="form-wrapper">
@@ -529,6 +526,8 @@ Actualiza el archivo **app/views/layouts/application.html.erb** y quita las sigu
 ```
 
 **app/views/devise/registrations/edit.html.erb**
+
+*Esta vista se encarga del formulario de edición de la información de usuarios en tu app.*
 
 ```rhtml
 
@@ -568,6 +567,8 @@ Actualiza el archivo **app/views/layouts/application.html.erb** y quita las sigu
 
 **app/views/devise/passwords/new.html.erb**
 
+*Esta vista está encargada de mostrar el formulario para la solicitud de contraseña al sistema en caso de olvido.*
+
 ```rhtml
 <div class="form-wrapper">
   <h1>¿Olvidaste tu contraseña?</h1>
@@ -591,6 +592,8 @@ Actualiza el archivo **app/views/layouts/application.html.erb** y quita las sigu
 ```
 
 **app/views/devise/passwords/edit.html.erb**
+
+*En esta vista se encuentra el formulario para el cambio de la contraseña de un usuario de tu app*
 
 ```rhtml
 <div class="form-wrapper">
@@ -621,6 +624,8 @@ Actualiza el archivo **app/views/layouts/application.html.erb** y quita las sigu
 
 **app/views/devise/sessions/new.html.erb**
 
+*¡Este es el formulario de login (inicio de sesión) de tu Instagram app!*
+
 ```rhtml
 <div class="form-wrapper">
   <h1>Iniciar Sesion</h1>
@@ -648,9 +653,9 @@ Actualiza el archivo **app/views/layouts/application.html.erb** y quita las sigu
   <%= render "devise/shared/links" %>
 </div>
 ```
-### Añade unos estilos
+### Añade estos estilos para que tus formularios se vean más geniales <3
 
-Abajo del archivo **app/assets/stylesheets/custom_bootstrap.scss**
+Al final del archivo: **app/assets/stylesheets/custom_bootstrap.scss**
 
 ```css
 .form-wrapper {
@@ -676,7 +681,11 @@ Debajo de `<% if user_signed_in? %>`:
 
 ## 15. Genera el scaffold para Posts
 
+##### Posts serán nuestras publicaciones o, mejor dicho, ¡Las imágenes que publicamos en nuestro Instagram!
+
 ### Genera un scaffold para Posts
+
+##### Un scaffold es un generador automático de modelo + controlador + vistas
 
 ```bash
 rails generate scaffold posts description:string
@@ -684,9 +693,11 @@ rake db:migrate
 ```
 
 
-## 16. Simplificando el controlador de Posts
+## 16. Simplifiquemos el controlador de Posts
 
 **app/controllers/posts_controller.rb**
+
+##### Reemplaza todo el contenido del controlador
 
 ```ruby
 class PostsController < ApplicationController
@@ -747,11 +758,15 @@ end
 
 Actualiza el archivo **apps/views/posts/new.html.erb**
 
+##### Reemplaza el contenido actual del archivo por:
+
 ```rhtml
 <%= render 'form' %>
 ```
 
-Y crea un parcial **apps/views/posts/_form.html.erb**
+Y modifica el parcial del formulario **apps/views/posts/_form.html.erb**
+
+##### Aquí también reemplazas todo el contenido por:
 
 ```rhtml
 <%= form_for(@post) do |f| %>
@@ -775,15 +790,9 @@ Y crea un parcial **apps/views/posts/_form.html.erb**
 <% end %>
 ```
 
-### Para mantener nuestros estilos, añade las siguientes vistas dentro de un form-wrapper
+### Para mantener nuestros estilos, tendremos el contenido de las siguientes vistas dentro de un form-wrapper
 
-Encierra todo lo que hay en estos archivos **app/views/posts/edit.html.erb**, **app/views/posts/new.html.erb** en estas etiquetas:
-
-```html
-<div class="form-wrapper">
-
-</div>
-```
+Cambia todo lo que hay en estos dos archivos: **app/views/posts/edit.html.erb**, **app/views/posts/new.html.erb** por:
 
 ```rhtml
 <div class="form-wrapper">
@@ -793,7 +802,7 @@ Encierra todo lo que hay en estos archivos **app/views/posts/edit.html.erb**, **
 </div>
 ```
 
-### Añade un enlace para crear un nuevo post al navbar
+### Añade un enlace en el navbar (barra de navegación) para crear un nuevo post
 
 **app/views/layouts/_header.html.erb**
 
@@ -805,17 +814,21 @@ Debajo de `<% if user_signed_in? %>`:
 
 ### Redireccionamos la raíz de nuestra aplicación al `index` de Posts
 
+##### (no te diremos en qué archivo, es un desafío ;) , si tienes dudas, ¡Pregúntale a uno de tus mentores! )
+
 reemplaza `root "pages#home"` por `root "posts#index"`
 
 ## 18. Posts, Usuarios y Asociacíon
 
-Recursos
+#### Recursos
 
-asociacíon: http://guides.rubyonrails.org/association_basics.html
+**Asociacíon:** http://guides.rubyonrails.org/association_basics.html
 
 ### Configura tus asociaciones
 
 Un Post `belongs_to` un Usuario
+
+##### Una Publicación ***pertenece*** a un Usuario
 
 **app/models/post.rb**
 
@@ -827,16 +840,26 @@ end
 
 
 ### Genera una nueva migración de índice de un usuario
+<br/>
+Esto significa que cada publicación estará relacionada con un usuario
+
+consola
 
 ```bash
 rails generate migration add_user_id_to_posts user_id:integer:index
 rake db:migrate
 ```
+* ##### Recuerda que hacemos `rake db:migrate` porque acabamos de crear una migración.
 
+* ##### Cada vez que hagas una migración, debes reiniciar el servidor de Rails
 
 ### Inicia la consola de Rails
 
-La consola de Rails nos permite interactuar directamente con los datos en la base de datos. Usa la consola para actualizar directamente los datos , o  solo para probar el código Ruby antes de integrarlo a tu proyecto
+La consola de Rails nos permite interactuar directamente con los datos en la base de datos. Usa la consola para actualizar directamente los datos, o  solo para probar el código Ruby antes de integrarlo a tu proyecto.
+
+##### Primero debes detener el servidor rails con `CONTROL + C`
+<br/>
+consola
 
 ```
 rails console
@@ -846,7 +869,7 @@ Una vez en la consola ...
 
 ```bash
 > Post.connection #Esto establece una conexión con la base de datos ( y escupe una gran cantidad de datos innecesarios)
-> Post.inspect #muestra todos los parámetros para un Post
+> Post.inspect #muestra todos los parámetros para un Post y sus respectivos tipos de datos.
 > post = Post.first #Nos trae el primer Post asegurate que la primer letra es MAYÚSCULA
 > post.user #Nos muestra el usuario del post.
 ```
