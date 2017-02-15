@@ -825,3 +825,9 @@ heroku open
 heroku rename instagram #Reemplaza "instagram" con el nombre de tu proyecto
 heroku run rake db:migrate #Para correr las migraciones
 ```
+
+### Authors
+
+Miguél Díaz (miguel.diaz@codescrum.com)
+
+Victor Cortés (ie.cortex@gmail.com)
