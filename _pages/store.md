@@ -140,11 +140,13 @@ Detalle del producto: `app/views/products/show.html.erb`
 Para comprar un producto vamos a tener que "tocar" todo el MVC y las rutas.
 
 Agregamos al archivo `config/routes.rb` una nueva ruta:
+
 ```ruby
 get 'products/:id/purchase', to: 'products#purchase', as: :purchase_product
 ```
 
 Lo siguiente es modificar el controlador `app/controllers/products_controller.rb` agregando la acción comprar (purchase):
+
 ```ruby
 def purchase
   @product = Product.find(params[:id])
@@ -158,6 +160,7 @@ end
 ```
 
 Añadimos al modelo `app/models/product.rb` un nuevo método:
+
 ```ruby
 def decrement_quantity
   self.quantity -= 1
@@ -165,6 +168,7 @@ end
 ```
 
 Por último en `app/views/products/show.html.erb`, agregamos un botón después del precio:
+
 ```rhtml
 <h3>
   <% if @product.quantity > 0 %>
@@ -190,6 +194,7 @@ gem 'bootstrap-sass', '~> 3.3.6'
 ```
 
 Cambiamos la **extensión** del archivo `app/assets/stylesheets/application.css` por `scss` y reemplazmos su contenido por:
+
 ```scss
 @import "bootstrap-sprockets";
 @import "bootstrap";
@@ -197,6 +202,7 @@ Cambiamos la **extensión** del archivo `app/assets/stylesheets/application.css`
 @import "products";
 @import "scaffolds";
 ```
+
 **Nota:** Debemos reiniciar el servidor después de hacer este cambio.
 
 Ahora agregamos los estilos.
@@ -356,6 +362,7 @@ Primero actualizamos el "encuadre" de la aplicación. Sustituimos completamente 
 Como se pueden dar cuenta en el **layout** de la aplicación, estamos **renderizando** un archivo `header` (la cabecera). El contendio de este archivo será incluido en el layout.
 
 Entonces creamos un nuevo archivo `app/views/layouts/_header.html.erb`, con el siguiente contenido:
+
 ```rhtml
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -396,7 +403,9 @@ Para ello, vamos a colocarle un campo de búsqueda en la cabecera (header) que a
 ```
 Ahora agregamos una nueva ruta para las búsquedas, en el archivo `config/routes.rb` modificamos:
 
-`resources :products`
+```ruby
+resources :products
+```
 
 por
 
@@ -409,6 +418,7 @@ end
 Esto hará que nuestra aplicación responda a la url `/products/search` (que es lo mismo que el search_products_path que se ve en el código agregado) que es a donde nuestro formulario enviará los datos ingresados en el campo de texto de búsqueda.
 
 Agregamos la nueva acción  **"buscar"** al controlador `app/controllers/products_controller.rb`:
+
 ```ruby
 def search
   @product_name = params[:product_name]
@@ -427,6 +437,7 @@ end
 Lo que hemos escrito significa que va a buscar los productos por nombre, sin importar mayúsculas o minúsculas.
 
 Por último creamos la vista `app/views/products/search.html.erb` y colocamos lo siguiente:
+
 ```rhtml
 <h1><%= "Resultados de productos: #{@product_name}" %></h1>
 <br>
@@ -443,6 +454,7 @@ Por último creamos la vista `app/views/products/search.html.erb` y colocamos lo
 
 <%= link_to 'Regresar a productos', products_path %>
 ```
+
 Refresca la página y escribe una palabra o parte de ella en la caja de búsqueda para ver los resultados de productos.
  
  
@@ -453,6 +465,7 @@ En esta parte vamos a realizar las funcionalidades de crear, editar y eliminar p
 Primero vamos a crear las siguientes carpetas `app/controllers/admin` , `app/views/admin` y `app/views/admin/products`.
 
 Dentro de `config/routes.rb` agregamos:
+
 ```ruby
 namespace :admin do
   resources :products
@@ -537,6 +550,7 @@ El siguiente y último paso es actulizar las vistas.
 Eliminámos los archivos `app/views/products/_form.html.erb`, `app/views/products/edit.html.erb` y `app/views/products/new.html.erb`.
 
 Creamos el archivo `app/views/admin/products/_form.html.erb`:
+
 ```rhtml
 <%= form_for [:admin, @product] do |f| %>
   <% if @product.errors.any? %>
@@ -588,6 +602,7 @@ Creamos el archivo `app/views/admin/products/edit.html.erb`:
 ```
 
 Creamos el archivo `app/views/admin/products/new.html.erb` y colocamos en el:
+
 ```rhtml
 <h1>Crear Producto</h1>
 
@@ -597,6 +612,7 @@ Creamos el archivo `app/views/admin/products/new.html.erb` y colocamos en el:
 ```
 
 Creamos el archivo `app/views/admin/products/index.html.erb`:
+
 ```rhtml
 <p id="notice"><%= notice %></p>
 
@@ -640,6 +656,7 @@ Ahora podemos ir a nuestro navegador web, usando la ruta `/admin/products`, por 
 Vamos a agregar una simple gema de autenticación llamada Devise. Esta nos proporciona formularios de autenticación y métodos para manejar las sesiones de usuario.
 
 Lo primero que tenemos que hacer es instalar la gema. Agregamos al archivo `Gemfile` la línea:
+
 ```ruby
 gem 'devise'
 ```
@@ -647,31 +664,37 @@ gem 'devise'
 **Info**: [https://github.com/plataformatec/devise](https://github.com/plataformatec/devise)
 
 Ahora instalamos la gema mediante el comando en la terminal:
+
 ```
 bundle install
 ```
 
 Configuramos nuestro proyecto para usar Devise con:
+
 ```
 rails generate devise:install
 ```
 
 Creamos un modelo de Devise para el administrador:
+
 ```
 rails generate devise Admin
 ```
 
 Ahora necesitamos crear un usuario administrador en nuestra base de datos, para esto abrimos la consola de Rails escribiendo:
+
 ```
 rake db:migrate
 ```
 
 Creamos un usuario administrador directamente en la consola de Rails:
+
 ```
 Admin.create(email: 'admin@tienda.com', password: 'railsgirls', password_confirmation: 'railsgirls')
 ```
 
 Y en el controlador de productos para administradores (`app/controllers/admin/products_controller.rb`) le decimos que antes de hacer cualquier acción debe autenticar el administrador:
+
 ```ruby
 before_action :authenticate_admin!
 ```
@@ -679,6 +702,7 @@ before_action :authenticate_admin!
 Reiniciamos el servidor de Rails y vamos a la dirección `http://localhost:3000/admin/products`. Ahora nos debería pedir autenticarnos. Lo hacemos con los datos de email y password del usuario administrador creado anteriormente.
 
 Modificamos la barra de navegación del layout principal `app/views/layouts/header.html` como lo hicimos en una anterior ocasión, para agregar un enlace para cerrar la sesión:
+
 ```rhtml
 <% if admin_signed_in? %>
   <ul class="nav navbar-nav navbar-right">
