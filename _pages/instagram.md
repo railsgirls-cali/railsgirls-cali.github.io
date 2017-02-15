@@ -90,16 +90,18 @@ class PagesController < ApplicationController
 end
 ```
 
-###  Crea el código HTML en la vista
+###  Crea el siguiente archivo:
 
 **app/views/pages/about.html.erb**
 
+#### y agrega lo siguiente:
+
 ```html
-<h1>¿Quiénes somos?</h1>
-<p>Estamos trabajando en nuestra aplicación Instagram</p>
+<h1>¿Quién soy?</h1>
+<p>¡Una Rails Girl creando mi propia app de Instagram!</p>
 ```
 
-###  Agregamos la ruta
+###  Vamos a Agregar una ruta
 
 **config/routes.rb**
 
@@ -187,6 +189,7 @@ bundle install
 ```
 
 ### Añade el viewport
+##### Esto sirve para permitir que tu app se vea bien en varios tamaños de pantalla
 **views/layouts/application.html.erb**
 
 Después del `<head>` y antes del `<title>`.
@@ -271,15 +274,25 @@ Después del `<body>`
 </nav>
 ```
 
+### Ahora que tenemos nuestra barra de navegación, eliminemos estas dos líneas:
+
+**app/views/layouts/application.html.erb**
+
+```rhtml
+<%= link_to "Home", root_path %>
+<%= link_to "Quiénes somos", about_path %>
+```
+
 
 ### Añade el encabezado a la página de inicio
+##### Reemplaza todo el contenido del archivo
 
 **views/pages/home.html.erb**
 
 ```rhtml
 <div class="jumbotron">
-	<h1>¡Bienvenidos a mi aplicación!</h1>
-	Haz clic aquí para <%= link_to "Registrarte", "#", class: "btn btn-primary" %>
+	<h1>¡Bienvenidos a mi app!</h1>
+	Haz clic aquí para <%= link_to "Regístrarte", "#", class: "btn btn-primary" %>
 </div>
 ```
 
