@@ -222,6 +222,7 @@ Agregamos al archivo `app/assets/stylesheets/application.scss`:
 ```
 
 Sustituimos completamente el archivo `app/assets/stylesheets/products.scss`:
+
 ```scss
 .product-cont {
   text-align: center;
@@ -255,7 +256,6 @@ Sustituimos completamente el archivo `app/assets/stylesheets/products.scss`:
 Sustituimos completamente el archivo `app/assets/stylesheets/scaffolds.scss`:
 
 ```scss
-
 body {
   background-color: #fff;
   color: #333;
