@@ -2,7 +2,7 @@
 layout: inner
 title: Railslack
 lead_text: Crea un clon de Slack desde cero
-permalink: /railslack/
+permalink: /slack/
 ---
 
 <div class="repo">
@@ -372,7 +372,7 @@ root 'chat_rooms#index'
 
 ### Client Side
 
-Instala redis...
+Para continuar, vamos a implementar un  `Service Broker`, que básicamente es una manera de establecer un canal de comunicación asincronicamente; podriamos decir que es un Servicio Postal, el cual utilizamos para poder enviar cartas a una persona que se encuentra lejos. Para esto vamos a instalar Redis, un motor de base de datos en memoria.
 
 En el archivo *Gemfile* pega lo siguiente:
 
@@ -382,14 +382,14 @@ gem 'redis', '~> 3.2'
 [...]
 ```
 
-y ejecuta
+y ejecuta en consola el siguiente comando:
 ```
-bundle install
+$ bundle install
 ```
 
-Ahora puedes modificar el archivo `config/cable.yml` para usar Redis como un adaptador:
+Ahora modifica el archivo `config/cable.yml` para usar Redis como un adaptador:
 
-***config/cable.yml***
+
 ```
 [...]
 adapter: redis
@@ -399,18 +399,17 @@ url: YOUR_URL
 
 O simplemente usa `adapter: async` (valor por defecto).
 
-Agrega en tu archivo *routes.rb* lo siguiente:
+Agrega en tu archivo `config/routes.rb` lo siguiente:
 
-***config/routes.rb***
+
 ```
 [...]
 mount ActionCable.server => '/cable'
 [...]
 ```
 
-Revisa dentro de la carpeta *javascripts* si el archivo *cable.js* contiene lo siguiente:
 
-***app/assets/javascripts/cable.js***
+Revisa si el archivo `app/assets/javascripts/cable.js` contiene lo siguiente:
 
 ```
 //= require action_cable
@@ -425,21 +424,20 @@ Revisa dentro de la carpeta *javascripts* si el archivo *cable.js* contiene lo s
 }).call(this);
 ```
 
-Este archivo debe ser requerido dentro de *application.js*
+Este archivo debe ser requerido dentro de `app/assets/javascripts/application.js`
 
-***app/assets/javascripts/application.js***
 ```
 [...]
 //= require cable
 [...]
 ```
 
-Un `Consumer` (consumidor) es un cliente de una conexión web socket que puede suscribirse a uno o multiples canales. Cada servidor ActionCable puede manejar multiples conexiones. Un `channel` (canal)  es similar a un controlador MVC y es usado para streaming. Tu puedes leer mas acerca de la terminología de ActionCable [aqui](https://github.com/rails/rails/tree/master/actioncable#terminology).
+Un `Consumer` (consumidor) es un cliente de una conexión web socket que puede suscribirse a uno o multiples canales. Cada servidor ActionCable puede manejar multiples conexiones. Un `channel` (canal)  es similar a un controlador MVC y es usado para `streaming`. Tu puedes leer mas acerca de la terminología de ActionCable [aqui](https://github.com/rails/rails/tree/master/actioncable#terminology).
 
 
-Asi que vamos a crear un nuevo canal
+Asi que vamos a crear un nuevo canal, para eso creamos el siguiente archivo `app/javascripts/channels/rooms.coffee`
 
-***app/javascripts/channels/rooms.coffee***
+
 ```
 App.global_chat = App.cable.subscriptions.create {
     channel: "ChatRoomsChannel"
@@ -462,7 +460,7 @@ Básicamente lo que hacemos aqui, es suscribir un consumidor a `ChatRoomsChannel
 
 Por supuesto, necesitamos un formulario para permitir que los usuarios envíen sus mensajes:
 
-***app/views/chat_rooms/show.html.erb***
+`app/views/chat_rooms/show.html.erb`
 
 ```
 <%= form_for @message, url: '#' do |f| %>
@@ -476,9 +474,7 @@ Por supuesto, necesitamos un formulario para permitir que los usuarios envíen s
 <% end %>
 ```
 
-La variable de instancia `@message` debe estar en el controlador
-
-***app/controllers/chat_rooms_controller.rb***
+La variable de instancia `@message` debe estar en el método `show` del controlador `app/controllers/chat_rooms_controller.rb`
 ```
 [...]
 def show
@@ -488,9 +484,9 @@ end
 [...]
 ```
 
-Ahora agregamos algunas validaciones para los mensajes
+Ahora agregamos algunas validaciones para los mensajes, esto lo hacemos en:
 
-***app/models/message.rb***
+`app/models/message.rb`
 ```
 [...]
 validates :body, presence: true, length: {minimum: 2, maximum: 1000}
@@ -499,7 +495,7 @@ validates :body, presence: true, length: {minimum: 2, maximum: 1000}
 
 Y fijamos el id del chat-room con ayuda del atributo `data` de HTML
 
-***app/views/chat_rooms/show.html.erb***
+`app/views/chat_rooms/show.html.erb`
 ```
 [...]
 <div id="messages" data-chat-room-id="<%= @chat_room.id %>">
@@ -511,7 +507,7 @@ Y fijamos el id del chat-room con ayuda del atributo `data` de HTML
 Habiendo hecho esto, podemos agregar el id del chat-room en el script.
 
 Actualiza el archivo
-***app/javascripts/channels/rooms.coffee***
+`app/javascripts/channels/rooms.coffee`
 ```
 jQuery(document).on 'turbolinks:load', ->
   messages = $('#messages')
@@ -538,7 +534,7 @@ Nota: La parte de `jQuery(document).on 'turbolinks:load'`. Solo deberia hacerse 
 
 La lógica del script es muy simple: revisa si hay un bloque `#messages` en la página y si lo hay, se suscribe al canal de donde proviene el id del salón. El siguiente paso es escuchar el evento `submit` del formulario.
 
-***app/javascripts/channels/rooms.coffee***
+`app/javascripts/channels/rooms.coffee`
 ```
 jQuery(document).on 'turbolinks:load', ->
   messages = $('#messages')
@@ -557,14 +553,13 @@ jQuery(document).on 'turbolinks:load', ->
       return false
 ```
 
-Cuando el formulario es enviado, toma el cuerpo del mensaje, revisa que longitud sea al menos de dos y entonces llama la función `send_message` para transmitir el mensaje a todos los visitantes de la sala (chat-room).
+Cuando el formulario es enviado, toma el cuerpo del mensaje, revisa que su longitud sea mayor que uno y llama la función `send_message` para transmitir el mensaje a todos los visitantes de la sala (`chat-room`).
 
 ### Server Side
 
-Nuestra siguiente tarea será introducir un canal en nuestro servidor. En Rails 5, hay un nuevo directorio llamado *channels* para alojarlos.
-Entonces vamos a crear un archivo *chat_rooms_channel.rb* ahi
+Nuestra siguiente tarea será introducir un canal en nuestro servidor. En Rails 5, hay un  directorio llamado `channels` para alojarlos.
+Crearemos el siguiente archivo `app/channels/chat_rooms_channel.rb` y pegamos lo siguiente:
 
-***app/channels/chat_rooms_channel.rb***
 ```
 class ChatRoomsChannel < ApplicationCable::Channel
   def subscribed
@@ -584,13 +579,14 @@ end
 
 `unsubscribed` es una callback que se activa cuando se detiene el streaming, pero en esta guía no lo usaremos
 
-El último método `send_message` .... asdasdasd
+El último método `send_message` se dispara cuando ejecutamos `@perform 'send_message', message: message, chat_room_id: chat_room_id` desde nuestro script. La variable `data` contiene un `hash` (colección de datos) de los datos enviados, por ejemplo, para acceder al mensaje tu deberías escribir `data['message']`.
 
+Hay múltiples maneras para transmitir el mensaje recibido....
 
+Primero que todo, modifica el método `send_message`
 
-Continuando, vamos a modificar el método `send_message`
+`app/channels/chat_rooms_channel.rb`
 
-***app/channels/chat_rooms_channel.rb***
 ```
 [...]
 def send_message(data)
@@ -599,15 +595,12 @@ end
 [...]
 ```
 
-asdsadd
+Una vez recibimos un mensaje se guarda en la base de datos; no necesitamos revisar que la sala de chat (`chat-room`) donde proviene exista, por defecto, en Rails 5, debe existir un registro padre para guardarlo. Este comportamiento puede ser cambiado estableciendo `optional: true` por la relación `belongs_to` (Lee acerca de los cambios en Rails 5 [aqui](https://www.sitepoint.com/onwards-to-rails-5-additions-changes-and-deprecations/))
 
-Una vez recibimos un mensaje se guarda en la base de datos; no necesitamos revisar que del chat-room que proviene exista, por defecto, en Rails 5, existe un registro padre para guardarlo
-....
-asdasdasddasdasdsd
+Sin embargo hay un problema, el método de devise `current_user` no esta disponible para nosotros aqui. Para arreglar esto modificamos el archivo `connection.rb`  ubicado en el directorio `application_cable`
 
-Sin embargo hay un problema, el método de devise `current_user` no esta disponible para nosotros aqui. Para arreglar esto modificamos el archivo *connection.rb*  ubicado en el directorio *application_cable*
+`app/channels/application_cable/connection.rb`
 
-***app/channels/application_cable/connection.rb***
 ```
 module ApplicationCable
   class Connection < ActionCable::Connection::Base
@@ -631,7 +624,7 @@ module ApplicationCable
 end
 ```
 
-Después de realizar esto, además de tener el metodo `current_user` para el canal, ahora los usuarios que no estén autenticados no podrán transmitir sus mensajes.
+Después de realizar esto, además de tener el metodo `current_user` disponible para el canal, ahora los usuarios que no estén autenticados no podrán transmitir sus mensajes.
 
 El llamado a `logger.add_tags 'ActionCable', current_user.email` es usado para mostrar información de depuración en la consola. Por lo que podra ver algo similar a esto
 
