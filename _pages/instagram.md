@@ -29,7 +29,7 @@ cd instagram
 consola
 
 ```
-rails server
+rails server -b 0.0.0.0 -p 8080
 ```
 
 
@@ -206,7 +206,7 @@ consola
 
 ```bash
 CONTROL + C
-rails server
+rails server -b 0.0.0.0 -p 8080
 ```
 
 ## 7. Añade elementos de Bootstrap a la página
@@ -431,7 +431,7 @@ Este comando toma el archivo de migración y lo ejecuta, de manera que genere ta
 
 ```bash
 CONTROL + C (para parar el servidor)
-rails server (para volver a iniciar el servidor)
+rails server -b 0.0.0.0 -p 8080 (para volver a iniciar el servidor)
 ```
 
 Tendrás que reiniciar la aplicación cada vez que instales una gema o cada vez que ejecutes `rake db:migrate`
@@ -1036,7 +1036,7 @@ rake db:migrate
 
 ```bash
 CONTROL + C
-rails server
+rails server -b 0.0.0.0 -p 8080
 ```
 
 ### Edita el formulario de Post
