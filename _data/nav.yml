@@ -4,4 +4,4 @@ main:
     - { url: '/forum', text: 'Foro' }
     - { url: '/tienda', text: 'Tienda' }
     - { url: '/slack', text: 'Railslack' }
-    # - { url: '/location', text: '¿Cómo llegar?' }
+    - { url: '/location', text: '¿Cómo llegar?' }
