@@ -17,15 +17,15 @@ permalink: /instagram/
 
 La interfaz de línea de comandos, terminal o consola es un método que permite a los usuarios dar instrucciones a algún programa informático por medio de una línea de texto simple.
 
-Lo primero que debemos saber es que el terminal se utiliza para dar ordenes al sistema mediante unas palabras llamadas comandos de Linux. Estos comandos pueden servir para muchas cosas, como por ejemplo: copiar archivos, comprimir carpetas, reproducir musica, descargar archivos, etc.
+Lo primero que debemos saber es que el terminal se utiliza para dar órdenes al sistema mediante unas palabras llamadas comandos de Linux. Estos comandos pueden servir para muchas cosas, como por ejemplo: copiar archivos, comprimir carpetas, reproducir música, descargar archivos, etc.
 
-Para que nosotros sepamos que el sistema está preparado para recibir ordenes, en el terminal aparecerá una línea de texto llamada prompt
+Para que nosotros sepamos que el sistema está preparado para recibir órdenes, en el terminal aparecerá una línea de texto llamada prompt
 
 ```
 $
 ```
 
-Entonces cada vez que vas a encontrar referencia a la `consola` en la guía, solo copia el comando y ejecutalo en la consola.
+Entonces cada vez que vas a encontrar referencia a la `consola` en la guía, solo copia el comando y ejecútalo en la consola.
 
 
 ### 2. Modificación de archivos
@@ -34,12 +34,12 @@ Encontrarás referencias como la siguiente para ubicar el archivo que tienes que
 
 **app/views/pages/home.html.erb**
 
-Con instrucciones y el codigo/contenido que tienes que agregar o cambiar
+Con instrucciones y el código/contenido que tienes que agregar o cambiar
 
 ```
 [...]
 
-codigo/contenido
+código/contenido
 
 [...]
 ```
@@ -50,13 +50,13 @@ codigo/contenido
 
 **NOTA**
 
-* Si estás usando C9 y creaste un espacio de trabajo con una plantilla de `Ruby on Rails` ya tienes tu aplicación, puedes seguir hasta el proximo punto `Arranca el servidor de Rails`
-* Si estás usando C9 y creaste un espacio de trabajo con una plantilla de `Rails Tutorial` puedes seguir con las instrucciones abajo
+* Si estás usando C9 y creaste un espacio de trabajo con una plantilla de `Ruby on Rails` ya tienes tu aplicación, puedes seguir hasta el próximo punto `Arranca el servidor de Rails`.
+* Si estás usando C9 y creaste un espacio de trabajo con una plantilla de `Rails Tutorial` puedes seguir con las instrucciones abajo.
 
 
 ### Instala la última versión disponible de Ruby on Rails
 
-Rails es un framework de ruby para desarrollar aplicaciones web, a pesar de estar compuesto de multiples librerias, Rails es en si mismo una gema de ruby.
+Rails es un framework de Ruby para desarrollar aplicaciones web, a pesar de estar compuesto de múltiples librerías, Rails es en sí mismo una gema de Ruby.
 
 *"Las gemas en Ruby son las bibliotecas o paquetes (código Ruby empaquetado de una manera predeterminada) de software que se instalan en el sistema para aumentar las funcionalidades del interprete"*.
 
@@ -72,7 +72,7 @@ Este proceso podría tomar unos minutos...
 
 ### Crea una nueva aplicación Rails
 
-Rails viene con un número de generadores que están diseñados para hacer tu ciclo de desarrollo más fácil. Uno de esos es el generador de nuevas aplicaciones, que crea la estructura base de una aplicación Rails, por lo que no tienes que escribirla por ti mismo.
+Rails viene con un número de generadores que están diseñados para hacer tu ciclo de desarrollo más fácil. Uno de esos, es el generador de nuevas aplicaciones, que crea la estructura base de una aplicación Rails, por lo que no tienes que escribirla por ti misma.
 
 Para usar este generador, abre la consola y ejecuta:
 
@@ -82,7 +82,7 @@ Para usar este generador, abre la consola y ejecuta:
 rails new instagram
 ```
 
-Esto creará una aplicación Rails llamada **Instagram** en un directorio llamado instagram
+Esto creará una aplicación Rails llamada **Instagram** en un directorio llamado instagram.
 
 Después de crear la aplicación, entra a su directorio para continuar trabajando directamente en la aplicación:
 
@@ -90,7 +90,7 @@ Después de crear la aplicación, entra a su directorio para continuar trabajand
 cd instagram
 ```
 
-Se puede decir que cd viene de Change Directory o Cambiar Directorio.
+Se puede decir que `cd` viene de Change Directory o Cambiar Directorio.
 
 ### Arranca el servidor de Rails
 
@@ -102,8 +102,8 @@ rails server -b 0.0.0.0 -p 8080
 
 El comando anterior usa las siguientes opciones:
 
-- **-b** *especifíca que el servidor será accesible desde clientes externos, en este caso desde la internet utilizando cualquier navegador web si estás usando c9*
-- **-p** *especifíca el puerto en el cual el servidor abre la conexión*
+- **-b** *especifica que el servidor será accesible desde clientes externos, en este caso desde internet utilizando cualquier navegador web si estás usando c9*.
+- **-p** *especifica el puerto en el cual el servidor abre la conexión*.
 
 
 ## 2. Página de inicio
@@ -121,15 +121,15 @@ La página "Welcome Aboard" es la primera prueba para una nueva aplicación Rail
 
 ## 3. Crea una nueva página
 
-Para crear nuestra nueva pagina, necesitas crear como mínimo un controlador y una vista.
+Para crear nuestra nueva página, necesitas crear como mínimo un controlador y una vista.
 
 El propósito de un controlador es recibir las peticiones (requests) de la aplicación. El enrutamiento (routing) decide qué controlador recibe qué petición.
 
 A menudo, hay más de una ruta para cada controlador, y diferentes rutas pueden ser servidas por diferentes acciones (actions). El propósito de cada acción es obtener información para pasarla después a la vista.
 
-El propósito de una vista es mostrar la información en un formato legible para los humanos. Una distinción importante que hacer es que es el controlador, y no la vista, donde la información es recolectada. La vista sólo debería mostrar la información. Por defecto, las plantillas de las vistas están escritas en un lenguaje llamado ERB (del inglés, Embedded Ruby), que se procesa automáticamente para cada petición servida por Rails.
+El propósito de una vista es mostrar la información en un formato legible para los humanos. Una distinción importante que hacer, es que es el controlador, y no la vista, donde la información es recolectada. La vista sólo debería mostrar la información. Por defecto, las plantillas de las vistas están escritas en un lenguaje llamado ERB (del inglés, Embedded Ruby), que se procesa automáticamente para cada petición servida por Rails.
 
-Para crear un nuevo controlador, necesitas ejecutar el generador de controladores y decirle que quieres un controlador llamado por ejemplo pages con una acción llamada home. Para ello, ejecuta lo siguiente:
+Para crear un nuevo controlador, necesitas ejecutar el generador de controladores y decirle que quieres un controlador llamado por ejemplo `pages` con una acción llamada `home`. Para ello, ejecuta lo siguiente:
 
 **NOTA** El primer tab de tu consola ya tiene el servidor de Rails corriendo que lanzaste con el comando:
 
@@ -183,7 +183,7 @@ En tu navegador, ve a la URL : [http://**nombre_del_proyecto**-**tu_usuario_de_c
 
 ### Mostrar la página de inicio de tu aplicación (Home)
 
-Como conectar la raíz de tu sitio a un controlador y acción específica?
+¿Cómo conectar la raíz de tu sitio a un controlador y acción específica?
 
 Debemos configurar la ruta de acceso a la aplicación editando el archivo `config/routes.rb`, para esto debemos cambiar la siguiente línea en el mismo:
 
@@ -270,7 +270,7 @@ gem 'bootstrap-sass'
 [...]
 ```
 
-### Siempre parre el servidor con `CONTROL + C` y corre `bundle install` para instalar una nueva gema
+### Siempre pare el servidor con `CONTROL + C` y corre `bundle install` para instalar una nueva gema
 
 `consola`
 
@@ -353,7 +353,7 @@ por...
 
 ### Crea un parcial de encabezado
 
-Por convención un parcial es un archivo de plantilla cuyo nombre empieza por un guión bajo y cuyo contenido se reutiliza en varias plantillas diferentes. Aqui el encabezado es un ejemplo de contenido que se repite en varias paginas.
+Por convención un parcial es un archivo de plantilla cuyo nombre empieza por un guion bajo y cuyo contenido se reutiliza en varias plantillas diferentes. Aquí el encabezado es un ejemplo de contenido que se repite en varias páginas.
 
 Crea el archivo **app/views/layouts/_header.html.erb**
 
@@ -388,21 +388,21 @@ Crea el archivo **app/views/layouts/_header.html.erb**
 
 **NOTA** **Embedded Ruby?** -- **¿Ruby embebido?**
 
-En Ruby se usa mucho ERB como sistema de plantillas para crear archivos HTML con código Ruby embebido
+En Ruby se usa mucho ERB como sistema de plantillas para crear archivos HTML con código Ruby embebido.
 
-En HTML, un enlace es así
+En HTML, un enlace es así:
 
 ```html
 <a href="#"> aquí </a>
 ```
 
-Estas son etiquetas de Ruby
+Estas son etiquetas de Ruby:
 
 ```erb
 < % = % >
 ```
 
-En Ruby on Rails un enlace se verá así
+En Ruby on Rails un enlace se verá así:
 
 ```erb
 <%= link_to "aquí", "#" %>
@@ -419,7 +419,7 @@ Después de la etiqueta `<body>` inserta:
 ```
 
 
-### Añade el el contenido del home
+### Añade el contenido del home
 
 Reemplaza todo el contenido del archivo
 
@@ -439,11 +439,11 @@ Reemplaza todo el contenido del archivo
 
 ### Cambios de estilo
 
-Ahora agregamos un poco de estilos CSS (*usando SASS*)
+Ahora agregamos un poco de estilos CSS (*usando SASS*).
 
 **app/assets/stylesheets/custom_bootstrap.scss**
 
-Reemplaza
+Reemplaza:
 
 ```scss
 @import 'bootstrap';
@@ -484,7 +484,7 @@ $jumbotron-bg:                     white;
 
 ### Añade la gema de Devise
 
-La mayoria de las aplicaciones web necesitan que los usuarios puedan crear una cuenta, modificar su perfil, iniciar y cerrar sesión. En el contexto de rails hay una gema que se integra naturalmente con él y gestiona estos componentes; esta gema se llama Devise.
+La mayoría de las aplicaciones web necesitan que los usuarios puedan crear una cuenta, modificar su perfil, iniciar y cerrar sesión. En el contexto de rails hay una gema que se integra naturalmente con él y gestiona estos componentes; esta gema se llama Devise.
 
 **/Gemfile**
 
@@ -494,7 +494,7 @@ gem 'devise'
 [...]
 ```
 
-### Siempre parre el servidor con `CONTROL + C` y corre `bundle install` para instalar una nueva gema
+### Siempre pare el servidor con `CONTROL + C` y corre `bundle install` para instalar una nueva gema
 
 `consola`
 
@@ -547,7 +547,7 @@ La línea de arriba crea un modelo de usuario y un nuevo archivo: **app/models/u
 
 Ve a **db/migration** y deberías tener en los archivos algo así como **db/migration/20170218022322_devise_create_users.rb**
 
-El número es la fecha de creacíon
+El número es la fecha de creación.
 
 ### Migra la base de datos
 
@@ -557,7 +557,7 @@ El número es la fecha de creacíon
 rake db:migrate
 ```
 
-Este comando toma el archivo de migración y lo ejecuta, de manera que genere tablas en la base de datos
+Este comando toma el archivo de migración y lo ejecuta, de manera que genere tablas en la base de datos.
 
 
 ### Vuelve a iniciar el servidor
@@ -569,9 +569,10 @@ rails server -b 0.0.0.0 -p 8080 (para volver a iniciar el servidor)
 
 Tendrás que reiniciar la aplicación cada vez que instales una gema o cada vez que ejecutes `rake db:migrate`
 
+
 ## 11. Mensajes flash
 
-Los mensajes flash son los mensajes en sitios web que dicen " Gracias por registrarse en " o "Gracias por suscribirse a"
+Los mensajes flash son los mensajes en sitios web que dicen "Gracias por registrarse en ..." o "Gracias por suscribirse a ..."
 
 **app/views/layouts/application.html.erb**
 
@@ -590,7 +591,7 @@ Agrega lo siguiente Debajo de `<div class="container">` y antes de `<%= yield %>
 
 ```
 
-## 12. Registrar nuevos usuarios o iniciar sesíon
+## 12. Registrar nuevos usuarios o iniciar sesión
 
 ### Modifica la vista de inicio
 
@@ -639,7 +640,7 @@ por
 </ul>
 ```
 
-**NOTA** Usa el tabulador, la tecla Tab (Tab ↹) nos permite indentar el texto que este en nuestra selección y así mantener el codigo organizado y indentado.
+**NOTA** Usa el tabulador, la tecla Tab (Tab ↹) nos permite indentar el texto que este en nuestra selección y así mantener el código organizado y indentado.
 
 
 ## 13. Cambia las vistas de Devise
@@ -832,7 +833,7 @@ Debajo de `<% if user_signed_in? %>`:
 
 ## 14. Genera el scaffold para Posts
 
-Posts serán nuestras publicaciones o, mejor dicho, ¡Las imágenes que publicamos en nuestro Instagram!
+`Posts` serán nuestras publicaciones o, mejor dicho, ¡Las imágenes que publicamos en nuestro Instagram!
 
 ### Genera un scaffold para Posts
 
@@ -843,7 +844,7 @@ rails generate scaffold posts description:string
 rake db:migrate
 ```
 
-El scaffold tambien crea un archivo de estilos CSS basicos pero nosotros vamos a usar nuestro propio CSS así que podemos borrar este archivo.
+El scaffold también crea un archivo de estilos CSS basicos pero nosotros vamos a usar nuestro propio CSS así que podemos borrar este archivo.
 
 **/app/assets/stylesheets/scaffolds.scss**
 
@@ -973,7 +974,7 @@ reemplaza `root 'pages#home'` por `root 'posts#index'`
 
 ### Configura tus asociaciones
 
-Un Post `belongs_to` un Usuario
+Un Post `belongs_to` un Usuario.
 
 ##### Una Publicación ***pertenece*** a un Usuario
 
@@ -987,7 +988,7 @@ end
 
 ### Genera una nueva migración de índice de un usuario
 <br/>
-Esto significa que cada publicación estará relacionada con un usuario
+Esto significa que cada publicación estará relacionada con un usuario.
 
 `consola`
 
@@ -997,7 +998,7 @@ rake db:migrate
 ```
 * ##### Recuerda que hacemos `rake db:migrate` porque acabamos de crear una migración.
 
-* ##### Cada vez que hagas una migración, debes reiniciar el servidor de Rails
+* ##### Cada vez que hagas una migración, debes reiniciar el servidor de Rails.
 
 `consola`
 
@@ -1024,13 +1025,13 @@ end
 ```
 
 
-## 18. Autorización : ¿Quién puede? ¿Quién no puede?
+## 18. Autorización: ¿Quién puede? ¿Quién no puede?
 
-Una vez que un usuario tiene acceso ala plataforma, hay que ver los permisos que este usuario tiene.
+Una vez que un usuario tiene acceso a la plataforma, hay que ver los permisos que este usuario tiene.
 
-- Tenemos que asegurar que un usuario no puede cambiar la publicacion de otro usuario.
+- Tenemos que asegurar que un usuario no puede cambiar la publicación de otro usuario.
 
-- Tambien que las acciones (crear, cambiar o borrar una publicacíon) se puede hacer solamente si estas autenticado.
+- También que las acciones (crear, cambiar o borrar una publicación) se puede hacer solamente si estas autenticado.
 
 
 ### Actualiza el controlador Posts
@@ -1124,7 +1125,7 @@ before_action :correct_user, only: [:edit, :update, :destroy]
 
 ## 19. Sube imágenes con Paperclip
 
-### Instala el procesador de imagenes ImageMagick
+### Instala el procesador de imágenes ImageMagick
 
 Paperclip requiere la instalación de ImageMagick. Necesitas esto para procesamiento de imagen. Para instalar ImageMagick, usa los comandos abajo.
 
@@ -1193,7 +1194,7 @@ rails server -b 0.0.0.0 -p 8080
 
 **/app/views/posts/_form.html.erb**
 
-Reemplaza la  primera linea por
+Reemplaza la primera línea por:
 
 ```rhtml
 <%= form_for @post, html: { multipart: true } do |f| %>
@@ -1349,7 +1350,7 @@ Dentro de `<div class="post">` abajo colocamos:
 </div>
 ```
 
-y añade los siguiente estilos
+y añade los siguientes estilos
 
 **app/assets/stylesheets/custom_bootstrap.scss**
 
@@ -1400,7 +1401,7 @@ rails generate migration AddNameToUsers name:string
 rake db:migrate
 ```
 
-### Vuelve a iniciar el servidor después de correr una migracíon
+### Vuelve a iniciar el servidor después de correr una migración
 
 `consola`
 
@@ -1432,14 +1433,14 @@ end
 
 **app/views/devise/registrations/new.html.erb**, **app/views/devise/registrations/edit.html.erb**
 
-justo antes de
+Justo antes de
 
 ```rhtml
 <div class="form-group">
   <%= f.label :email %>
 ```
 
-añade
+Añade
 
 ```rhtml
 .
@@ -1452,7 +1453,7 @@ añade
 
 ### Terminamos con un nuevo controlador
 
-Creaa el archivo **app/controllers/registrations_controller.rb**:
+Crea el archivo **app/controllers/registrations_controller.rb**:
 
 ```ruby
 class RegistrationsController < Devise::RegistrationsController
@@ -1513,7 +1514,7 @@ con...
 
 ### Rodea el enlace de edición con un "si" condicional
 
-De esta manera sólo se pueden ver tus posts. Para poner esto de otra manera: Un usuario sólo puede ver sus posts (y no los posts de otros usuarios ). ¿Tiene algun sentido?
+De esta manera sólo se pueden ver tus posts. Para poner esto de otra manera: Un usuario sólo puede ver sus posts (y no los posts de otros usuarios). ¿Tiene algún sentido?
 
 
 **app/views/posts/show.html.erb**
@@ -1587,7 +1588,7 @@ Este comando nos genera una migración **db/migrate/** para añadir los campos e
 rake db:migrate
 ```
 
-### Vuelve a iniciar el servidor después de correr una migracíon
+### Vuelve a iniciar el servidor después de correr una migración
 
 `consola`
 
@@ -1598,7 +1599,7 @@ rails server -b 0.0.0.0 -p 8080
 
 ### Asocia los comentarios
 
-Ahora nuestro modelo **app/model/comment.rb** debe está configurado para indicar a quién pertenecen los comentarios.
+Ahora nuestro modelo **app/model/comment.rb** está configurado para indicar a quién pertenecen los comentarios.
 
 ```ruby
 class Comment < ActiveRecord::Base  
@@ -1636,7 +1637,7 @@ end
 rails g controller comments
 ```
 
-El controlador de comentarios solo va a tener las acciones de crear y borrar comentarios
+El controlador de comentarios solo va a tener las acciones de crear y borrar comentarios.
 
 **app/controllers/comments_controller.rb**
 
@@ -1879,31 +1880,31 @@ Y reemplaza con
 1. En la parte superior derecha de tu espacio de trabajo en [C9](http://c9.io), haz clic en tu foto para abrir el panel de configuración y clic en `Dashboard`.
 [https://c9.io/account/ssh](https://c9.io/account/ssh)
 2. Ahora click en el círculo de arriba que tiene un engranaje y después en el menú lateral que dice `SSH keys`
-3. Copia todas las lineas que empezan por `ssh-rsa...`
+3. Copia todas las líneas que empiezan por `ssh-rsa...`
 4. Crea una cuenta en GitHub: [https://github.com](https://github.com)
-7. Entra en [tu perfil de usuario](https://github.com/settings/profile) y haz clicc en `SSH and GPG keys`.
+5. Entra en [tu perfil de usuario](https://github.com/settings/profile) y haz clic en `SSH and GPG keys`.
 [https://github.com/settings/ssh](https://github.com/settings/ssh)
-8. Ahora Clic en “Add SSH Key”. Introduce el título: " C9 ", pega la clave SSH en el cuadro "key", y haz clic en "Add key".
-9. Crea un repositorio nuevo vacío para tu nuevo proyecto. Desde tu repositorio, copia el enlace SSH:
+6. Ahora clic en “Add SSH Key”. Introduce el título: "C9", pega la clave SSH en el cuadro "key", y haz clic en "Add key".
+7. Crea un repositorio nuevo vacío para tu nuevo proyecto. Desde tu repositorio, copia el enlace SSH:
 ```
 git@github.com:sunombre/nombredelproyecto.git
 ```
-10. Convierte tu directorio actual en un repositorio git ejecutando en la consola de C9:
+8. Convierte tu directorio actual en un repositorio git ejecutando en la consola de C9:
 ```
 git init
 ```
-11. Utilizando el enlace SSH que copiaste en el paso 9, añade el repositorio remoto como origen:
+9. Utilizando el enlace SSH que copiaste en el paso 7, añade el repositorio remoto como origen:
 ```
 git remote add origin git@github.com:sunombre/nombredelproyecto.git
 ```
-12. Añade tus archivos y haz commit
+10. Añade tus archivos y haz commit
 ```
 git add .
 ```
 ```
 git commit -m "Mi Primer commit"
 ```
-13. Sube los archivos:
+11. Sube los archivos:
 ```
 git push -u origin master
 ```
