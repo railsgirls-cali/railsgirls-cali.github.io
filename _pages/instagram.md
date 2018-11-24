@@ -1448,6 +1448,12 @@ devise_for :users, :controllers => { registrations: 'registrations' }
 
 **app/views/posts/show.html.erb**
 
+Reemplaza
+
+```rhtml
+<%= @post.user.email if @post.user %>
+``
+
 con...
 
 ```rhtml
