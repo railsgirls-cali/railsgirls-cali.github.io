@@ -1,7 +1,7 @@
 ---
 layout: inner
 title: Instagram
-lead_text: Crea un clon de Instagram desde zero
+lead_text: Crea un clon de Instagram desde cero
 permalink: /instagram/
 ---
 
