@@ -52,53 +52,7 @@ codigo/contenido
 
 ## INICIO
 
-## 1. Crea una aplicación nueva
-
-**NOTA**
-
-* Si estás usando C9 y creaste un espacio de trabajo con una plantilla de `Ruby on Rails` ya tienes tu aplicación, puedes seguir hasta el proximo punto `Arranca el servidor de Rails`
-* Si estás usando C9 y creaste un espacio de trabajo con una plantilla de `Rails Tutorial` puedes seguir con las instrucciones abajo
-
-
-### Instala la última versión disponible de Ruby on Rails
-
-Rails es un framework de ruby para desarrollar aplicaciones web, a pesar de estar compuesto de multiples librerias, Rails es en si mismo una gema de ruby.
-
-*"Las gemas en Ruby son las bibliotecas o paquetes (código Ruby empaquetado de una manera predeterminada) de software que se instalan en el sistema para aumentar las funcionalidades del interprete"*.
-
-Para instalar Rails debemos hacer lo siguiente:
-
-`consola`
-
-```
-gem install rails
-```
-
-Este proceso podría tomar unos minutos...
-
-### Crea una nueva aplicación Rails
-
-Rails viene con un número de generadores que están diseñados para hacer tu ciclo de desarrollo más fácil. Uno de esos es el generador de nuevas aplicaciones, que crea la estructura base de una aplicación Rails, por lo que no tienes que escribirla por ti mismo.
-
-Para usar este generador, abre la consola y ejecuta:
-
-`consola`
-
-```
-rails new instagram
-```
-
-Esto creará una aplicación Rails llamada **Instagram** en un directorio llamado instagram
-
-Después de crear la aplicación, entra a su directorio para continuar trabajando directamente en la aplicación:
-
-```
-cd instagram
-```
-
-Se puede decir que cd viene de Change Directory o Cambiar Directorio.
-
-### Arranca el servidor de Rails
+## 1. Arranca el servidor de Rails
 
 `consola`
 
