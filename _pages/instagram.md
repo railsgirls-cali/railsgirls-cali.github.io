@@ -68,9 +68,7 @@ El comando anterior usa las siguientes opciones:
 
 ## 2. Página de inicio
 
-En cualquier navegador de tu computador escribe la URL: [localhost:3000](localhost:3000). Esta es la página de inicio por defecto para las aplicaciones Rails.
-
-**NOTA** Si estás usando C9 no vas a poder acceder a la página de inicio en tu explorador usando la URL anterior, necesitas una URL especial, para el caso del taller la URL será generada de la siguiente forma:
+C9 te creas una URL especial, para el caso del taller la URL será generada de la siguiente forma:
 
 http://**nombre_del_proyecto**-**tu_usuario_de_c9**.c9users.io/
 
