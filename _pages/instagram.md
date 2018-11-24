@@ -6,9 +6,15 @@ permalink: /instagram/
 ---
 
 <div class="repo">
-  <h3>Repostitorio de la aplicación</h3>
+  <h3>repositorio de la aplicación</h3>
   <a href="https://github.com/railsgirls-cali/example-instagram">
     https://github.com/railsgirls-cali/example-instagram</a>
+</div>
+
+<div class="repo">
+  <h3>Ejemplo de la aplicación</h3>
+  <a href="https://instagram-example-chrisestanol.c9users.io/">
+    https://instagram-example-chrisestanol.c9users.io/</a>
 </div>
 
 ## CONVENCIONES
