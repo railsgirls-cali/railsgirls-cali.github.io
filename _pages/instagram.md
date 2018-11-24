@@ -52,53 +52,7 @@ código/contenido
 
 ## INICIO
 
-## 1. Crea una aplicación nueva
-
-**NOTA**
-
-* Si estás usando C9 y creaste un espacio de trabajo con una plantilla de `Ruby on Rails` ya tienes tu aplicación, puedes seguir hasta el próximo punto `Arranca el servidor de Rails`.
-* Si estás usando C9 y creaste un espacio de trabajo con una plantilla de `Rails Tutorial` puedes seguir con las instrucciones abajo.
-
-
-### Instala la última versión disponible de Ruby on Rails
-
-Rails es un framework de Ruby para desarrollar aplicaciones web, a pesar de estar compuesto de múltiples librerías, Rails es en sí mismo una gema de Ruby.
-
-*"Las gemas en Ruby son las bibliotecas o paquetes (código Ruby empaquetado de una manera predeterminada) de software que se instalan en el sistema para aumentar las funcionalidades del interprete"*.
-
-Para instalar Rails debemos hacer lo siguiente:
-
-`consola`
-
-```
-gem install rails
-```
-
-Este proceso podría tomar unos minutos...
-
-### Crea una nueva aplicación Rails
-
-Rails viene con un número de generadores que están diseñados para hacer tu ciclo de desarrollo más fácil. Uno de esos, es el generador de nuevas aplicaciones, que crea la estructura base de una aplicación Rails, por lo que no tienes que escribirla por ti misma.
-
-Para usar este generador, abre la consola y ejecuta:
-
-`consola`
-
-```
-rails new instagram
-```
-
-Esto creará una aplicación Rails llamada **Instagram** en un directorio llamado instagram.
-
-Después de crear la aplicación, entra a su directorio para continuar trabajando directamente en la aplicación:
-
-```
-cd instagram
-```
-
-Se puede decir que `cd` viene de Change Directory o Cambiar Directorio.
-
-### Arranca el servidor de Rails
+## 1. Arranca el servidor de Rails
 
 `consola`
 
@@ -114,9 +68,7 @@ El comando anterior usa las siguientes opciones:
 
 ## 2. Página de inicio
 
-En cualquier navegador de tu computador escribe la URL: [localhost:3000](localhost:3000). Esta es la página de inicio por defecto para las aplicaciones Rails.
-
-**NOTA** Si estás usando C9 no vas a poder acceder a la página de inicio en tu explorador usando la URL anterior, necesitas una URL especial, para el caso del taller la URL será generada de la siguiente forma:
+C9 te creas una URL especial, para el caso del taller la URL será generada de la siguiente forma:
 
 http://**nombre_del_proyecto**-**tu_usuario_de_c9**.c9users.io/
 
