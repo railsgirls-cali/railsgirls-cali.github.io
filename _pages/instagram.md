@@ -1446,21 +1446,7 @@ devise_for :users, :controllers => { registrations: 'registrations' }
 
 ### Ahora cambiamos el correo por el nombre
 
-**app/views/posts/index.html.erb**
-
-Reemplaza
-
-```rhtml
-<%= post.user.email if post.user %>
-```
-
-con...
-
-```rhtml
-<%= post.user.name if post.user %>
-```
-
-y **app/views/posts/show.html.erb**
+**app/views/posts/show.html.erb**
 
 con...
 
@@ -1869,7 +1855,9 @@ git push -u origin master
 
 **Ahora tienes tu repositorio actualizado en GitHub**
 
-## Tener nuestra aplicación en la web
+
+
+## 26. Tener nuestra aplicación en la web
 
 ¿Cómo subir nuestra aplicación en la web, de forma que otros puedan verla? Con un servicio llamado [Heroku](http://heroku.com) que permite subir tu aplicación en un servidor gratis en cuestión de segundos.
 
@@ -1945,9 +1933,10 @@ En nuestro caso sería como añadir comentarios sin tener que refrescar la pági
 
 - recursos: [JavaScript, jQuery y Ajax](http://blog.makeitreal.camp/javascript-jquery-y-ajax)
 
-### Mueve los comentarios en un parcial
 
-Ajax en Rails se maneja con parciales, entonces...
+## 27.  Mueve los comentarios en un parcial
+
+Ajax en Rails se maneja con parciales, entonces crea un nuevo archivo
 
 **app/views/comments/_comment.html.erb**
 
@@ -1967,16 +1956,16 @@ Ajax en Rails se maneja con parciales, entonces...
 </div>
 ```
 
-### Ahora podemos cambiar `_post.html.erb`
+### Ahora podemos cambiar `show.html.erb`
 
-Acabamos de mudar el comentario aparte de nuestro, formulario en un archivo separado. Ahora, vamos a tener que ajustar nuestro post parcial para seguir monstrando los comentarios de manera apropiada.
+Acabamos de mudar el comentario aparte en un archivo separado. Ahora, vamos a tener que ajustar nuestro `show` para seguir monstrando los comentarios de manera apropiada.
 
-En **app/views/posts/_post.html.erb**
+En **app/views/posts/show.html.erb**
 
 Reemplaza
 
 ```rhtml
-<% post.comments.each do |comment| %>
+<% @post.comments.each do |comment| %>
   <div class="comment">
     <div class="user-name">
       <%= comment.user.name %>
@@ -1985,7 +1974,7 @@ Reemplaza
       <%= comment.content %>
     </div>
     <% if comment.user == current_user %>
-      <%= link_to post_comment_path(post, comment), method: :delete, data: { confirm: "¿Estás segura?" } do %>
+      <%= link_to post_comment_path(@post, comment), method: :delete, data: { confirm: "¿Estás segura?" } do %>
         <span class="glyphicon glyphicon-remove delete-comment"></span>
       <% end %>
     <% end %>
@@ -1997,30 +1986,29 @@ con...
 
 
 ```rhtml
-<%= render post.comments, post: post %>
+<%= render @post.comments, post: @post %>
 ```
 
 Y sigue funcionando igual.
 
-
 ### Añadiendo `remote: true` a nuestro formulario
 
-En **app/views/posts/_post.html.erb**
+En **app/views/posts/show.html.erb**
 
 reemplaza
 
 ```rhtml
 <% if post.comments %>
-  <%= render post.comments, post: post %>
+  <%= render @post.comments, post: @post %>
 <% end %>
 ```
 
 con...
 
 ```rhtml
-<div class="comments" id="comments_<%= post.id %>">
-  <% if post.comments %>
-    <%= render post.comments, post: post %>
+<div class="comments" id="comments_<%= @post.id %>">
+  <% if @post.comments %>
+    <%= render @post.comments, post: @post %>
   <% end %>
 </div>
 ```
@@ -2028,7 +2016,7 @@ con...
 y las líneas
 
 ```rhtml
-<%= form_for [post, post.comments.new] do |f| %>
+<%= form_for [@post, @post.comments.new] do |f| %>
   <%= f.text_field :content, placeholder: 'Añade un comentario...' %>
 <% end %>
 ```
@@ -2036,8 +2024,8 @@ y las líneas
 con...
 
 ```rhtml
-<%= form_for([post, post.comments.build], remote: true) do |f| %>
-  <%= f.text_field :content, placeholder: 'Añade un comentario...', id: "comment_content_#{post.id}" %>
+<%= form_for([@post, @post.comments.build], remote: true) do |f| %>
+  <%= f.text_field :content, placeholder: 'Añade un comentario...', id: "comment_content_#{@post.id}" %>
 <% end %>
 ```
 
@@ -2080,10 +2068,16 @@ Añadir `remote: true` al enlace para borrar
 
 **app/views/comments/_comment.html**
 
-Al final de esta línea y antes de `do`, añade `remote: true`
+Al final de esta línea y antes de `do`, añade `, remote: true`
 
 ```rhtml
 <%= link_to post_comment_path(post, comment), method: :delete, data: { confirm: "¿Estás segura?" } do %>
+```
+
+Quedaría:
+
+```rhtml
+<%= link_to post_comment_path(post, comment), method: :delete, data: { confirm: "¿Estás segura?" }, remote: true do %>
 ```
 
 ### Añade la respuesta Javascript para la acción del controlador
@@ -2094,7 +2088,7 @@ Añade el método `responds_to` a la acción `destroy` dentro del `comments_cont
 
 ```ruby
 def destroy
-  @comment = @pin.comments.find(params[:id])
+  @comment = @post.comments.find(params[:id])
 
   if @comment.user_id == current_user.id
    @comment.delete
