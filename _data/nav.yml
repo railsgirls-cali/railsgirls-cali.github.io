@@ -5,3 +5,4 @@ main:
     - { url: '/tienda', text: 'Tienda' }
     - { url: '/slack', text: 'Railslack' }
     - { url: '/location', text: '¿Cómo llegar?' }
+    - { url: '/registro', text: 'Regístrate' }
