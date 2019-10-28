@@ -61,15 +61,15 @@ Antes de iniciar a programar veremos 2 puntos importantes.
 
 La interfaz de línea de comandos, terminal o consola es un método que permite a los usuarios dar instrucciones a algún programa informático por medio de una línea de texto simple.
 
-Lo primero que debemos saber es que el terminal se utiliza para dar ordenes al sistema mediante unas palabras llamadas comandos de Linux. Estos comandos pueden servir para muchas cosas, como por ejemplo: copiar archivos, comprimir carpetas, reproducir musica, descargar archivos, etc.
+Lo primero que debemos saber es que el terminal se utiliza para dar órdenes al sistema mediante unas palabras llamadas comandos de Linux. Estos comandos pueden servir para muchas cosas, como por ejemplo: copiar archivos, comprimir carpetas, reproducir música, descargar archivos, etc.
 
-Para que nosotros sepamos que el sistema está preparado para recibir ordenes, en el terminal aparecerá una línea de texto llamada prompt
+Para que nosotros sepamos que el sistema está preparado para recibir órdenes, en el terminal aparecerá una línea de texto llamada prompt
 
 ```
 $
 ```
 
-Entonces cada vez que vas a encontrar referencia a la `consola` en la guía, solo copia el comando y ejecutalo en la consola.
+Entonces cada vez que vas a encontrar referencia a la `consola` en la guía, solo copia el comando y ejecútalo en la consola.
 
 
 ### 2. Modificación de archivos
@@ -262,7 +262,7 @@ En tu navegador, ve a la URL : [http://localhost:3000/pages/home](http://localho
 
 ### Mostrar la página de inicio de tu aplicación (Home)
 
-Como conectar la raíz de tu sitio a un controlador y acción específica?
+¿Cómo conectar la raíz de tu sitio a un controlador y acción específica?
 
 Debemos configurar la ruta de acceso a la aplicación editando el archivo **config/routes.rb**, para esto debemos cambiar la siguiente línea en el mismo:
 
@@ -442,7 +442,7 @@ por...
 
 ### Crea un parcial de encabezado
 
-Por convención un parcial es un archivo de plantilla cuyo nombre empieza por un guión bajo y cuyo contenido se reutiliza en varias plantillas diferentes. Aqui el encabezado es un ejemplo de contenido que se repite en varias paginas.
+Por convención un parcial es un archivo de plantilla cuyo nombre empieza por un guion bajo y cuyo contenido se reutiliza en varias plantillas diferentes. Aquí el encabezado es un ejemplo de contenido que se repite en varias páginas.
 
 Crea el archivo **app/views/layouts/_header.html.erb**
 
@@ -474,21 +474,21 @@ Crea el archivo **app/views/layouts/_header.html.erb**
 
 **NOTA** **Embedded Ruby?** -- **¿Ruby embebido?**
 
-En Ruby se usa mucho ERB como sistema de plantillas para crear archivos HTML con código Ruby embebido
+En Ruby se usa mucho ERB como sistema de plantillas para crear archivos HTML con código Ruby embebido.
 
-En HTML, un enlace es así
+En HTML, un enlace es así:
 
 ```html
 <a href="#"> aquí </a>
 ```
 
-Estas son etiquetas de Ruby
+Estas son etiquetas de Ruby:
 
 ```erb
 < % = % >
 ```
 
-En Ruby on Rails un enlace se verá así
+En Ruby on Rails un enlace se verá así:
 
 ```erb
 <%= link_to "aquí", "#" %>
@@ -505,7 +505,7 @@ Después de la etiqueta `<body>` inserta:
 ```
 
 
-### Añade el el contenido del home
+### Añade el contenido del home
 
 Reemplaza todo el contenido del archivo
 
@@ -525,11 +525,11 @@ Reemplaza todo el contenido del archivo
 
 ### Cambios de estilo
 
-Ahora agregamos un poco de estilos CSS (*usando SASS*)
+Ahora agregamos un poco de estilos CSS (*usando SASS*).
 
 **app/javascript/stylesheets/application.scss**
 
-Reemplaza
+Reemplaza:
 
 ```scss
 @import '~bootstrap/scss/bootstrap';
@@ -586,7 +586,7 @@ gem 'devise'
 [...]
 ```
 
-### Siempre parre el servidor con `CONTROL + C` y corre `bundle install` para instalar una nueva gema
+### Siempre pare el servidor con `CONTROL + C` y corre `bundle install` para instalar una nueva gema
 
 Ejecuta bundle install para instalarla
 
@@ -657,7 +657,6 @@ Ve a **db/migrate** y deberías tener en los archivos algo así como **db/migrat
 
 El número es la fecha de creacíon.
 
-El modelo
 
 ### Migra la base de datos
 
@@ -685,9 +684,10 @@ rails server (para volver a iniciar el servidor)
 Tendrás que reiniciar la aplicación cada vez que instales una gema o cada vez que ejecutes `rails db:migrate`
 
 
+
 ## 11. Mensajes flash
 
-Los mensajes flash son los mensajes en sitios web que dicen " Gracias por registrarse en " o "Gracias por suscribirse a"
+Los mensajes flash son los mensajes en sitios web que dicen "Gracias por registrarse en ..." o "Gracias por suscribirse a ..."
 
 **app/views/layouts/application.html.erb**
 
@@ -706,7 +706,7 @@ Agrega lo siguiente Debajo de `<div class="container">` y antes de `<%= yield %>
 
 ```
 
-## 12. Registrar nuevos usuarios o iniciar sesíon
+## 12. Registrar nuevos usuarios o iniciar sesión
 
 ### Modifica la vista de inicio
 
@@ -769,7 +769,7 @@ por
 </ul>
 ```
 
-**NOTA** Usa el tabulador, la tecla Tab (Tab ↹) nos permite indentar el texto que este en nuestra selección y así mantener el codigo organizado y indentado.
+**NOTA** Usa el tabulador, la tecla Tab (Tab ↹) nos permite indentar el texto que este en nuestra selección y así mantener el código organizado y indentado.
 
 
 ## 13. Cambia las vistas de Devise
@@ -979,7 +979,7 @@ Ya tenemos todo un sistema de registro, autenticacion de usuarios con notificaci
 
 ## 14. Genera el scaffold para Posts
 
-Posts serán nuestras publicaciones o, mejor dicho, ¡Las imágenes que publicamos en nuestro Instagram!
+`Posts` serán nuestras publicaciones o, mejor dicho, ¡Las imágenes que publicamos en nuestro Instagram!
 
 
 ### Genera un scaffold para Posts
@@ -1178,7 +1178,7 @@ end
 
 ### Genera una nueva migración de índice de un usuario
 <br/>
-Esto significa que cada publicación estará relacionada con un usuario
+Esto significa que cada publicación estará relacionada con un usuario.
 
 `consola`
 
@@ -1193,7 +1193,7 @@ rails db:migrate
 ```
 * ##### Recuerda que hacemos `rails db:migrate` porque acabamos de crear una migración.
 
-* ##### Cada vez que hagas una migración, debes reiniciar el servidor de Rails
+* ##### Cada vez que hagas una migración, debes reiniciar el servidor de Rails.
 
 `consola`
 
@@ -1220,13 +1220,13 @@ end
 ```
 
 
-## 18. Autorización : ¿Quién puede? ¿Quién no puede?
+## 18. Autorización: ¿Quién puede? ¿Quién no puede?
 
-Una vez que un usuario tiene acceso ala plataforma, hay que ver los permisos que este usuario tiene.
+Una vez que un usuario tiene acceso a la plataforma, hay que ver los permisos que este usuario tiene.
 
-- Tenemos que asegurar que un usuario no puede cambiar la publicacion de otro usuario.
+- Tenemos que asegurar que un usuario no puede cambiar la publicación de otro usuario.
 
-- Tambien que las acciones (crear, cambiar o borrar una publicacíon) se puede hacer solamente si estas autenticado.
+- También que las acciones (crear, cambiar o borrar una publicación) se puede hacer solamente si estas autenticado.
 
 
 ### Actualiza el controlador Posts
@@ -1557,7 +1557,7 @@ Dentro de `<div class="post">` abajo colocamos:
 </div>
 ```
 
-y añade los siguiente estilos
+y añade los siguientes estilos
 
 **app/javascript/stylesheets/application.scss**
 
@@ -1608,7 +1608,7 @@ rails generate migration AddNameToUsers name:string
 rails db:migrate
 ```
 
-### Vuelve a iniciar el servidor después de correr una migracíon
+### Vuelve a iniciar el servidor después de correr una migración
 
 `consola`
 
@@ -1640,14 +1640,14 @@ end
 
 **app/views/devise/registrations/new.html.erb**, **app/views/devise/registrations/edit.html.erb**
 
-justo antes de
+Justo antes de
 
 ```rhtml
 <div class="form-group">
   <%= f.label :email %>
 ```
 
-añade
+Añade
 
 ```rhtml
 .
@@ -1765,7 +1765,7 @@ Este comando nos genera una migración **db/migrate/** para añadir los campos e
 rails db:migrate
 ```
 
-### Vuelve a iniciar el servidor después de correr una migracíon
+### Vuelve a iniciar el servidor después de correr una migración
 
 `consola`
 
@@ -1816,7 +1816,7 @@ end
 rails g controller comments
 ```
 
-El controlador de comentarios solo va a tener las acciones de crear y borrar comentarios
+El controlador de comentarios solo va a tener las acciones de crear y borrar comentarios.
 
 Actalualiza **app/controllers/comments_controller.rb** con:
 
@@ -2061,31 +2061,31 @@ Y reemplaza con
 1. En la parte superior derecha de tu espacio de trabajo en [C9](http://c9.io), haz clic en tu foto para abrir el panel de configuración y clic en `Dashboard`.
 [https://c9.io/account/ssh](https://c9.io/account/ssh)
 2. Ahora click en el círculo de arriba que tiene un engranaje y después en el menú lateral que dice `SSH keys`
-3. Copia todas las lineas que empezan por `ssh-rsa...`
+3. Copia todas las líneas que empiezan por `ssh-rsa...`
 4. Crea una cuenta en GitHub: [https://github.com](https://github.com)
-7. Entra en [tu perfil de usuario](https://github.com/settings/profile) y haz clicc en `SSH and GPG keys`.
+5. Entra en [tu perfil de usuario](https://github.com/settings/profile) y haz clic en `SSH and GPG keys`.
 [https://github.com/settings/ssh](https://github.com/settings/ssh)
-8. Ahora Clic en “Add SSH Key”. Introduce el título: " C9 ", pega la clave SSH en el cuadro "key", y haz clic en "Add key".
-9. Crea un repositorio nuevo vacío para tu nuevo proyecto. Desde tu repositorio, copia el enlace SSH:
+6. Ahora clic en “Add SSH Key”. Introduce el título: "C9", pega la clave SSH en el cuadro "key", y haz clic en "Add key".
+7. Crea un repositorio nuevo vacío para tu nuevo proyecto. Desde tu repositorio, copia el enlace SSH:
 ```
 git@github.com:sunombre/nombredelproyecto.git
 ```
-10. Convierte tu directorio actual en un repositorio git ejecutando en la consola de C9:
+8. Convierte tu directorio actual en un repositorio git ejecutando en la consola de C9:
 ```
 git init
 ```
-11. Utilizando el enlace SSH que copiaste en el paso 9, añade el repositorio remoto como origen:
+9. Utilizando el enlace SSH que copiaste en el paso 7, añade el repositorio remoto como origen:
 ```
 git remote add origin git@github.com:sunombre/nombredelproyecto.git
 ```
-12. Añade tus archivos y haz commit
+10. Añade tus archivos y haz commit
 ```
 git add .
 ```
 ```
 git commit -m "Mi Primer commit"
 ```
-13. Sube los archivos:
+11. Sube los archivos:
 ```
 git push -u origin master
 ```
