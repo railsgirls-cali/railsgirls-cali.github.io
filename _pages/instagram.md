@@ -17,9 +17,47 @@ permalink: /instagram/
     https://instagram-example-chrisestanol.c9users.io/</a>
 </div>
 
-## CONVENCIONES
+## RUBY ON RAILS
 
-### 1. consola
+### ¿Qué es Rails?
+
+Un recordatorio rápido sobre Rails.
+
+Rails es un framework de desarrollo de aplicaciónes web escrito en el lenguaje de programación Ruby. Está diseñado para hacer que la programación de aplicaciónes web sea más fácil, haciendo supuestos sobre lo que cada desarrollador necesita para comenzar. Te permite escribir menos código realizando más que muchos otros lenguajes y frameworks. Además, expertos desarrolladores en Rails reportan que hace que el desarrollo de aplicaciones web sea más divertido.
+
+Rails te permite escribir un buen código evitando que te repitas y favoreciendo la convención antes que la configuración.
+
+
+### Convención antes que configuración
+
+La convención antes que la configuración es un concepto simple que se utiliza principalmente en la programación. Significa que el entorno en el que trabaja (sistemas, bibliotecas, lenguaje ...) asume muchas situaciones lógicas por defecto, por lo que si te adaptas a ellas en lugar de crear tus propias reglas cada vez, la programación se convierte en una tarea más fácil y productiva.
+
+El objetivo es disminuir el número de decisiones que debes tomar como programador y eliminar la complejidad de tener que configurar todas y cada una de las áreas de desarrollo de aplicaciones. El resultado inmediato es que puedes crear muchas más cosas en menos tiempo.
+
+Los entornos de programación altamente exitosos como Ruby on Rails se basan en este concepto. Si sigue las convenciones establecidas, puede desarrollar una aplicación Rails en mucho menos tiempo y con muchas menos líneas de código de las que necesitaría desarrollar una aplicación web en otros lenguajes.
+
+
+### MVC (Model, View, Controller)
+
+En le transcurso de este proyecto vamos a hablar de conceptos de arquitectura y programación como vistas o controladores que usa Rails debido a que sigue un patrón de arquitectura que se llama MVC.
+
+El MVC o Modelo-Vista-Controlador es un patrón de arquitectura de software que, utilizando 3 componentes (Vistas, Models y Controladores) separa la lógica de la aplicación de la lógica de la vista en una aplicación.
+
+- **MODELO** Se encarga de los datos consultando la base de datos. Actualizaciones, consultas, búsquedas, etc. todo eso va aquí, en el modelo.
+
+- **CONTROLADOR** Recibe las órdenes del usuario y se encarga de solicitar los datos al modelo y de comunicárselos a la vista.
+
+- **VISTAS** Son la representación visual de los datos, todo lo que tenga que ver con la interfaz gráfica va aquí. Ni el modelo ni el controlador se preocupan de cómo se verán los datos, esa responsabilidad es únicamente de la vista.
+
+
+## GUIA
+
+La mejor forma de usar esta guía es seguir cada paso tal y como se muestra. No hemos ahorrado ninguna línea de código en las explicaciones, así que puedes seguirla literalmente paso a paso.
+
+Antes de iniciar a programar veremos 2 puntos importantes.
+
+
+### 1. consola/terminal
 
 La interfaz de línea de comandos, terminal o consola es un método que permite a los usuarios dar instrucciones a algún programa informático por medio de una línea de texto simple.
 
@@ -40,63 +78,120 @@ Encontrarás referencias como la siguiente para ubicar el archivo que tienes que
 
 **app/views/pages/home.html.erb**
 
-Con instrucciones y el codigo/contenido que tienes que agregar o cambiar
+Con instrucciones y el codigo que tienes que agregar o cambiar
 
 ```
 [...]
 
-codigo/contenido
+codigo
 
 [...]
 ```
 
 ## INICIO
 
-## 1. Arranca el servidor de Rails
+## 1. Crea una aplicación nueva
 
-`consola`
+### ¡Vamos a crear  una nueva aplicación basada en Instagram!
+
+En la consola
+
+```bash
+rails new instagram
+```
+
+Despues de este comando presiona enter y se va a crear una serie de archivos y dependencias organizados en carpetas que conforman la estructura de una aplicación Rails
+
+Una vez terminado puedes ver la ultima linea que dice:
 
 ```
-rails server -b 0.0.0.0 -p 8080
+Webpacker successfully installed 🎉 🍰
 ```
 
-El comando anterior usa las siguientes opciones:
+Después de crear la aplicación, entra a su directorio para continuar trabajando directamente en ella:
 
-- **-b** *especifíca que el servidor será accesible desde clientes externos, en este caso desde la internet utilizando cualquier navegador web si estás usando c9*
-- **-p** *especifíca el puerto en el cual el servidor abre la conexión*
+En la consola
+
+```
+cd instagram
+```
+
+
+### El archivo Gemfile
+
+Ahora que creamos este nuevo proyecto con los archivos necesario para iniciar un proyecto de Rails echale una mirada al archivo **Gemfile**.
+Este archivo es la base de Rails y donde encontraras las librerias que hacen funcionar nuestra aplicación.
+Ademas estaremos agregando nueva librerias en el transcurso de este proyecto para agregar nueva funcionalidades a nuestro proyecto.
 
 
 ## 2. Página de inicio
 
-C9 te creas una URL especial, para el caso del taller la URL será generada de la siguiente forma:
+Una vez que tenemos la primera parte lista podemos ejecutar un nuevo comando en la consola:
 
-http://**nombre_del_proyecto**-**tu_usuario_de_c9**.c9users.io/
+```
+rails server
+```
 
-Deberías ver la página de información por defecto de Rails.
+Eso va a arrancar nuestro servidor de aplicación.
 
-La página "Welcome Aboard" es la primera prueba para una nueva aplicación Rails: Ésta asegura que tienes el software configurado correctamente para servir una página.
+Deberías ver algo parecido a:
+
+```
+=> Booting Puma
+=> Rails 6.0.0 application starting in development
+=> Run `rails server --help` for more startup options
+Puma starting in single mode...
+* Version 3.12.1 (ruby 2.6.2-p47), codename: Llamas in Pajamas
+* Min threads: 5, max threads: 5
+* Environment: development
+* Listening on tcp://localhost:3000
+Use Ctrl-C to stop
+```
+
+Que significa que nuestra aplicacion ya esta corriendo en el navegador.
+
+En el navegador, ve a la URL: [http://localhost:3000](http://localhost:3000) . Esta es la página de inicio por defecto para las aplicaciones Rails.
+
+La página "Yay! You’re on Rails!" es la primera prueba para una nueva aplicación Rails. Ésta asegura que tienes el software configurado correctamente para servir una página.
 
 
-## 3. Crea una nueva página
+## 3. Crea una primera página
 
-Para crear nuestra nueva pagina, necesitas crear como mínimo un controlador y una vista.
+Para crear nuestra primera pagina, necesitas crear como mínimo una ruta, un controlador y una vista.
 
-El propósito de un controlador es recibir las peticiones (requests) de la aplicación. El enrutamiento (routing) decide qué controlador recibe qué petición.
+
+### Ruta
+
+La ruta define donde se va a encontrar nuestra pagina y quien va a tener responsabilidad de mostrar el contenido.
+
+
+### Controlador
+
+Esta responsabilidad es la del controlador
+El propósito de un controlador es recibir las peticiones (requests) de la aplicación.
 
 A menudo, hay más de una ruta para cada controlador, y diferentes rutas pueden ser servidas por diferentes acciones (actions). El propósito de cada acción es obtener información para pasarla después a la vista.
 
+
+### Vista
+
 El propósito de una vista es mostrar la información en un formato legible para los humanos. Una distinción importante que hacer es que es el controlador, y no la vista, donde la información es recolectada. La vista sólo debería mostrar la información. Por defecto, las plantillas de las vistas están escritas en un lenguaje llamado ERB (del inglés, Embedded Ruby), que se procesa automáticamente para cada petición servida por Rails.
 
-Para crear un nuevo controlador, necesitas ejecutar el generador de controladores y decirle que quieres un controlador llamado por ejemplo pages con una acción llamada home. Para ello, ejecuta lo siguiente:
+
+### Ahora la nueva pagina
+
+Vamos a crear una pagina de `inicio` y iniciamos creando un nuevo controlador.
+
+Para crear un nuevo controlador, necesitas ejecutar el generador de controladores y decirle que quieres un controlador llamado por ejemplo `pages` con una acción llamada `home`. Para ello, ejecuta lo siguiente:
 
 **NOTA** El primer tab de tu consola ya tiene el servidor de Rails corriendo que lanzaste con el comando:
 
 ```
-rails server -b 0.0.0.0 -p 8080
+rails server
 ```
 
 Ahora tienes que abrir un nuevo tab.
-En el terminal aparecerá un nuevo prompt `$ ` donde puedes ejecutar:
+En la consola aparecerá un nuevo prompt `$ ` donde puedes ejecutar:
 
 
 `consola`
@@ -109,7 +204,7 @@ Rails creará una serie de archivos y añadirá una ruta por ti.
 
 ```
 create  app/controllers/pages_controller.rb
- route  get 'pages/home'
+route  get 'pages/home'
 invoke  erb
 create    app/views/pages
 create    app/views/pages/home.html.erb
@@ -119,31 +214,57 @@ invoke  helper
 create    app/helpers/pages_helper.rb
 invoke    test_unit
 invoke  assets
-invoke    coffee
-create      app/assets/javascripts/pages.coffee
 invoke    scss
 create      app/assets/stylesheets/pages.scss
 ```
 
-Los archivos más importantes de éstos son por supuesto el controlador, que se encuentra en **app/controllers/pages_controller.rb** y la vista, que se encuentra en **app/views/pages/home.html.erb**.
+Estas convenciones que estabamos hablando un poco mas arribas son las que permiten definir lo que se va a crear cada vez que ejecutemos un comando de Rails. Podríamos tambien crear los archivos a mano y escribir el codigo pero Rails se encarga de crear el esqueleto o la estrucutra base para ahorarnos tiempo y implementar buenas practicas basadas en la experiencia colectiva de los desarolladores que contribuyen en proyectos de codigo abiertos como Ruby on Rails.
+
+
+Los archivos más importantes que acabamos de crear con el generador son por supuesto el controlador, que se encuentra en **app/controllers/pages_controller.rb** y la vista (HTML), que se encuentra en **app/views/pages/home.html.erb**.
+
+Miremos un poco acerca de la convencion que sigue estos archivos.
+La mayoría del trabajo en esta guia se llevará a cabo en la carpeta **app/**, y vemos que el primer archivo el controlador se creo en una carpeta que se llama `controllers`, se llama `pages_controller.rb` y tiene una accion llamada `home`.
+
+```ruby
+class PagesController < ApplicationController
+  def home
+  end
+end
+```
+
+Le coresponde entonces un vista ubicada en el archivo `views` con el nombre `home.html.erb` que va a contener la representacion en codigo HTML de lo que queremos mostrar en el navegador.
+
+Y todo no podría funcionar sin nuestra ruta que tambíen fue añadida con el mismo comando
+La puedes ver abriendo el archivo **config/routes.rb**
+
+```ruby
+Rails.application.routes.draw do
+  get 'pages/home'
+  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+end
+```
+
+**NOTA** El algunos archivos puedes ver un texto que impieza con el numeral `#`. Este texto hace parte de los comentarios que se estan autogenerando que dan algunas indicaciones a a el usuarios de como seguir la convenciones de Rails.
 
 
 ### Actualiza el texto en la nueva página
 
+Ahora actualizaremos el archivo de inicio.
 Abre el archivo **app/views/pages/home.html.erb** en tu editor de texto y edítalo para que contenga sólo está línea de código:
 
 ```html
 <h1>¡Bienvenidos a Instagram!</h1>
 ```
 
-En tu navegador, ve a la URL : [http://**nombre_del_proyecto**-**tu_usuario_de_c9**.c9users.io/pages/home](http://**nombre_del_proyecto**-**tu_usuario_de_c9**.c9users.io/pages/home) y ve la nueva página que se acaba de crear.
+En tu navegador, ve a la URL : [http://localhost:3000/pages/home](http://localhost:3000/pages/home) y ve la nueva página que se acaba de crear.
 
 
 ### Mostrar la página de inicio de tu aplicación (Home)
 
 Como conectar la raíz de tu sitio a un controlador y acción específica?
 
-Debemos configurar la ruta de acceso a la aplicación editando el archivo `config/routes.rb`, para esto debemos cambiar la siguiente línea en el mismo:
+Debemos configurar la ruta de acceso a la aplicación editando el archivo **config/routes.rb**, para esto debemos cambiar la siguiente línea en el mismo:
 
 **config/routes.rb**
 
@@ -158,6 +279,9 @@ get 'pages/home'
 ```ruby
 root 'pages#home'
 ```
+
+Este pequeño cambio indica a Rails que en la pagina de inicio de nuestra aplicación ubicada enla direccion web [http://localhost:3000/](http://localhost:3000/) queremos mostrar la pagina `home`.
+
 
 ## 4. Crea más paginas
 
@@ -175,9 +299,14 @@ class PagesController < ApplicationController
 end
 ```
 
+Como puedes ver acabamos de agregar debajo de la accion `Home` una nueva accion `about`.
+Así tenemos la estructura basica de nuestra aplicación donde tenemos una pagina de inicio y una nueva pagina `about` para contar un poco sobre nosotros.
+
+
 ###  Crea el siguiente archivo:
 
 **app/views/pages/about.html.erb**
+
 
 #### y agrega lo siguiente:
 
@@ -203,91 +332,93 @@ Añade:
 get 'about' => 'pages#about'
 ```
 
+Ahora en el navegador puedes visitar nuestras dos paginas:
+
+- [http://localhost:3000/](http://localhost:3000/): la pagina de inicio
+- [http://localhost:3000/pages/about](http://localhost:3000/pages/about): la pagina donde encontrar información sobre ti en tu proyecto.
+
 
 ## 5. ¡Instalemos Bootstrap!
 
-### Añade la gema de Bootstrap Y Sass
+### Añade Bootstrap con Webpack
 
-*"Las gemas en Ruby son las bibliotecas o paquetes (código Ruby empaquetado de una manera predeterminada) de software que se instalan en el sistema para aumentar las funcionalidades del interprete"*.
+Ahora vamos a dedicar un poco de tiempo en configurar toda la parte de Front end de de nuestra aplicación por eso vamos a usar un Framework llamado Bootstrap.
 
 - **Bootstrap** es una biblioteca multiplataforma o conjunto de herramientas de código abierto para diseño de sitios y aplicaciones web. Contiene plantillas de diseño con tipografía, formularios, botones, cuadros, menús de navegación y otros elementos de diseño basado en HTML y CSS, así como extensiones de JavaScript adicionales.
+Boostrap facilita la maquetación de sitios web y nos ofrece las herramientas para que nuestro sitio web se vea bien en toda clase de dispositivos, ahorrandonos así el trabajo de tener que rediseñar un sitio web.
+Inicialmente creado como una solución interna para twitter y posteriormente liberado al público en agosto del 2011 como un proyecto Open Source en GitHub, en los meses siguientes a su liberación la comunidad apoyó activamente este proyecto hasta convertirlo en lo que es hoy "the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web." como lo indica en su [https://getbootstrap.com/](página web).
+
+Existe varias manera de integrarar Bootstrap con la parte de Frontend de Rails, es decir todo el codigo Javascript y CSS que se usa en la parte de la vista y que permite renderizar aplicaciones dinamicas en el navegador.
+En nuestro ejemplo vamos a ver una de la mas popular que se llama `Webpack`.
+
+- **Webpack** es un Module Bundler for modern JavaScript applications, es decir, un empaquetador de módulos para aplicaciones modernas hechas en JavaScript.
+
+Una aplicación web lleva múltiples tipos de assets como imágenes, fuentes personalizadas, JSON, CSS, JavaScript, etc. y manejar esto se vuelve un dolor de cabeza a medida que nuestra aplicación tiene éxito y va creciendo. Todo esto lo resuelve Webpack y es por eso que será nuestro empaquetador de módulos (o Module Mundler).
+
+Tener una aplicación organizada va a ayudarte a llevar un correcto manejo de versiones de tu código. También necesitarás organizar carpetas llenas de archivos en toda clase de extensiones y separar las que se usan en entornos de desarrollo, como las que se usarán en producción. Esto lo hace Webpack de manera fácil, solo debes decirle dónde está el archivo fuente y a dónde quieres enviar el o los archivos resultantes.
+
+
+### Paso a paso
+
+El primero comando que vamos a utlizar es
+
+`consola`
+
+```
+yarn add bootstrap jquery popper.js
+```
+
+Acabamos de instalar los paquetes y dependecias de Bootstrap. Ahora solo falta configurarlo dentro de rails
+
+En **config/webpack/environment.js** agrega lo siguiente:
+
+
+```js
+const { environment } = require('@rails/webpacker')
+
+const webpack = require('webpack')
+environment.plugins.append('Provide', new webpack.ProvidePlugin({
+  $: 'jquery',
+  jQuery: 'jquery',
+  Popper: ['popper.js', 'default']
+}))
+
+module.exports = environment
+```
+
+La primera y ultima linea ya esta en este archivo así que asegurate que el archivo contiene este codigo.
+
+
+Ahora en **app/javascript/packs/application.js** y debajo de `require("channels")`  agrega lo siguiente:
+
+```
+import 'bootstrap'
+import '../stylesheets/application'
+```
+
+Crea la carpeta **app/javascript/stylesheets** con el archivo `application.scss` y agraga:
+
+```
+@import '~bootstrap/scss/bootstrap';
+```
+
+Finalmente falta solamente abrir el archivo  **app/views/layouts/application.html.erb** y debajo de:
+
+
+```rhtml
+<%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+````
+
+agregar:
+
+```rhtml
+<%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+```
+
+De pronto te diste cuenta que estamos usando un archivo con una extension `.scss`. Este tipo de archivo es para manejar un tipo de CSS que se llama SASS.
 
 - **Sass** (acrónimo de Syntactically Awesome StyleSheets) es una extensión de CSS que añade características muy potentes y elegantes a este lenguaje de estilos. Sass permite el uso de variables, reglas CSS anidadas, mixins, importación de hojas de estilos y muchas otras características, al tiempo que mantiene la compatibilidad con CSS.
 
-En
-
-**/Gemfile**
-
-Y justo antes de `group :development, :test do` inserta:
-
-```ruby
-[...]
-
-gem 'bootstrap-sass'
-
-[...]
-```
-
-### Siempre parre el servidor con `CONTROL + C` y corre `bundle install` para instalar una nueva gema
-
-`consola`
-
-```bash
-CONTROL + C
-bundle install
-```
-
-### Vuelve a iniciar el servidor
-
-`consola`
-
-```bash
-rails server -b 0.0.0.0 -p 8080
-```
-
-### Crea un nuevo documento SCSS
-
-Una vez instalado Bootstrap en nuestra aplicación, crearemos un nuevo documento SASS en `app/assets/stylesheets/custom_bootstrap.scss` para importar todas las funcionalidades CSS de boostrap a nuestro proyecto. En este nuevo documento debemos añadir lo siguiente:
-
-**app/assets/stylesheets/custom_bootstrap.scss**
-
-```
-@import "bootstrap";
-```
-
-### Importa el Javascript para Bootstrap
-
-Igualmente, en el archivo `app/assets/javascripts/application.js` debemos agregar el código de abajo para importar todas las funcionalidades JS de Boostrap en nuestro proyecto.
-
-**app/assets/javascripts/application.js**
-
-```
-[...]
-//= require bootstrap-sprockets
-[...]
-//= require_tree .
-```
-
-### Añade el viewport
-##### Esto sirve para permitir que tu app se vea bien en varios tamaños de pantalla
-**views/layouts/application.html.erb**
-
-Después del `<head>` y antes del `<title>`.
-
-Inserta:
-
-```html
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-```
-
-### Vuelve a iniciar el servidor
-
-`consola`
-
-```bash
-CONTROL + C
-rails server -b 0.0.0.0 -p 8080
-```
 
 ## 6. Añade elementos de Bootstrap a la página
 
@@ -305,7 +436,7 @@ por...
 
 ```rhtml
 <div class="container">
-    <%= yield %>
+  <%= yield %>
 </div>
 ```
 
@@ -315,31 +446,28 @@ Por convención un parcial es un archivo de plantilla cuyo nombre empieza por un
 
 Crea el archivo **app/views/layouts/_header.html.erb**
 
+
 ### Añade la barra de navegación
 
 **app/views/layouts/_header.html.erb**
 
 ```rhtml
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-expand-lg ">
   <div class="container">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <%= link_to "Instagram", root_path, class: "navbar-brand" %>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse navbar-ex1-collapse">
-      <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "Home", root_path %></li>
-        <li><%= link_to "Quiénes somos", about_path %></li>
+    <%= link_to "Instagram", root_path, class: "navbar-brand" %>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <%= link_to "Home", root_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Quiénes somos", about_path, class: "nav-link" %>
+        </li>
       </ul>
-    </div><!-- /.navbar-collapse -->
+    </div>
   </div>
 </nav>
 ```
@@ -399,12 +527,12 @@ Reemplaza todo el contenido del archivo
 
 Ahora agregamos un poco de estilos CSS (*usando SASS*)
 
-**app/assets/stylesheets/custom_bootstrap.scss**
+**app/javascript/stylesheets/application.scss**
 
 Reemplaza
 
 ```scss
-@import 'bootstrap';
+@import '~bootstrap/scss/bootstrap';
 ```
 
 por los siguientes estilos:
@@ -415,20 +543,21 @@ por los siguientes estilos:
 
 $body-bg:                          #fafafa !important;
 $font-family-sans-serif:           'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-$navbar-height:                    70px;
-$navbar-default-bg:                white;
-$navbar-default-brand-color:       #3897F0;
-$navbar-default-link-color:        #3897F0;
-$brand-primary:                    #3897F0 !default;
+$primary:                          #3897F0;
 $jumbotron-bg:                     white;
 
-@import 'bootstrap-sprockets';
-@import 'bootstrap';
+@import '~bootstrap/scss/bootstrap';
 
-.navbar-default .navbar-brand {
+.navbar {
+  background-color: #fff;
+  font-weight: bold;
+  height: 77px;
+  border-bottom: 1px solid #dbdbdb;
+}
+
+.navbar-brand {
   font-family: 'Oleo Script', cursive;
   font-size: 25px;
-  font-weight: bold;
   color: #262626;
 }
 
@@ -442,9 +571,14 @@ $jumbotron-bg:                     white;
 
 ### Añade la gema de Devise
 
+*"Las gemas en Ruby son las bibliotecas o paquetes (código Ruby empaquetado de una manera predeterminada) de software que se instalan en el sistema para aumentar las funcionalidades del interprete"*.
+
 La mayoria de las aplicaciones web necesitan que los usuarios puedan crear una cuenta, modificar su perfil, iniciar y cerrar sesión. En el contexto de rails hay una gema que se integra naturalmente con él y gestiona estos componentes; esta gema se llama Devise.
 
 **/Gemfile**
+
+Debajo de `'bootsnap', '>= 1.4.2', require: false` añade la gema de Devise.
+
 
 ```ruby
 [...]
@@ -453,6 +587,8 @@ gem 'devise'
 ```
 
 ### Siempre parre el servidor con `CONTROL + C` y corre `bundle install` para instalar una nueva gema
+
+Ejecuta bundle install para instalarla
 
 `consola`
 
@@ -466,7 +602,7 @@ bundle install
 `consola`
 
 ```bash
-rails server -b 0.0.0.0 -p 8080
+rails server
 ```
 
 
@@ -475,7 +611,10 @@ rails server -b 0.0.0.0 -p 8080
 **NOTA** El primer tab de tu consola todavía tiene el servidor de Rails corriendo.
 Sigue usando el otro tab.
 
+
 ### Instala Devise
+
+Ejecuta el generador de Devise:
 
 `consola`
 
@@ -483,9 +622,15 @@ Sigue usando el otro tab.
 rails generate devise:install
 ```
 
+Acabamos de crear los archivos necesario para la configuracion de Devise.
+Ademas Devise nos deja una serie de recomendaciones sobre buenas practicas y configuraciones adicionales de la gema. Ahora podemos crear las vistas.
+
+
 ### Crea las vistas de Devise
 
 Generar las vistas para la personalización del manejo de sesiones de usuario.
+Estas vistas coresponden a las que necesitamos para iniciar y cerrar session, manejar registras de usuarios, cambio de contraseña...etc
+
 
 `consola`
 
@@ -493,7 +638,12 @@ Generar las vistas para la personalización del manejo de sesiones de usuario.
 rails g devise:views
 ```
 
+Y vemos que Rails acaba de crear varios archivos nuevos en nuestra aplicación.
+
+
 ### Crea un modelo de usuario
+
+Los modelos en Rails usan un nombre en singular, y sus correspondientes tablas de base de datos usan un nombre en plural. Rails provee un generador para crear modelos, el cual la mayoría de desarrolladores en Rails tienden a usar para crear nuevos modelos. En nustro caso Devise ofrece un generador especifico que crea el modelo de usuario definiendo la base de nustro sistema de autenticación.
 
 `consola`
 
@@ -501,31 +651,39 @@ rails g devise:views
 rails generate devise User
 ```
 
-La línea de arriba crea un modelo de usuario y un nuevo archivo: **app/models/user.rb**
+Esta línea crea un modelo de usuario y un nuevo archivo: **app/models/user.rb**
 
-Ve a **db/migration** y deberías tener en los archivos algo así como **db/migration/20170218022322_devise_create_users.rb**
+Ve a **db/migrate** y deberías tener en los archivos algo así como **db/migrate/20191021001811_devise_create_users.rb**
 
-El número es la fecha de creacíon
+El número es la fecha de creacíon.
+
+El modelo
 
 ### Migra la base de datos
 
 `consola`
 
 ```bash
-rake db:migrate
+rails db:migrate
 ```
 
-Este comando toma el archivo de migración y lo ejecuta, de manera que genere tablas en la base de datos
+Este comando toma el archivo de migración y lo ejecuta, de manera que genere tablas en la base de datos.
+
+**NOTA**
+Las migraciones nos permiten hacer cambios sobre el esquema de la base de datos de forma iterativa y consistente.
+Una migración es un archivo que se crea dentro de la carpeta **db/migrate** y que contiene instrucciones para modificar el esquema de la base de datos (crear tablas, agregar columnas, eliminar columnas, eliminar tablas, etc.).
+Cuando creas un modelo desde la línea de comandos con el generador de Rails, automáticamente se crea una migración con las instrucciones para crear la tabla.
 
 
 ### Vuelve a iniciar el servidor
 
 ```bash
 CONTROL + C (para parar el servidor)
-rails server -b 0.0.0.0 -p 8080 (para volver a iniciar el servidor)
+rails server (para volver a iniciar el servidor)
 ```
 
-Tendrás que reiniciar la aplicación cada vez que instales una gema o cada vez que ejecutes `rake db:migrate`
+Tendrás que reiniciar la aplicación cada vez que instales una gema o cada vez que ejecutes `rails db:migrate`
+
 
 ## 11. Mensajes flash
 
@@ -577,22 +735,36 @@ Agrega lo siguiente Debajo de `<div class="container">` y antes de `<%= yield %>
 Reemplaza
 
 ```rhtml
-<ul class="nav navbar-nav navbar-right">
-  <li><%= link_to "Home", root_path %></li>
-  <li><%= link_to "Quiénes somos", about_path %></li>
+<ul class="navbar-nav ml-auto">
+  <li class="nav-item">
+    <%= link_to "Home", root_path, class: "nav-link" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Quiénes somos", about_path, class: "nav-link" %>
+  </li>
 </ul>
 ```
 por
 
 ```rhtml
-<ul class="nav navbar-nav navbar-right">
-  <li><%= link_to "Home", root_path %></li>
-  <li><%= link_to "About", about_path %></li>
+<ul class="navbar-nav ml-auto">
+  <li class="nav-item">
+    <%= link_to "Home", root_path, class: "nav-link" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Quiénes somos", about_path, class: "nav-link" %>
+  </li>
   <% if user_signed_in? %>
-    <li><%= link_to "Cerrar sesión", destroy_user_session_path, method: :delete %></li>
+    <li class="nav-item">
+      <%= link_to "Cerrar sesión", destroy_user_session_path, class: "nav-link", method: :delete %>
+    </li>
   <% else %>
-    <li><%= link_to "Regístrate", new_user_registration_path %></li>
-    <li><%= link_to "Iniciar sesión", new_user_session_path %></li>
+    <li class="nav-item">
+      <%= link_to "Regístrate", new_user_registration_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "Iniciar sesión", new_user_session_path, class: "nav-link" %>
+    </li>
   <% end %>
 </ul>
 ```
@@ -602,11 +774,16 @@ por
 
 ## 13. Cambia las vistas de Devise
 
+Cunado corrimos el comando `rails g devise:views` el generador creo un serie de vistas con formularios responsable del registro de usuario, el inicio de sesion etc.
+Todos estas vistas están ubicadas dentro de la carpeta **app/views/devise**.
+Ahora vamos a mejorar un poco estos archvos agregando CSS de Bootstrap.
+
+
 ### Reemplaza el código para cada una de las vistas de Devise
 
 **app/views/devise/registrations/new.html.erb**
 
-#### *Esta vista se encarga del formulario de registro de usuarios en tu app.*
+*Esta vista se encarga del formulario de registro de usuarios en tu app.*
 
 ```rhtml
 <div class="form-wrapper">
@@ -630,7 +807,9 @@ por
     </div>
   <% end %>
 
-  <%= render "devise/shared/links" %>
+  <div class="form-group text-center">
+    <%= render "devise/shared/links" %>
+  </div>
 </div>
 ```
 
@@ -639,7 +818,6 @@ por
 *Esta vista se encarga del formulario de edición de la información de usuarios en tu app.*
 
 ```rhtml
-
 <div class="form-wrapper">
   <h1>Editar <%= resource_name.to_s.humanize %></h1>
 
@@ -695,8 +873,9 @@ por
     </div>
   <% end %>
 
-  <%= render "devise/shared/links" %>
-
+  <div class="form-group text-center">
+    <%= render "devise/shared/links" %>
+  </div>
 </div>
 ```
 
@@ -727,7 +906,9 @@ por
     </div>
   <% end %>
 
-  <%= render "devise/shared/links" %>
+  <div class="form-group text-center">
+    <%= render "devise/shared/links" %>
+  </div>
 </div>
 ```
 
@@ -759,12 +940,15 @@ por
     </div>
   <% end %>
 
-  <%= render "devise/shared/links" %>
+  <div class="form-group text-center">
+    <%= render "devise/shared/links" %>
+  </div>
 </div>
 ```
+
 ### Añade estos estilos para que tus formularios se vean más geniales <3
 
-Al final del archivo: **app/assets/stylesheets/custom_bootstrap.scss**
+Al final del archivo: **app/javascript/stylesheets/application.scss**
 
 ```css
 .form-wrapper {
@@ -784,33 +968,59 @@ Al final del archivo: **app/assets/stylesheets/custom_bootstrap.scss**
 Debajo de `<% if user_signed_in? %>`:
 
 ```rhtml
-<li><%= link_to "Mi cuenta", edit_user_registration_path %></li>
+<li class="nav-item">
+  <%= link_to "Mi cuenta", edit_user_registration_path, class: "nav-link" %>
+</li>
 
 ```
+
+Ya tenemos todo un sistema de registro, autenticacion de usuarios con notificaciones super poderoso. Si quieres conocer mas acerca de como configurar y usar Devise mas alla de esta guia encontraras un enlace al final de la guia.
+
 
 ## 14. Genera el scaffold para Posts
 
 Posts serán nuestras publicaciones o, mejor dicho, ¡Las imágenes que publicamos en nuestro Instagram!
 
+
 ### Genera un scaffold para Posts
 
-Un scaffold es un generador automático de modelo + controlador + vistas
+Un scaffold es un generador automático de modelo + controlador + vistas.
+Scaffold significa andamio en inglés. Es un generador de código el cual nos permite tener las funcionalidades básicas de administración de un modelo, es decir el CRUD (Create, Read, Update, Delete), y que son típicas para cualquier sistema transaccional. Entonces ya tendremos dos modelo de datos, uno para los usuarios que creamos con Devise y ahora sus respectivos posts utilizando el generador de código scaffold.
+
+`consola`
 
 ```bash
 rails generate scaffold posts description:string
-rake db:migrate
 ```
 
-El scaffold tambien crea un archivo de estilos CSS basicos pero nosotros vamos a usar nuestro propio CSS así que podemos borrar este archivo.
+Con este comando le estamos diciendo a Rails de crear un scaffold `posts` con un campo `description` que es de tipo `string`. Por ahora nustra publicación de Instagram solo tiene una descripción.
+Usando scaffold hemos creado todo el código necesario para un CRUD, éste nos ha creado los modelos, controladores, vistas, assets, rutas y las migraciones.
 
-**/app/assets/stylesheets/scaffolds.scss**
+Hablando de migraciones, ahora tenemos que ejecutar la migración.
+
+`consola`
+
+```bash
+rails db:migrate
+```
+
+**NOTA**
+Las migraciones nos permiten hacer cambios sobre el esquema de la base de datos de forma iterativa y consistente.
+Una migración es un archivo que se crea dentro de la carpeta **db/migrate** y que contiene instrucciones para modificar el esquema de la base de datos (crear tablas, agregar columnas, eliminar columnas, eliminar tablas, etc.).
+Cuando creas un modelo desde la línea de comandos con el generador de Rails, automáticamente se crea una migración con las instrucciones para crear la tabla.
+
+
+**IMPORTANTE**
+El scaffold también crea un archivo de estilos CSS basicos pero nosotros vamos a usar nuestro propio CSS así que podemos borrar este archivo para no interferir con nuestros estilos.
+
+Borra **/app/assets/stylesheets/scaffolds.scss**.
 
 
 ## 15. Simplifiquemos el controlador de Posts
 
 **app/controllers/posts_controller.rb**
 
-##### Reemplaza todo el contenido del controlador
+### Reemplaza todo el contenido del controlador
 
 ```ruby
 class PostsController < ApplicationController
@@ -869,11 +1079,15 @@ end
 
 ### Esto se llama el parcial "formulario"
 
+Las plantillas parciales (partials) son una forma de dividir el proceso de representación en partes más manejables. Los parciales permiten extraer fragmentos de código de sus plantillas en archivos separados y también reutilizarlos en todas sus plantillas.
+Los parciales tienen como prefijo un subrayado, de manera de no confundirlas con vistas regulares
+
 Modifica el parcial del formulario **apps/views/posts/_form.html.erb**
 
 Reemplaza todo el contenido por:
 
 ```rhtml
+<h1>Crear un post</h1>
 <%= form_for(@post) do |f| %>
   <% if @post.errors.any? %>
     <div class="alert alert-danger alert-dismissable"><button aria-hidden="true" class="close" data-dismiss="alert" type="button">×</button>
@@ -897,13 +1111,21 @@ Reemplaza todo el contenido por:
 
 ### Para mantener nuestros estilos, tendremos el contenido de las siguientes vistas dentro de un form-wrapper
 
-Cambia todo lo que hay en estos dos archivos: **app/views/posts/edit.html.erb**, **app/views/posts/new.html.erb** por:
+Cambia todo lo que hay en este archivos: **app/views/posts/new.html.erb** por:
 
 ```rhtml
 <div class="form-wrapper">
-
+  <h2>Crear un post</h2>
   <%= render 'form' %>
+</div>
+```
 
+Y lo que hay en este archivo **app/views/posts/edit.html.erb** por
+
+```rhtml
+<div class="form-wrapper">
+  <h2>Actualizar un post</h2>
+  <%= render 'form' %>
 </div>
 ```
 
@@ -914,7 +1136,9 @@ Cambia todo lo que hay en estos dos archivos: **app/views/posts/edit.html.erb**,
 Debajo de `<% if user_signed_in? %>`:
 
 ```rhtml
-<li><%= link_to 'Nuevo post', new_post_path %></li>
+<li class="nav-item">
+  <%= link_to 'Nuevo post', new_post_path, class: "nav-link"%>
+</li>
 ```
 
 ### Redireccionamos la raíz de nuestra aplicación al `index` de Posts
@@ -923,19 +1147,28 @@ Debajo de `<% if user_signed_in? %>`:
 
 reemplaza `root 'pages#home'` por `root 'posts#index'`
 
+
 ## 17. Posts, Usuarios y Asociaciones
 
-#### Recursos
+### Asociaciones
 
-**Asociaciones:** https://makeitrealcamp.gitbook.io/ruby-on-rails-5/asociaciones
+Las asociaciones se utilizan para definir relaciones entre tablas de una base de datos. Existen dos tipos de asociaciones que se pueden modelar en una base de datos relacional:
+- One to many (uno a muchos)
+- Many to many (muchos a muchos)
+
+En nustro ejemplo usaremos One to many (uno a muchos)
+
+### One to many
+
+En una relación uno a muchos cada registro de una tabla está relacionado a un registro de otra tabla.
+Por ejemplo, imagina que cada publicación pertenece a un usuario.
 
 ### Configura tus asociaciones
 
-Un Post `belongs_to` un Usuario
+Un Post `belongs_to` un Usuario.
+Una Publicación ***pertenece*** a un Usuario.
 
-##### Una Publicación ***pertenece*** a un Usuario
-
-**app/models/post.rb**
+En el model `Post` **app/models/post.rb** remplaza el contenido por:
 
 ```ruby
 class Post < ActiveRecord::Base
@@ -951,9 +1184,14 @@ Esto significa que cada publicación estará relacionada con un usuario
 
 ```bash
 rails generate migration add_user_id_to_posts user_id:integer:index
-rake db:migrate
 ```
-* ##### Recuerda que hacemos `rake db:migrate` porque acabamos de crear una migración.
+
+Y despues
+
+```bash
+rails db:migrate
+```
+* ##### Recuerda que hacemos `rails db:migrate` porque acabamos de crear una migración.
 
 * ##### Cada vez que hagas una migración, debes reiniciar el servidor de Rails
 
@@ -961,7 +1199,7 @@ rake db:migrate
 
 ```bash
 CONTROL + C (para parar el servidor)
-rails server -b 0.0.0.0 -p 8080 (para volver a iniciar el servidor)
+rails server (para volver a iniciar el servidor)
 ```
 
 
@@ -969,7 +1207,7 @@ rails server -b 0.0.0.0 -p 8080 (para volver a iniciar el servidor)
 
 ##### Un Usuario ***tiene*** muchas Publicaciones
 
-**app/models/user.rb**
+En el modelo `User` **app/models/user.rb** remplaza el contenido por:
 
 ```ruby
 class User < ActiveRecord::Base
@@ -992,6 +1230,8 @@ Una vez que un usuario tiene acceso ala plataforma, hay que ver los permisos que
 
 
 ### Actualiza el controlador Posts
+
+Ahora vamos a cambiar el codigo para que un usuario pueda crear, editar y borrar sus publicaciones y no aceder a todas.
 
 **app/controllers/posts_controller.rb**
 
@@ -1055,14 +1295,18 @@ end
 
 ### Agreguemos autenticación de usuarios con Devise
 
-Recursos: https://github.com/plataformatec/devise
+Devise crea algunos métodos de ayuda y filtros para que puedas manejar la autenticación en tu aplicación.
+El filtro que ppodemos agregar sobre los controladores que quieres proteger es el siguiente:
+
+`before_action :authenticate_user!`
+
+En nuestra aplicación vamos a proteger todas las acciones del controlador posts exceptuando `index` y `show` que son las que nos van a permitir listar y mostrar los detalles de una publicación.
 
 Añade `before_action` al Controlador Posts
 
 **app/controllers/posts_controller.rb**
 
 Debajo de `before_action :set_post ...`
-
 
 ```ruby
 before_action :authenticate_user!, except: [:index, :show]
@@ -1080,88 +1324,95 @@ Debajo de `before_action :authenticate_user! ...`
 before_action :correct_user, only: [:edit, :update, :destroy]
 ```
 
-## 19. Sube imágenes con Paperclip
 
-### Instala el procesador de imagenes ImageMagick
+## 19. Sube imágenes con Active Storage
 
-Paperclip requiere la instalación de ImageMagick. Necesitas esto para procesamiento de imagen. Para instalar ImageMagick, usa los comandos abajo.
+ActiveStorage permite a los desarrolladores gestionar la carga de archivos, el almacenamiento en la nube y la gestión de documentos vinculados a modelos en todas sus aplicaciones.
+En nustro ejemplo, Active Storage nos permite manejar la carga de imagen de cada publicación.
+
+
+### Primer paso instalar Active Storage
+
+Ejecuta el comando de instalación:
 
 `consola`
 
 ```bash
-sudo apt-get update
-sudo apt-get install imagemagick
+rails active_storage:install
 ```
 
-### Instala la gema Paperclip
+Y despues
 
-Paperclip es una gema que permite mediante el comando `has_attached_file` poder adjuntar imágenes de manera fácil.
+```bash
+rails db:migrate
+```
 
-https://github.com/thoughtbot/paperclip
+Con estos comandos acabamos de instalar Active Storage y actualizar la base de datos con campos necesarios para almacenar archivos en nustra aplicación.
 
-**/Gemfile**
+
+### Instalar image_processing
+
+Ahora necesitamos instalar un libreria para procesar nuestras imagenes con las caracteriticas y el tamaño de las imagenes que se suben a Instagram, entonces agregaremos la gema `image_processing`.
+
+
+Dentro del archivo **/gemfile** busca la linea `gem 'image_processing', '~> 1.2'` y quitale el `#` para que se vea de la siguiente forma:
 
 ```ruby
-gem 'paperclip'
+# Use Active Storage variant
+gem 'image_processing', '~> 1.2'
 ```
+
+Acabamos simplemente de remover un character que significa que esta linea es un comentario.
+Ahora esta linea es parte del codigo y podemos ejecutar `bundle install` para instalar esta nueva gema.
 
 `consola`
 
-```
+```bash
+CONTROL + C (para parar el servidor)
 bundle install
 ```
+
+Y despues
+
+
+```bash
+rails server
+```
+
+Para iniciar el servidor otra vez.
+
+
+### Actualiza Post
+
 Actualiza el model `Post`
 
 **/app/models/post.rb**
 
 ```ruby
-class Post < ActiveRecord::Base
+class Post < ApplicationRecord
   belongs_to :user
-  has_attached_file :image, styles: { medium: "600x600#" }
-  validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
+  has_one_attached :image
+
+  def squared_img
+    if image.attached?
+      image.variant(combine_options: { resize: '600x600^', gravity: 'center', extent: '600x600' })
+    end
+  end
 end
 ```
 
-### Genera la migración de paperclip
-
-`consola`
-
-```
-rails generate paperclip post image
-```
-
-Ejecuta y verifica la migración
-
-`consola`
-
-```bash
-rake db:migrate
-```
-
-### Vuelve a iniciar el servidor después de agregar una librería (gema)
-
-`consola`
-
-```bash
-CONTROL + C
-rails server -b 0.0.0.0 -p 8080
-```
 
 ### Edita el formulario de Post
 
 **/app/views/posts/_form.html.erb**
 
-Reemplaza la  primera linea por
-
-```rhtml
-<%= form_for @post, html: { multipart: true } do |f| %>
-```
-
-Y justo antes de
+Justo despues de
 
 ```rhtml
 <div class="form-group">
     <%= f.label :description %>
+    <%= f.text_field :description, class: "form-control" %>
+  </div>
 ```
 
 Añade:
@@ -1175,19 +1426,19 @@ Añade:
 
 ### Actualiza el controlador de Posts para parámetros "strong"
 
-**/app/controllers/concerns/posts_controller.rb**
+**/app/controllers/posts_controller.rb**
 
 `def post_params`
 
 ```ruby
-
 .
   def post_params
     params.require(:post).permit(:description, :image)
   end
 .
-
 ```
+
+Aqui estamos permitiendo que nuestro controlador pueda manejar un parametro adicional que se llama `image`.
 
 ### Actualiza la vista `index` de Posts
 
@@ -1198,9 +1449,9 @@ Añade:
   <div class="main-wrapper">
     <div class="row">
       <% @posts.each do |post| %>
-        <div class="col-sm-4">
+        <div class="col-xs-12 col-sm-6 col-md-4">
           <div class="image center-block">
-            <%= link_to (image_tag post.image.url(:medium), class:'img-responsive'), post_path(post) %>
+            <%= link_to (image_tag post.squared_img, class:'img-fluid'), post_path(post) %>
           </div>
         </div>
       <% end %>
@@ -1223,9 +1474,9 @@ Añade:
 
 ```rhtml
 <div class="posts-wrapper row">
-  <div class="post">    
+  <div class="post">
     <div class="image center-block">
-      <%= image_tag @post.image.url(:medium),class:'img-responsive' %>
+      <%= image_tag @post.squared_img, class:'img-responsive' %>
     </div>
     <div class="post-head">
       <div class="name">
@@ -1237,12 +1488,11 @@ Añade:
     </p>
   </div>
 </div>
-
 ```
 
 ### Con el estilo Instagram
 
-Abajo del archivo **app/assets/stylesheets/custom_bootstrap.scss**
+Abajo del archivo **app/javascript/stylesheets/application.scss** agregamos:
 
 ```css
 
@@ -1309,7 +1559,7 @@ Dentro de `<div class="post">` abajo colocamos:
 
 y añade los siguiente estilos
 
-**app/assets/stylesheets/custom_bootstrap.scss**
+**app/javascript/stylesheets/application.scss**
 
 ```css
 .edit-links {
@@ -1322,7 +1572,7 @@ y en **app/views/posts/edit.html.erb**, lo más arriba, añade
 
 ```rhtml
 <div class="text-center">
-  <%= image_tag @post.image.url(:medium) %>
+  <%= image_tag @post.squared_img %>
 </div>
 ```
 
@@ -1355,7 +1605,7 @@ rails generate migration AddNameToUsers name:string
 `consola`
 
 ```bash
-rake db:migrate
+rails db:migrate
 ```
 
 ### Vuelve a iniciar el servidor después de correr una migracíon
@@ -1364,7 +1614,7 @@ rake db:migrate
 
 ```bash
 CONTROL + C
-rails server -b 0.0.0.0 -p 8080
+rails server
 ```
 
 ### Indica a Devise autorizar este nuevo parámetro  
@@ -1375,7 +1625,7 @@ Actualiza **app/controllers/application_controller.rb**
 ```ruby
 class ApplicationController < ActionController::Base
  protect_from_forgery with: :exception
- before_filter :configure_permitted_parameters, if: :devise_controller?
+ before_action :configure_permitted_parameters, if: :devise_controller?
 
 protected
 
@@ -1410,7 +1660,7 @@ añade
 
 ### Terminamos con un nuevo controlador
 
-Creaa el archivo **app/controllers/registrations_controller.rb**:
+Crea el archivo **app/controllers/registrations_controller.rb**:
 
 ```ruby
 class RegistrationsController < Devise::RegistrationsController
@@ -1463,7 +1713,7 @@ con...
 
 ### Rodea el enlace de edición con un "si" condicional
 
-De esta manera sólo se pueden ver tus posts. Para poner esto de otra manera: Un usuario sólo puede ver sus posts (y no los posts de otros usuarios ). ¿Tiene algun sentido?
+De esta manera sólo se pueden ver tus posts. Para poner esto de otra manera: Un usuario sólo puede editar (o borrar) sus posts (y no los posts de otros usuarios ). ¿Tiene algun sentido?
 
 
 **app/views/posts/show.html.erb**
@@ -1494,28 +1744,6 @@ con
 <% end  %>
 ```
 
-### Proteger los posts también desde el controlador
-
-**app/controllers/posts_controller.rb**
-
-Agrega debajo de `private`
-
-```ruby
-private
-
-def owned_post  
-  unless current_user == @post.user
-    flash[:alert] = "¡Este post no te pertenece!"
-    redirect_to root_path
-  end
-end
-```
-
-Después, inserta un `before_action` en la parte superior del controlador, especificando el método `owned_post` solamente para las acciones de edición, actualización y destruir.
-
-```ruby
-before_action :owned_post, only: [:edit, :update, :destroy]
-```
 
 ## 23. Añadiremos la opción de comentar posts
 
@@ -1534,7 +1762,7 @@ Este comando nos genera una migración **db/migrate/** para añadir los campos e
 `consola`
 
 ```bash
-rake db:migrate
+rails db:migrate
 ```
 
 ### Vuelve a iniciar el servidor después de correr una migracíon
@@ -1543,12 +1771,12 @@ rake db:migrate
 
 ```bash
 CONTROL + C
-rails server -b 0.0.0.0 -p 8080
+rails server
 ```
 
 ### Asocia los comentarios
 
-Ahora nuestro modelo **app/model/comment.rb** debe está configurado para indicar a quién pertenecen los comentarios.
+Ahora nuestro modelo **app/model/comment.rb** debe estar configurado para indicar a quién pertenecen los comentarios.
 
 ```ruby
 class Comment < ActiveRecord::Base  
@@ -1556,6 +1784,8 @@ class Comment < ActiveRecord::Base
   belongs_to :post
 end
 ```
+
+Aquí estas lineas indican que un comentario pertenece a un `user` y también pertenece a un `post`.
 
 Por último, en **app/models/user.rb** and **app/models/post.rb** añade la siguiente línea a cada uno:
 
@@ -1588,7 +1818,7 @@ rails g controller comments
 
 El controlador de comentarios solo va a tener las acciones de crear y borrar comentarios
 
-**app/controllers/comments_controller.rb**
+Actalualiza **app/controllers/comments_controller.rb** con:
 
 ```ruby
 class CommentsController < ApplicationController
@@ -1600,7 +1830,7 @@ class CommentsController < ApplicationController
 
     if @comment.save
       flash[:success] = "¡Has comentado este post!"
-      redirect_to :back
+      redirect_back fallback_location: root_path
     else
       flash[:alert] = "Revisa el formulario de comentarios, algo salió mal :/"
       render root_path
@@ -1612,7 +1842,7 @@ class CommentsController < ApplicationController
 
     @comment.destroy
     flash[:success] = "Comentario eliminado :("
-    redirect_to root_path
+    redirect_back fallback_location: root_path
   end
 
   private
@@ -1636,7 +1866,7 @@ Reemplaza **app/views/posts/show.html.erb**
 <div class="posts-wrapper">
   <div class="post">
     <div class="image center-block">
-      <%= image_tag @post.image.url(:medium), class:'img-responsive' %>
+      <%= image_tag @post.squared_img, class:'img-fluid' %>
     </div>
     <div class="post-bottom">
       <div class="description">
@@ -1669,7 +1899,9 @@ Reemplaza **app/views/posts/show.html.erb**
       </div>
       <div class="comment-form col-sm-11">
         <%= form_for [@post, @post.comments.new] do |f| %>
-          <%= f.text_field :content, placeholder: 'Añade un comentario...' %>
+          <div class="form-group">
+            <%= f.text_field :content, class: 'form-control', placeholder: 'Añade un comentario...' %>
+          </div>
         <% end %>
       </div>
     </div>
@@ -1690,7 +1922,7 @@ Reemplaza **app/views/posts/show.html.erb**
 
 ### Los estilos para ponerlo bonito
 
-En **app/assets/stylesheets/custom_bootstrap.scss**
+En **app/javascript/stylesheets/application.scss**
 
 Borra los estilos debajo de
 
@@ -1928,7 +2160,7 @@ git push origin master
 git push heroku master
 heroku open
 heroku rename instagram #Reemplaza "instagram" con el nombre de tu proyecto
-heroku run rake db:migrate #Para correr las migraciones
+heroku run rails db:migrate #Para correr las migraciones
 ```
 
 ## Bonus: Comentarios con AJAX
@@ -2116,3 +2348,31 @@ Crea el nuevo archivo **destroy.js.erb** dentro de la carpeta **app/views/commen
 ```erb
 $('#comments_<%= @post.id %>').html("<%= j render @post.comments, post: @post, comment: @comment %>");
 ```
+
+## Resources
+
+Aquí están algunos recursos utiles para poder seguir aprediendo.
+Algunos sirvieron también en la elaboración de esta guía.
+
+*Introducción a Rails - codigofacilito* [http://rubysur.org/introduccion.a.rails/](https://codigofacilito.com/articulos/mvc-model-view-controller-explicado)
+
+*MVC (Model, View, Controller) Explicado - codigofacilito:* [https://codigofacilito.com/articulos/mvc-model-view-controller-explicado](https://codigofacilito.co/articulos/mvc-model-view-controller-explicado)
+
+*Asociaciones - Make it Real:* [https://makeitrealcamp.gitbook.io/ruby-on-rails-5/asociaciones](https://codigofacilito.com/articulos/mvc-model-view-controlle-explicado)
+
+*Make it Real - Ruby on Rails:* [https://guias.makeitreal.camp/ruby-on-rails-i](https://guias.makeitreal.camp/ruby-on-rails-i)
+
+*Ruby on Rails: El desarrollo web que no molesta:* [http://rubyonrails.org.es/](http://rubyonrails.org.es/)
+
+*Introducción a Ruby on Rails:* [https://uniwebsidad.com/libros/introduccion-rails](https://uniwebsidad.com/libros/introduccion-rails)
+
+*Tutorial de Ruby on Rails (3a. edición.) - Michael Hartl* [https://spanish.railstutorial.org/book](https://spanish.railstutorial.org/book)
+
+
+## Debug
+
+Error para correr `rails console`
+
+`Library not loaded: /usr/local/opt/readline/lib/libreadline.7.dylib (LoadError)`
+
+https://gist.github.com/zulhfreelancer/47efc39584cb9f006da43c41c014e03a
