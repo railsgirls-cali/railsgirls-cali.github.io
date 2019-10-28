@@ -7,15 +7,9 @@ permalink: /instagram/
 
 <div class="repo">
   <h3>repositorio de la aplicación</h3>
-  <a href="https://github.com/railsgirls-cali/example-instagram">
-    https://github.com/railsgirls-cali/example-instagram</a>
+  <a href="https://github.com/railsgirls-cali/instagram-2019</a>
 </div>
 
-<div class="repo">
-  <h3>Ejemplo de la aplicación</h3>
-  <a href="https://instagram-example-chrisestanol.c9users.io/">
-    https://instagram-example-chrisestanol.c9users.io/</a>
-</div>
 
 ## RUBY ON RAILS
 
