@@ -35,8 +35,6 @@ En la lista de la izquierda, presionamos click derecho sobre Foro y luego SSH Te
 Escribimos uno por uno:
 
 ```
-sudo apt-get update
-sudo apt-get install libsqlite3-dev
 bundle install
 ```
 
