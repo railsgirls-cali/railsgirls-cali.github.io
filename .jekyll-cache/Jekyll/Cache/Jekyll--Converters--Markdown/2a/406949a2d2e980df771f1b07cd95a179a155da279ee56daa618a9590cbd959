@@ -1,0 +1,682 @@
+I"wo<div class="repo">
+  <h3>Repostitorio de la aplicación</h3>
+  <a href="https://github.com/railsgirls-cali/example-railslack">
+    https://github.com/railsgirls-cali/example-railslack</a>
+</div>
+<h2 id="convenciones">CONVENCIONES</h2>
+
+<ol>
+  <li>consola</li>
+</ol>
+
+<pre><code>$
+</code></pre>
+
+<ol>
+  <li>Modificación de archivos</li>
+</ol>
+
+<pre><code>[...]
+test
+[...]
+</code></pre>
+
+<h2 id="introducción">Introducción</h2>
+<p>…</p>
+
+<h2 id="1-instala-la-última-versión-disponible-de-ruby-on-rails">1. Instala la última versión disponible de Ruby on Rails</h2>
+<p>Rails es un framework de ruby para desarrollar aplicaciones web, a pesar de estar compuesto de multiples librerias, Rails es en si mismo una gema de ruby.</p>
+
+<p><em>“Las gemas en Ruby son las bibliotecas o paquetes (código Ruby empaquetado de una manera predeterminada) de software que se instalan en el sistema para aumentar las funcionalidades del interprete”</em>.</p>
+
+<p>Para instalar Rails debemos hacer lo siguiente:</p>
+
+<pre><code>$ gem install rails
+</code></pre>
+
+<p>Este proceso podría tomar unos minutos…</p>
+
+<h2 id="2-crea-una-aplicación-nueva">2. Crea una aplicación nueva</h2>
+<h3 id="creando-la-aplicación">Creando la aplicación</h3>
+<p>Una vez la gema esté instalada, vamos a proceder a crear nuestra aplicación bajo el nombre de <strong>railslack-app</strong></p>
+
+<pre><code>$ rails new railslack-app
+</code></pre>
+
+<p>Una vez finalizado el proceso de generación de la nueva aplicación, será creada una carpeta con el nombre de la misma.</p>
+
+<h3 id="arrancando-el-servidor">Arrancando el servidor</h3>
+<p>Para poder arrancar el servidor y modificar la aplicación debemos ingresar a la carpeta creada.</p>
+
+<pre><code>$ cd railslack-app
+</code></pre>
+
+<p>Una vez dentro, debemos digitar la siguiente instrucción que iniciará nuestro servidor</p>
+
+<pre><code>$ rails server -b 0.0.0.0 -p 8080
+</code></pre>
+
+<p>El comando anterior usa las siguientes opciones:</p>
+
+<ul>
+  <li><strong>-b</strong> <em>especifíca que el servidor será accesible desde clientes externos, en este caso desde la internet utilizando cualquier navegador web si estás usando c9</em></li>
+  <li><strong>-p</strong> <em>especifíca el puerto en el cual el servidor abre la conexión</em></li>
+</ul>
+
+<h3 id="página-de-inicio">Página de inicio</h3>
+
+<p>En cualquier navegador de tu computador escribe la URL: <a href="localhost:3000">localhost:3000</a>. Esta es la página de inicio por defecto para las aplicaciones Rails.</p>
+
+<p><strong>NOTA</strong> Si estás usando c9 no vas a poder acceder a la página de inicio en tu explorador usando la URL anterior, necesitas una URL especial, para el caso del taller la URL será genrada de la siguiente forma:</p>
+
+<p>http://railslack-<strong>your_id</strong>-railsgirlscali.c9users.io/</p>
+
+<h2 id="3-instala-devise-y-bootstrap">3. Instala devise y bootstrap</h2>
+
+<h3 id="configurando-boostrap">Configurando Boostrap</h3>
+
+<p>La mayoria de las aplicaciones web necesitan que los usuarios puedan crear una cuenta, modificar su perfil, iniciar y cerrar sesión. En el contexto de rails hay una gema que se integra naturalmente con él y gestiona estos componentes; esta gema se llama devise.</p>
+
+<p>Ademas de instalar devise, para agilizar el proceso de creacion de estilos, utilizaremos un framework CSS, HTML y JS muy popular llamado bootstrap; este lo instalamos en forma de gema. Para eso abrimos el archivo <code>config/Gemfile</code> y copiamos lo siguiente:</p>
+
+<pre><code>[...]
+gem 'devise'
+gem 'bootstrap', '~&gt; 4.0.0.alpha6'
+[...]
+</code></pre>
+
+<p>En consola ejecutaremos el siguiente comando, para instalar nuestras nuevas gemas:</p>
+
+<pre><code>$ bundle install
+</code></pre>
+
+<p>Una vez instalado Bootstrap en nuestra aplicación, crearemos un nuevo documento SASS en <code>app/assets/stylesheets/bootstrap_and_overrides.sass</code> para importar todas las funcionalidades CSS de boostrap a nuestro proyecto. En este nuevo documento debemos añadir lo siguiente:</p>
+
+<pre><code>@import "bootstrap";
+</code></pre>
+
+<p>Igualmente, en el archivo <code>app/assets/javascripts/application.js</code> debemos agregar el código de abajo para importar todas las funcionalidades JS de Boostrap en nuestro proyecto.</p>
+
+<pre><code>[...]
+//= require bootstrap
+[...]
+</code></pre>
+
+<h3 id="configurando-devise">Configurando Devise</h3>
+
+<p>En consola ejecuta los siguientes comandos para instalar devise, generar un modelo llamado User y generar las vistas para la personalización del manejo de sesiones de usuario.</p>
+
+<pre><code>$ rails generate devise:install
+$ rails generate devise User
+$ rails generate devise:views
+$ rails db:migrate
+</code></pre>
+
+<p>Ahora restringe el acceso a todas las paginas del sitio solo para usuarios autenticados, para hacerlo debemos ingresar al archivo <code>app/controllers/application_controller.rb</code> y añadir lo siguiente:</p>
+
+<pre><code>[...]
+before_action :authenticate_user!
+[...]
+</code></pre>
+
+<h2 id="4-chat-rooms">4. Chat Rooms</h2>
+
+<p>El siguiente paso es agregar el soporte para las salas de chat (<em>chat rooms</em>), para eso genera el siguiente modelo.</p>
+
+<p>en consola, digita lo siguiente:</p>
+
+<pre><code>$ rails g model ChatRoom title:string user:references
+$ rails db:migrate
+</code></pre>
+
+<p>Una sala de chat debe tener un creador. Asegurate de establecer un relación de unos a muchos entre <code>chat_rooms</code> y <code>users</code>, es decir entre salas de chat y usuarios</p>
+
+<p>De esta forma en el archivo <code>app/models/chat_room.rb</code>, cerciórate que este la siguiente línea de código, la cual denota una dependencia relacional entre los dos modelos.</p>
+
+<pre><code>[...]
+belongs_to :user
+[...]
+</code></pre>
+
+<p>Igualmente en el archivo <code>app/models/users.rb</code> agrega la linea de abajo para cerrar con la dependencia relacional que se creo en el modelo <code>chat_room</code></p>
+
+<pre><code>[...]
+has_many :chat_rooms, dependent: :destroy
+[...]
+</code></pre>
+
+<p>Crea un controlador de salas de chat llamado <code>ChatRoomsController</code> en el archivo <code>app/controllers/chat_rooms_controller.rb</code>, en el cual deberás añadir el siguiente código para listar y crear salas de chat.</p>
+
+<pre><code>class ChatRoomsController &lt; ApplicationController
+  def index
+    @chat_rooms = ChatRoom.all
+  end
+
+  def new
+    @chat_room = ChatRoom.new
+  end
+
+  def create
+    @chat_room = current_user.chat_rooms.build(chat_room_params)
+    if @chat_room.save
+      flash[:success] = 'Chat room added!'
+      redirect_to chat_rooms_path
+    else
+      render 'new'
+    end
+  end
+
+  private
+
+  def chat_room_params
+    params.require(:chat_room).permit(:title)
+  end
+end
+</code></pre>
+
+<p>Ahora crea el siguiente directorio <code>app/views/chat_rooms/</code> donde internamente crearás las siguientes vistas.</p>
+
+<p><strong><em>index.html.erb</em></strong></p>
+
+<pre><code>&lt;h1&gt;Chat rooms&lt;/h1&gt;
+
+&lt;p class="lead"&gt;&lt;%= link_to 'New chat room', new_chat_room_path, class: 'btn btn-primary' %&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;%= render @chat_rooms %&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p><strong><em>_chat_room.html.erb</em></strong></p>
+
+<pre><code>&lt;li&gt;&lt;%= link_to "Enter #{chat_room.title}", chat_room_path(chat_room) %&gt;&lt;/li&gt;
+</code></pre>
+
+<p><strong><em>new.html.erb</em></strong></p>
+<pre><code>&lt;h1&gt;Add chat room&lt;/h1&gt;
+
+&lt;%= form_for @chat_room do |f| %&gt;
+  &lt;div class="form-group"&gt;
+    &lt;%= f.label :title %&gt;
+    &lt;%= f.text_field :title, autofocus: true, class: 'form-control' %&gt;
+  &lt;/div&gt;
+
+  &lt;%= f.submit "Add!", class: 'btn btn-primary' %&gt;
+&lt;% end %&gt;
+</code></pre>
+<h2 id="5-mensajes">5. Mensajes</h2>
+<h3 id="modelos">Modelos</h3>
+
+<p>La principal característica de nuestra aplicación es, por supuesto, un mensaje de chat. Estos deben pertenecer tanto a un usuario como a una sala de chat. Vamos a crear un modelo <code>Message</code> para definir la abstracción de un mensaje.</p>
+
+<p>Para hacerlo, en consola, escribe lo siguiente:</p>
+<pre><code>$ rails g model Message body:text user:references chat_room:references
+$ rails db:migrate
+</code></pre>
+
+<p>Ahora asegurate de establecer las relaciones adecuadas:</p>
+
+<p>En el archivo <code>app/models/chat_room.rb</code> cerciórate que las siguientes líneas existan:</p>
+
+<pre><code>[...]
+belongs_to :user
+has_many :messages, dependent: :destroy
+[...]
+</code></pre>
+
+<p>En el archivo <code>app/models/message.rb</code> cerciórate que las siguientes líneas existan:</p>
+<pre><code>[...]
+belongs_to :user
+belongs_to :chat_room
+[...]
+</code></pre>
+
+<p>Finalmente, en el archivo <code>app/models/users.rb</code> añade las siguientes líneas:</p>
+<pre><code>[...]
+has_many :chat_rooms, dependent: :destroy
+has_many :messages, dependent: :destroy
+[...]
+</code></pre>
+
+<h3 id="controladores">Controladores</h3>
+
+<p>Los mensajes deberian mostrarse cuando un usuario ingrese a una sala de chat, asi que crea una acción <code>show</code> en el controlador <code>app/controllers/chat_rooms_controller.rb</code></p>
+
+<pre><code>[...]
+def show
+  @chat_room = ChatRoom.includes(:messages).find_by(id: params[:id])
+end
+[...]
+</code></pre>
+
+<p><strong>Nota:</strong> el  método <a href="http://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-includes">includes</a> usado es para generar un proceso de ‘eager loading’ y evitar consultas N+1</p>
+
+<h3 id="vistas">Vistas</h3>
+
+<p>Ahora crea las siguientes vistas:</p>
+
+<p><strong><em>app/views/chat_rooms/show.html.erb</em></strong></p>
+<pre><code>&lt;h1&gt;&lt;%= @chat_room.title %&gt;&lt;/h1&gt;
+
+&lt;div id="messages"&gt;
+  &lt;%= render @chat_room.messages %&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p><strong><em>app/views/messages/_message.html.erb</em></strong></p>
+<pre><code>&lt;div class="card"&gt;
+  &lt;div class="card-block"&gt;
+    &lt;div class="row"&gt;
+      &lt;div class="col-md-1"&gt;
+        &lt;%= gravatar_for message.user %&gt;
+      &lt;/div&gt;
+      &lt;div class="col-md-11"&gt;
+        &lt;p class="card-text"&gt;
+          &lt;span class="text-muted"&gt;&lt;%= message.user.name %&gt; at &lt;%= message.timestamp %&gt; says&lt;/span&gt;&lt;br&gt;
+          &lt;%= message.body %&gt;
+        &lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<h3 id="helpers-y-atributos-virtuales">Helpers y atributos virtuales</h3>
+
+<p>En este parcial se emplean tres nuevos métodos <code>user.name</code>, <code>message.timestamp</code> y <code>gravatar_for</code>.</p>
+
+<p>Para definir un nombre de usuario simplemente eliminamos la parte del dominio del correo electrónico. De esta forma en el archivo <code>app/models/user.rb</code> añadimos el siguiente método:</p>
+
+<pre><code>[...]
+def name
+  email.split('@')[0]
+end
+[...]
+</code></pre>
+
+<p>El método <code>timestamp</code> se basa en el método <code>strftime</code> para presentar la fecha de creación del mensaje de manera amigable. Así, en el archivo <code>app/models/message.rb</code> dedemos añadir lo siguiente:</p>
+
+<pre><code>[...]
+def timestamp
+  created_at.strftime('%H:%M:%S %d %B %Y')
+end
+[...]
+</code></pre>
+
+<p>Finalmente, <code>gravatar_for</code> es un <strong>helper</strong> para mostrar tu imagen de usuario registrada en <a href="http://es.gravatar.com/">gravatar</a>. En el archivo <code>app/helpers/application_helper.rb</code> copia lo siguiente:</p>
+
+<pre><code>module ApplicationHelper
+  def gravatar_for(user, opts = {})
+    opts[:alt] = user.name
+    image_tag "https://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(user.email)}?s=#{opts.delete(:size) { 40 }}",
+              opts
+  end
+end
+</code></pre>
+
+<h3 id="estilos">Estilos</h3>
+
+<p>Ahora agregamos un poco de estilos CSS (<em>usando SASS</em>) al contenedor de mensajes, para esto debemos crear el archivo <code>app/assets/stylesheets/main.sass</code> con las siguientes reglas de estilo:</p>
+
+<pre><code>#messages
+  max-height: 450px
+  overflow-y: auto
+  .avatar
+    margin: 0.5rem
+</code></pre>
+
+<h3 id="configuración-de-rutas">Configuración de rutas</h3>
+
+<p>Finalmente, debemos configurar las rutas de acceso a la aplicación editando el archivo <code>config/routes.rb</code>, para esto debemos añadir las siguientes líneas en el mismo:</p>
+
+<pre><code>[...]
+resources :chat_rooms, only: [:new, :create, :show, :index]
+root 'chat_rooms#index'
+[...]
+</code></pre>
+
+<h2 id="6-agregando-actioncable">6. Agregando ActionCable</h2>
+<p><strong>Action Cable</strong> es la apuesta tecnológica de <strong>Rails</strong> para dotar a las aplicaciones de un comportamiento asíncrono natural en la web. Esta tecnología integra Websockets sin problemas con el resto de la aplicación <strong>Rails</strong>. <strong>Action Cable</strong> permite diseñar aplicaciones con características de tiempo real en la misma forma que escribes código <strong>Rails</strong> convencional.</p>
+
+<h3 id="client-side--cliente">Client Side / Cliente</h3>
+<h4 id="data-store---redis">Data Store - Redis</h4>
+<p>Para continuar, vamos a usar un <strong>Data Store</strong> para soportar el almacenamiento de los mensajes transitorios usados como insumo para la comunicación base del chat, básicamente sincronizará el contenido de la mensajería a través de todas las instancias de la aplicación; podriamos decir que este <strong>Data Store</strong> actuaría como un Servicio Postal, recibiendo y entregando mensaje sobre un canal definido y ruta definidas. La tecnología que vamos a usar para implementar este concepto es <strong>Redis</strong> que se integra naturalmente con el stack de <strong>Rails</strong></p>
+
+<p><strong>Nota</strong>: Redis es un servidor, para poder usarlo con nuestra aplicación de <strong>Rails</strong>, debemos instalar el servidor (no te preocupes por hacerlo en el entorno de C9, puesto que ya lo trae instalado) e instalar la dependencia/gema que desde <strong>Rails</strong> permite comunicarse con <strong>Redis</strong></p>
+
+<p>Para instalar redis como dependencia, en el archivo <em>Gemfile</em> pega lo siguiente:</p>
+
+<pre><code>[...]
+gem 'redis', '~&gt; 3.2'
+[...]
+</code></pre>
+
+<p>y ejecuta en consola el siguiente comando:</p>
+<pre><code>$ bundle install
+</code></pre>
+
+<p><strong>Action Cable</strong> es configurado en el archivo <code>config/cable.yml</code>, de esta forma, para usar Redis como <strong>Data Store</strong> debemos modificar lo siguiente:</p>
+
+<pre><code>[...]
+adapter: redis
+url: YOUR_URL
+[...]
+</code></pre>
+
+<p>O simplemente usa <code>adapter: async</code> (valor por defecto, recuerda que <strong>Rails</strong> se integra naturalmente con <strong>Redis</strong>).</p>
+
+<p>Finalmente, agrega en tu archivo <code>config/routes.rb</code> lo siguiente:</p>
+
+<pre><code>[...]
+mount ActionCable.server =&gt; '/cable'
+[...]
+</code></pre>
+
+<p>Revisa si el archivo <code>app/assets/javascripts/cable.js</code> contiene lo siguiente:</p>
+
+<pre><code>//= require action_cable
+//= require_self
+//= require_tree ./channels
+
+(function() {
+  this.App || (this.App = {});
+
+  App.cable = ActionCable.createConsumer();
+
+}).call(this);
+</code></pre>
+
+<p>Este archivo debe ser requerido dentro de <code>app/assets/javascripts/application.js</code></p>
+
+<pre><code>[...]
+//= require cable
+[...]
+</code></pre>
+<h4 id="consumidor">Consumidor</h4>
+<p>Un <code>Consumer</code> (consumidor) es un cliente de una conexión web socket que puede suscribirse a uno o multiples canales. Cada servidor <strong>Action Cable</strong> puede manejar multiples conexiones. Un <code>channel</code> (canal)  es similar a un <strong>Controlador</strong> en el modelo convencional MVC y es usado para hacer <strong>Streaming</strong>. Puedes leer más acerca de la terminología de ActionCable <a href="https://github.com/rails/rails/tree/master/actioncable#terminology">aqui</a>.</p>
+
+<p>Para crear un nuevo canal creamos el siguiente archivo <code>app/javascripts/channels/rooms.coffee</code> con el siguiente contenido:</p>
+
+<pre><code>App.global_chat = App.cable.subscriptions.create {
+    channel: "ChatRoomsChannel"
+    chat_room_id: ''
+  },
+  connected: -&gt;
+    # Called when the subscription is ready for use on the server
+
+  disconnected: -&gt;
+    # Called when the subscription has been terminated by the server
+
+  received: (data) -&gt;
+    # Data received
+
+  send_message: (message, chat_room_id) -&gt;
+    @perform 'send_message', message: message, chat_room_id: chat_room_id
+</code></pre>
+
+<p>Básicamente lo que hacemos aqui, es suscribir un consumidor a <code>ChatRoomsChannel</code> y pasamos el id actual del la sala (En este punto realmente no pasamos nada, pero eso se arreglará pronto). La suscripción tiene un numero de <strong>callbacks</strong> autoexplicativos <code>connected</code>, <code>disconnected</code>, y <code>received</code>. Además, la suscripción define una función principal (<code>send_message</code>) que invoca un metodo con el mismo nombre del lado del servidor y le pasa los datos necesarios.</p>
+
+<p>Por supuesto, necesitamos un formulario para permitir que los usuarios envíen sus mensajes:</p>
+
+<p><code>app/views/chat_rooms/show.html.erb</code></p>
+
+<pre><code>&lt;%= form_for @message, url: '#' do |f| %&gt;
+  &lt;div class="form-group"&gt;
+    &lt;%= f.label :body %&gt;
+    &lt;%= f.text_area :body, class: 'form-control' %&gt;
+    &lt;small class="text-muted"&gt;From 2 to 1000 characters&lt;/small&gt;
+  &lt;/div&gt;
+
+  &lt;%= f.submit "Post", class: 'btn btn-primary btn-lg' %&gt;
+&lt;% end %&gt;
+</code></pre>
+
+<p>La variable de instancia <code>@message</code> debe estar en el método <code>show</code> del controlador <code>app/controllers/chat_rooms_controller.rb</code></p>
+
+<pre><code>[...]
+def show
+  @chat_room = ChatRoom.includes(:messages).find_by(id: params[:id])
+  @message = Message.new
+end
+[...]
+</code></pre>
+
+<p>Ahora agregamos algunas validaciones para los mensajes en el modelo <code>Message</code>, esto lo hacemos en el archivo <code>app/models/message.rb</code></p>
+
+<pre><code>[...]
+validates :body, presence: true, length: { minimum: 2, maximum: 1000 }
+[...]
+</code></pre>
+
+<p>Y fijamos el id del chat-room con ayuda de un atributo <code>data</code> de HTML, en el archivo <code>app/views/chat_rooms/show.html.erb</code> modificamos lo siguiente:</p>
+
+<pre><code>[...]
+&lt;div id="messages" data-chat-room-id="&lt;%= @chat_room.id %&gt;"&gt;
+  &lt;%= render @chat_room.messages %&gt;
+&lt;/div&gt;
+[...]
+</code></pre>
+
+<p>Habiendo hecho esto, podemos agregar el id del chat-room en el script.</p>
+
+<p>Actualiza el archivo <code>app/javascripts/channels/rooms.coffee</code> con el siguiente código:</p>
+
+<pre><code>jQuery(document).on 'turbolinks:load', -&gt;
+  messages = $('#messages')
+  if $('#messages').length &gt; 0
+
+    App.global_chat = App.cable.subscriptions.create {
+        channel: "ChatRoomsChannel"
+        chat_room_id: messages.data('chat-room-id')
+      },
+      connected: -&gt;
+        # Called when the subscription is ready for use on the server
+
+      disconnected: -&gt;
+        # Called when the subscription has been terminated by the server
+
+      received: (data) -&gt;
+        # Data received
+
+      send_message: (message, chat_room_id) -&gt;
+        @perform 'send_message', message: message, chat_room_id: chat_room_id
+</code></pre>
+
+<p><strong>Nota:</strong> La parte de <code>jQuery(document).on 'turbolinks:load'</code>. Solo deberia hacerse si tu estas utilizando <a href="https://github.com/turbolinks/turbolinks-classic">Turbolinks 5</a> que soporta este nuevo evento JS.</p>
+
+<p>La lógica del script es muy simple: este revisa si hay un bloque <code>#messages</code> en la página y si lo hay, se suscribe al canal de donde proviene el id de la sala de chat. El siguiente paso es escuchar el evento <code>submit</code> del formulario.</p>
+
+<p>Entonces en el mismo archivo <code>app/javascripts/channels/rooms.coffee</code> debemos añadir lo siguiente al final:</p>
+
+<pre><code>jQuery(document).on 'turbolinks:load', -&gt;
+  messages = $('#messages')
+  if $('#messages').length &gt; 0
+
+    App.global_chat = App.cable.subscriptions.create
+    # ...
+
+    $('#new_message').submit (e) -&gt;
+      $this = $(this)
+      textarea = $this.find('#message_body')
+      if $.trim(textarea.val()).length &gt; 1
+        App.global_chat.send_message textarea.val(), messages.data('chat-room-id')
+        textarea.val('')
+      e.preventDefault()
+      return false
+</code></pre>
+
+<p>Cuando el formulario es enviado, toma el cuerpo del mensaje, revisa que su longitud sea mayor que uno y llama la función <code>send_message</code> para transmitir el mensaje a todos los visitantes de la sala de chat asociada.</p>
+
+<h3 id="server-side">Server Side</h3>
+
+<p>Nuestra siguiente tarea será introducir un canal en nuestro servidor. En Rails 5, hay un  directorio llamado <code>channels/</code> para alojarlos.</p>
+
+<p>Crearemos el siguiente archivo <code>app/channels/chat_rooms_channel.rb</code> y añadimos lo siguiente:</p>
+
+<pre><code>class ChatRoomsChannel &lt; ApplicationCable::Channel
+  def subscribed
+    stream_from "chat_rooms_#{params['chat_room_id']}_channel"
+  end
+
+  def unsubscribed
+    # Any cleanup needed when channel is unsubscribed
+  end
+
+  def send_message(data)
+    # process data sent from the page
+  end
+end
+</code></pre>
+
+<p><code>subscribed</code> es un método especial para iniciar la transmisión desde un canal con un nombre dado. Mientras tengamos varias salones, el nombre del canal variará. Recuerda que nosotros proveemos el <code>chat_room_id: messages.data('chat-room-id')</code> cuando los clientes se suscriben a un canal en nuestro script. Gracias a esto <code>chat_room_id</code> puede ser buscado dentro del método <code>subscribed</code> llamando <code>params['chat_room_id'].</code></p>
+
+<p><code>unsubscribed</code> es una callback que se activa cuando se detiene el streaming, pero en esta guía no lo usaremos…</p>
+
+<p>El último método <code>send_message</code> es invocado cuando ejecutamos <code>@perform 'send_message', message: message, chat_room_id: chat_room_id</code> desde nuestro script. La variable <code>data</code> contiene un <code>hash</code> (colección de datos) de los datos enviados, por ejemplo, para acceder al mensaje tu deberías escribir <code>data['message']</code>.</p>
+
+<p>Hay múltiples maneras para transmitir el mensaje recibido, este proyecto usará una variación simple del demo proveído por DHH (Creador de <strong>Rails</strong>)</p>
+
+<p>Primero que todo, modifica el método <code>send_message</code>
+en el archivo <code>app/channels/chat_rooms_channel.rb</code></p>
+
+<pre><code>[...]
+def send_message(data)
+  current_user.messages.create!(body: data['message'], chat_room_id: data['chat_room_id'])
+end
+[...]
+</code></pre>
+
+<p>Una vez recibimos un mensaje se guarda en la base de datos; no necesitamos revisar que la sala de chat (<code>chat room</code>) proveída exista, por defecto, en Rails 5, debe existir un registro asociado cuando se establece una relación de modelo (belongs_to/has_many , etc). Este comportamiento puede ser cambiado estableciendo <code>optional: true</code> en la relación <code>belongs_to</code> (Lee acerca de los cambios en Rails 5 <a href="https://www.sitepoint.com/onwards-to-rails-5-additions-changes-and-deprecations/">aqui</a>)</p>
+
+<p>Sin embargo hay un problema, el método de devise <code>current_user</code> no esta disponible para nosotros aqui. Para arreglar esto modificamos el archivo <code>app/channels/application_cable/connection.rb</code>.</p>
+
+<pre><code>module ApplicationCable
+  class Connection &lt; ActionCable::Connection::Base
+    identified_by :current_user
+
+    def connect
+      self.current_user = find_verified_user
+      logger.add_tags 'ActionCable', current_user.email
+    end
+
+    protected
+
+    def find_verified_user # this checks whether a user is authenticated with devise
+      if verified_user = env['warden'].user
+        verified_user
+      else
+        reject_unauthorized_connection
+      end
+    end
+  end
+end
+</code></pre>
+
+<p>Después de realizar esto, además de tener el metodo <code>current_user</code> disponible para el canal, ahora los usuarios que no estén autenticados no podrán transmitir sus mensajes.</p>
+
+<p>El llamado a <code>logger.add_tags 'ActionCable', current_user.email</code> es usado para mostrar información de depuración en la consola. Por lo que podra ver algo similar a esto en su consola de servidor.</p>
+
+<pre><code>[ActionCable] [test@example.com] Registered connection (Z2lkOi8vY2FibGUtY2hhdC9Vc2VyLzE)
+[ActionCable] [test@example.com] ChatRoomsChannel is transmitting the subscription confirmation
+[ActionCable] [test@example.com] ChatRoomsChannel is streaming from chat_rooms_1_channel
+</code></pre>
+
+<p>Internamente Devise usa Warden para la autenticación, asi la línea <code>env['warden'].user</code> trata de encontrar la referencia al usuario que actualmente ha iniciado sesión, si esta referencia no puede ser encontrada entonces será lanzado un <code>reject_unauthorized_connection</code> prohibiendo la emisión del mensaje.</p>
+
+<p>Ahora vamos agregar un <strong>callback</strong> que se activa después de que el mensaje se guarda en la base de datos a través del modelo User y con el método <code>create!</code>, programando un <strong>Background Job</strong></p>
+
+<p>Los <strong>Background Jobs</strong> son procesos paralelos que ejecutan una instancia completa de la aplicación para encargarse de una responsabilidad específica en el dominio de negocio, en este caso transmitir el mensaje hacia los clientes del canal de chat asociado.</p>
+
+<p><code>app/models/message.rb</code></p>
+
+<pre><code>[...]
+after_create_commit { MessageBroadcastJob.perform_later(self) }
+[...]
+</code></pre>
+
+<p>En este <strong>callback</strong> <strong>self</strong> es nuestro mensaje previamente grabado. asi que basicamente lo pasamos directamente al <strong>Job</strong>, entonces para esto, debemos crear el arhivo <code>app/jobs/message_broadcast_job.rb</code> con la siguiente información:</p>
+
+<pre><code>class MessageBroadcastJob &lt; ApplicationJob
+  queue_as :default
+
+  def perform(message)
+    ActionCable.server.broadcast "chat_rooms_#{message.chat_room.id}_channel", message: 'MESSAGE_HTML'
+  end
+end
+</code></pre>
+
+<p>El método<code>perform</code> hace el</p>
+
+<p><strong><em>app/jobs/message_broadcast_job.rb</em></strong></p>
+<pre><code>class MessageBroadcastJob &lt; ApplicationJob
+  queue_as :default
+
+  def perform(message)
+    ActionCable.server.broadcast "chat_rooms_#{message.chat_room.id}_channel",
+                                 message: render_message(message)
+  end
+
+  private
+
+  def render_message(message)
+    MessagesController.render partial: 'messages/message', locals: {message: message}
+  end
+end
+</code></pre>
+
+<p>Para que esto funcione, debemos crear un controladro vacío:</p>
+
+<p><strong><em>app/controllers/messages_controller.rb</em></strong></p>
+
+<pre><code>class MessagesController &lt; ApplicationController
+end
+</code></pre>
+
+<h3 id="back-to-the-client-side">Back to the Client Side</h3>
+
+<p>Great, now the server side is ready and we can finalize our script. As long as we broadcast HTML markup, it can be simply placed right onto the page without any further manipulations</p>
+
+<p><strong><em>app/javascripts/channels/rooms.coffee</em></strong></p>
+<pre><code>[...]
+App.global_chat = App.cable.subscriptions.create {
+    channel: "ChatRoomsChannel"
+    chat_room_id: messages.data('chat-room-id')
+  },
+  connected: -&gt;
+    # Called when the subscription is ready for use on the server
+
+  disconnected: -&gt;
+    # Called when the subscription has been terminated by the server
+
+  received: (data) -&gt;
+    messages.append data['message']
+
+  send_message: (message, chat_room_id) -&gt;
+    @perform 'send_message', message: message, chat_room_id: chat_room_id
+[...]
+</code></pre>
+
+<p>The only thing…</p>
+
+<p><strong><em>app/javascripts/channels/rooms.coffee</em></strong></p>
+<pre><code>jQuery(document).on 'turbolinks:load', -&gt;
+  messages = $('#messages')
+  if $('#messages').length &gt; 0
+    messages_to_bottom = -&gt; messages.scrollTop(messages.prop("scrollHeight"))
+
+    messages_to_bottom()
+
+    App.global_chat = App.cable.subscriptions.create
+    # ...
+</code></pre>
+
+<p>Let’s also scroll …</p>
+
+<p><strong><em>app/javascripts/channels/rooms.coffee</em></strong></p>
+<pre><code>[...]
+received: (data) -&gt;
+  messages.append data['message']
+  messages_to_bottom()
+[...]
+</code></pre>
+:ET

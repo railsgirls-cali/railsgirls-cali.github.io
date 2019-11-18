@@ -1,0 +1,777 @@
+I"�k<h3 id="repostitorio-de-la-aplicación">Repostitorio de la aplicación</h3>
+<p><a href="https://github.com/railsgirls-cali/example-store-2017">https://github.com/railsgirls-cali/example-store-2017</a></p>
+
+<h3 id="demo">Demo</h3>
+<p><a href="https://railsgirls-cali-store-2017.herokuapp.com/">https://railsgirls-cali-store-2017.herokuapp.com/</a></p>
+
+<h3 id="guía-detalla">Guía detalla</h3>
+
+<p>Puedes ver la guía más detallada en Google Docs <a href="https://docs.google.com/document/d/1Uvk-ile_XPTGowkneNc49l2SPNSzUe7KSFKlMUrGp28/edit?usp=sharing">aquí</a>.</p>
+
+<h2 id="1-creando-una-aplicación-nueva">1. Creando una aplicación nueva</h2>
+
+<p>En la terminal:</p>
+
+<pre><code>rails new tienda
+</code></pre>
+<pre><code>cd tienda
+</code></pre>
+<pre><code>bundle install
+</code></pre>
+
+<h3 id="arranca-el-servidor-de-rails">Arranca el servidor de Rails</h3>
+
+<p>En la terminal:</p>
+
+<pre><code>rails server
+</code></pre>
+
+<h2 id="2-página-de-inicio">2. Página de inicio</h2>
+
+<p>En el navegador, ve a la URL: <a href="localhost:3000">localhost:3000</a> . Esta es la página de inicio por defecto para las aplicaciones Rails.</p>
+
+<h2 id="3-creando-el-esqueleto-para-producto-generador-scaffold">3. Creando el “esqueleto” para producto (generador scaffold)</h2>
+
+<p>Como necesitamos una tienda, pues quisiéramos tener algo para vender en ella, lo cual vamos a llamar “productos” o “products” en inglés.</p>
+
+<p>Usaremos  la funcionalidad <strong>scaffold</strong> de Rails para generar un código base que nos permita listar, añadir, eliminar, editar y ver objetos, en nuestro caso productos.</p>
+
+<p>En la terminal:</p>
+
+<pre><code>rails generate scaffold product name:string description:text picture:string price:float quantity:integer
+</code></pre>
+
+<p>Al correr el generador, vemos que rails de nuevo ha generado otro montón de archivos, todos ellos relacionados con lo que le llamamos productos (products).</p>
+
+<p>El código que hemos generado ha debido de crear una página básica dedicada a gestionar productos (products).</p>
+
+<h3 id="migraciones">Migraciones</h3>
+
+<p>Si vamos a <a href="localhost:3000/products">localhost:3000/products</a> vamos a tener nuestro primer error :(</p>
+
+<p>Para solucionarlo, en la terminal:</p>
+<pre><code>rake db:migrate
+</code></pre>
+
+<p>Este comando nos permite crear la tabla de productos en la base de datos dónde vamos a almacenar toda la información de la tienda.</p>
+
+<h3 id="validaciones">Validaciones</h3>
+<p>Para asegurarnos que todos nuestros productos tengan un foto vamos a agregar una validación al “Product”:</p>
+
+<pre><code class="language-ruby">class Product &lt; ApplicationRecord
+  validates_presence_of :picture
+end
+</code></pre>
+
+<h3 id="4-afinando-las-routes">4. Afinando las routes</h3>
+
+<p>Cómo mencionamos en el paso 2, Rails crea una página de inicio por defecto. Cambiemos nuestra página de inicio para que sea el listado de productos de nuestra tienda:</p>
+
+<pre><code class="language-ruby">root :to =&gt; 'products#index'
+</code></pre>
+
+<h3 id="5-mostrando-la-foto-de-nuestro-producto">5. Mostrando la foto de nuestro producto</h3>
+<p>Por defecto en vez de la foto se está mostrando la URL. Modifiquemos la lista de productos y el detalle:</p>
+
+<p>Lista de prodcutos: <code>app/views/products/index.html.erb</code></p>
+
+<pre><code class="language-rhtml">&lt;p id="notice"&gt;&lt;%= notice %&gt;&lt;/p&gt;
+
+&lt;h1&gt;Listado de Productos&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;% @products.each do |product| %&gt;
+    &lt;li&gt;
+      &lt;h3&gt;&lt;%= product.name %&gt;&lt;/h3&gt;
+      &lt;%= link_to image_tag(product.picture, width: '200'), product %&gt;
+      &lt;%= number_to_currency product.price, precision: 0 %&gt;
+      &lt;%= link_to 'Detalle', product %&gt;&lt;/li&gt;
+  &lt;% end %&gt;
+&lt;/ul&gt;
+&lt;p&gt;
+  &lt;%= link_to 'New Product', new_product_path %&gt;
+&lt;/p&gt;
+</code></pre>
+
+<p>Detalle del producto: <code>app/views/products/show.html.erb</code></p>
+
+<pre><code class="language-rhtml">&lt;p id="notice"&gt;&lt;%= notice %&gt;&lt;/p&gt;
+
+&lt;h1&gt;&lt;%= @product.name %&gt;&lt;/h1&gt;
+&lt;%= link_to image_tag(@product.picture, width: 300), @product %&gt;
+&lt;p&gt;
+  &lt;%= @product.description %&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+  &lt;strong&gt;Precio:&lt;/strong&gt;
+  &lt;%= number_to_currency @product.price, precision: 0 %&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+  &lt;strong&gt;Cantidades disponibles:&lt;/strong&gt;
+  &lt;%= @product.quantity %&gt;
+&lt;/p&gt;
+
+&lt;%= link_to 'Regresar a productos', products_path %&gt;
+&lt;%= link_to 'Eliminar producto', product_path(@product), method: :delete %&gt;
+</code></pre>
+
+<h2 id="6-comprando-un-producto">6. Comprando un producto</h2>
+
+<p>Para comprar un producto vamos a tener que “tocar” todo el MVC y las rutas.</p>
+
+<p>Agregamos al archivo <code>config/routes.rb</code> una nueva ruta:</p>
+
+<pre><code class="language-ruby">get 'products/:id/purchase', to: 'products#purchase', as: :purchase_product
+</code></pre>
+
+<p>Lo siguiente es modificar el controlador <code>app/controllers/products_controller.rb</code> agregando la acción comprar (purchase):</p>
+
+<pre><code class="language-ruby">def purchase
+  @product = Product.find(params[:id])
+  @product.decrement_quantity
+  @product.save!
+
+  respond_to do |format|
+    format.html { redirect_to @product, notice: 'Producto comprado' }
+  end
+end
+</code></pre>
+
+<p>Añadimos al modelo <code>app/models/product.rb</code> un nuevo método:</p>
+
+<pre><code class="language-ruby">def decrement_quantity
+  self.quantity -= 1
+end
+</code></pre>
+
+<p>Por último en <code>app/views/products/show.html.erb</code>, agregamos un botón después del precio:</p>
+
+<pre><code class="language-rhtml">&lt;h3&gt;
+  &lt;% if @product.quantity &gt; 0 %&gt;
+    &lt;%= link_to 'Comprar', purchase_product_path(@product), style: "color:blue" %&gt;
+  &lt;% else %&gt;
+    &lt;%= link_to 'Lo lamentamos, se han acabado las unidades disponibles', products_path, style: "color:blue" %&gt;
+  &lt;% end %&gt;
+&lt;/h3&gt;
+</code></pre>
+
+<p>Prueba haciendo click en un producto para ver el detalle y presionando el botón comprar para ver como se decrementan las unidades disponibles.</p>
+
+<h2 id="7-embellecimiento">7. Embellecimiento</h2>
+<p>La aplicación no luce muy bien todavía. Vamos a hacer algo con esto. Usaremos el proyecto Bootstrap para darle estilo en forma fácil.</p>
+
+<h3 id="estilos">Estilos</h3>
+
+<p>Agregamos una nueva <strong>gema</strong> (libreria) <code>config/Gemfile</code>:</p>
+
+<pre><code class="language-ruby">gem 'bootstrap-sass', '~&gt; 3.3.6'
+</code></pre>
+
+<p>Cambiamos la <strong>extensión</strong> del archivo <code>app/assets/stylesheets/application.css</code> por <code>scss</code> y reemplazmos su contenido por:</p>
+
+<pre><code class="language-scss">@import "bootstrap-sprockets";
+@import "bootstrap";
+
+@import "products";
+@import "scaffolds";
+</code></pre>
+
+<p><strong>Nota:</strong> Debemos reiniciar el servidor después de hacer este cambio.</p>
+
+<p>Ahora agregamos los estilos.</p>
+
+<p>Agregamos al archivo <code>app/assets/stylesheets/application.scss</code>:</p>
+
+<pre><code class="language-scss">.navbar-default {
+  background-color: #d3360b;
+  a {
+    color: white !important;
+  }
+  .navbar-brand {
+    font-size: 24px;
+  }
+}
+</code></pre>
+
+<p>Sustituimos completamente el archivo <code>app/assets/stylesheets/products.scss</code>:</p>
+
+<pre><code class="language-scss">.product-cont {
+  text-align: center;
+  h3 a {
+    color: #d3360b;
+    margin-bottom: 12px;
+  }
+  a:hover {
+    background: none;
+  }
+  p {
+    margin-top: 10px;
+    font-size: 16px;
+  }
+}
+
+.product-details {
+  h1 {
+    color: #d3360b;
+    margin-bottom: 24px;
+  }
+  p {
+    font-size: 18px;
+  }
+  .description {
+    margin-top: 100px;
+  }
+}
+</code></pre>
+
+<p>Sustituimos completamente el archivo <code>app/assets/stylesheets/scaffolds.scss</code>:</p>
+
+<pre><code class="language-scss">body {
+  background-color: #fff;
+  color: #333;
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+p, ol, ul, td {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+pre {
+  background-color: #eee;
+  padding: 10px;
+  font-size: 11px;
+}
+
+a {
+  color: #000;
+
+  &amp;:visited {
+    color: #666;
+  }
+
+  &amp;:hover {
+    color: #fff;
+    background-color: #000;
+  }
+}
+
+div {
+  &amp;.field, &amp;.actions {
+    margin-bottom: 10px;
+  }
+}
+
+#notice {
+  color: green;
+}
+
+.field_with_errors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+#error_explanation {
+  width: 450px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+
+  h2 {
+    text-align: left;
+    font-weight: bold;
+    padding: 5px 5px 5px 15px;
+    font-size: 12px;
+    margin: -7px;
+    margin-bottom: 0px;
+    background-color: #c00;
+    color: #fff;
+  }
+
+  ul li {
+    font-size: 12px;
+    list-style: square;
+  }
+}
+</code></pre>
+<h3 id="vistas">Vistas</h3>
+
+<p>También tenemos que actualizar las vistas para aplicar estos estilos.</p>
+
+<p>Primero actualizamos el “encuadre” de la aplicación. Sustituimos completamente el archivo <code>app/views/layouts/application.html.erb</code>:</p>
+
+<pre><code class="language-rhtml">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Tienda Rails Girls Cali 2017&lt;/title&gt;
+  &lt;%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' =&gt; true %&gt;
+  &lt;%= javascript_include_tag 'application', 'data-turbolinks-track' =&gt; true %&gt;
+  &lt;%= csrf_meta_tags %&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;%= render 'layouts/header' %&gt;
+  &lt;% if notice.present? %&gt;
+    &lt;div id="notice" class="alert alert-success alert-dismissible"&gt;
+      &lt;%= notice %&gt;
+    &lt;/div&gt;
+  &lt;% end %&gt;
+  &lt;div class="container-fluid"&gt;
+    &lt;%= yield %&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>Como se pueden dar cuenta en el <strong>layout</strong> de la aplicación, estamos <strong>renderizando</strong> un archivo <code>header</code> (la cabecera). El contendio de este archivo será incluido en el layout.</p>
+
+<p>Entonces creamos un nuevo archivo <code>app/views/layouts/_header.html.erb</code>, con el siguiente contenido:</p>
+
+<pre><code class="language-rhtml">&lt;nav class="navbar navbar-default"&gt;
+  &lt;div class="container-fluid"&gt;
+    &lt;!-- Brand and toggle get grouped for better mobile display --&gt;
+    &lt;div class="navbar-header"&gt;
+      &lt;button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"&gt;
+        &lt;span class="sr-only"&gt;Toggle navigation&lt;/span&gt;
+        &lt;span class="icon-bar"&gt;&lt;/span&gt;
+        &lt;span class="icon-bar"&gt;&lt;/span&gt;
+        &lt;span class="icon-bar"&gt;&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;%= link_to 'Tienda Rails Girls Cali', root_path, class: "navbar-brand" %&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;
+</code></pre>
+
+<p>Además del layout debemos actualizar las demás vistas de productos. 
+Para esto vamos a reemplazar todo el código de <code>app/views/products/index.html.erb</code>, <code>show.html.erb</code>, <code>new.html.erb</code>, <code>edit.html.erb</code> y <code>form.html.erb</code>.</p>
+
+<p>Vamos al <a href="https://github.com/railsgirls-cali/example-store-2017">repositorio</a> para copiar el código de estas vistas.</p>
+
+<h2 id="8-buscando-productos">8. Buscando Productos</h2>
+
+<p>Para hacer la aplicación más interesante y útil, sería ideal poder buscar por los productos de manera fácil y rápida desde cualquier página.</p>
+
+<p>Para ello, vamos a colocarle un campo de búsqueda en la cabecera (header) que acabamos de poner.</p>
+
+<pre><code class="language-rhtml">&lt;%= form_tag search_products_path, class: 'navbar-form navbar-left pull-right',
+             role: 'search', method: :get do %&gt;
+  &lt;div class="form-group"&gt;
+    &lt;%= text_field_tag :product_name, @product_name, class: 'form-control',
+                       placeholder: 'Buscar productos' %&gt;
+  &lt;/div&gt;
+  &lt;%= submit_tag 'Buscar', class: 'btn btn-default' %&gt;
+&lt;% end %&gt;
+</code></pre>
+<p>Ahora agregamos una nueva ruta para las búsquedas, en el archivo <code>config/routes.rb</code> modificamos:</p>
+
+<pre><code class="language-ruby">resources :products
+</code></pre>
+
+<p>por</p>
+
+<pre><code class="language-ruby">resources :products do
+  get 'search', on: :collection
+end
+</code></pre>
+
+<p>Esto hará que nuestra aplicación responda a la url <code>/products/search</code> (que es lo mismo que el search_products_path que se ve en el código agregado) que es a donde nuestro formulario enviará los datos ingresados en el campo de texto de búsqueda.</p>
+
+<p>Agregamos la nueva acción  <strong>“buscar”</strong> al controlador <code>app/controllers/products_controller.rb</code>:</p>
+
+<pre><code class="language-ruby">def search
+  @product_name = params[:product_name]
+  @products = Product.search(@product_name)
+end
+</code></pre>
+
+<p>También debemos ir a nuestro modelo de Producto (que se comunica con la base de datos) <code>app/models/product.rb</code>  y agregar la lógica de búsqueda como tal:</p>
+
+<pre><code class="language-ruby">def self.search(term)
+  self.where("lower(name) LIKE lower(?)", "%#{term}%")
+end
+</code></pre>
+
+<p>Lo que hemos escrito significa que va a buscar los productos por nombre, sin importar mayúsculas o minúsculas.</p>
+
+<p>Por último creamos la vista <code>app/views/products/search.html.erb</code> y colocamos lo siguiente:</p>
+
+<pre><code class="language-rhtml">&lt;h1&gt;&lt;%= "Resultados de productos: #{@product_name}" %&gt;&lt;/h1&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;ul&gt;
+  &lt;% @products.each do |product| %&gt;
+    &lt;li&gt;
+      &lt;h3&gt;&lt;%= product.name %&gt;&lt;/h3&gt;
+      &lt;%= link_to image_tag(product.picture, width: '200'), product %&gt;
+      &lt;%= number_to_currency product.price, precision: 0 %&gt;
+      &lt;%= link_to 'Detalle', product %&gt;&lt;/li&gt;
+  &lt;% end %&gt;
+&lt;/ul&gt;
+
+&lt;%= link_to 'Regresar a productos', products_path %&gt;
+</code></pre>
+
+<p>Refresca la página y escribe una palabra o parte de ella en la caja de búsqueda para ver los resultados de productos.</p>
+
+<h2 id="9-quién-administra-mi-tienda">9. ¿Quién administra mi tienda?</h2>
+
+<p>En esta parte vamos a realizar las funcionalidades de crear, editar y eliminar productos. Esto lo vamos a hacer en una ruta diferente a la que acceden los usuarios normales, que es la ruta del administrador.</p>
+
+<p>Primero vamos a crear las siguientes carpetas <code>app/controllers/admin</code> , <code>app/views/admin</code> y <code>app/views/admin/products</code>.</p>
+
+<p>Dentro de <code>config/routes.rb</code> agregamos:</p>
+
+<pre><code class="language-ruby">namespace :admin do
+  resources :products
+end
+</code></pre>
+
+<p>Una vez tenemos la ruta vamos a crear el controlador <code>app/controllers/admin/products_controller.rb</code>:</p>
+
+<pre><code class="language-ruby">class Admin::ProductsController &lt; ApplicationController
+
+  def index
+    @products = Product.all
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @products }
+    end
+  end
+
+  def new
+    @product = Product.new
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @product }
+    end
+  end
+
+  def edit
+    @product = Product.find(params[:id])
+  end
+
+  def create
+    @product = Product.new(product_params)
+
+    respond_to do |format|
+      if @product.save
+        format.html { redirect_to admin_products_url, notice: 'Producto creado.' }
+        format.json { render json: @product, status: :created, location: @product }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @product.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def update
+    @product = Product.find(params[:id])
+
+    respond_to do |format|
+      if @product.update_attributes(product_params)
+        format.html { redirect_to admin_products_url, notice: 'Producto actuaizado.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @product.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def destroy
+    @product = Product.find(params[:id])
+    @product.destroy
+
+    respond_to do |format|
+      format.html { redirect_to admin_products_url, notice: 'Producto eliminado.'}
+      format.json { head :no_content }
+    end
+  end
+
+  private
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def product_params
+    params.require(:product).permit(:name, :description, :picture, :price, :quantity)
+  end
+end
+</code></pre>
+
+<p>El siguiente y último paso es actulizar las vistas.</p>
+
+<p>Eliminámos los archivos <code>app/views/products/_form.html.erb</code>, <code>app/views/products/edit.html.erb</code> y <code>app/views/products/new.html.erb</code>.</p>
+
+<p>Creamos el archivo <code>app/views/admin/products/_form.html.erb</code>:</p>
+
+<pre><code class="language-rhtml">&lt;%= form_for [:admin, @product] do |f| %&gt;
+  &lt;% if @product.errors.any? %&gt;
+    &lt;div id="error_explanation"&gt;
+      &lt;h2&gt;&lt;%= pluralize(@product.errors.count, "error") %&gt; prohibited this product from being saved:&lt;/h2&gt;
+
+      &lt;ul&gt;
+      &lt;% @product.errors.full_messages.each do |message| %&gt;
+        &lt;li&gt;&lt;%= message %&gt;&lt;/li&gt;
+      &lt;% end %&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;% end %&gt;
+
+  &lt;div class="field"&gt;
+    &lt;label&gt;Nombre:&lt;/label&gt;&lt;br&gt;
+    &lt;%= f.text_field :name %&gt;
+  &lt;/div&gt;
+  &lt;div class="field"&gt;
+    &lt;label&gt;Descripción:&lt;/label&gt;&lt;br&gt;
+    &lt;%= f.text_area :description %&gt;
+  &lt;/div&gt;
+  &lt;div class="field"&gt;
+    &lt;label&gt;Imágen:&lt;/label&gt;&lt;br&gt;
+    &lt;%= f.text_field :picture %&gt;
+  &lt;/div&gt;
+  &lt;div class="field"&gt;
+    &lt;label&gt;Precio:&lt;/label&gt;&lt;br&gt;
+    &lt;%= f.text_field :price %&gt;
+  &lt;/div&gt;
+  &lt;div class="field"&gt;
+    &lt;label&gt;Cantidad:&lt;/label&gt;&lt;br&gt;
+    &lt;%= f.number_field :quantity %&gt;
+  &lt;/div&gt;
+  &lt;div class="actions"&gt;
+    &lt;%= f.submit 'Guardar' %&gt;
+  &lt;/div&gt;
+&lt;% end %&gt;
+</code></pre>
+
+<p>Creamos el archivo <code>app/views/admin/products/edit.html.erb</code>:</p>
+
+<pre><code class="language-rhtml">&lt;h1&gt;Editar Producto&lt;/h1&gt;
+
+&lt;%= render 'form' %&gt;
+
+&lt;%= link_to 'Regresar', admin_products_path %&gt;
+</code></pre>
+
+<p>Creamos el archivo <code>app/views/admin/products/new.html.erb</code> y colocamos en el:</p>
+
+<pre><code class="language-rhtml">&lt;h1&gt;Crear Producto&lt;/h1&gt;
+
+&lt;%= render 'form' %&gt;
+
+&lt;%= link_to 'Regresar', admin_products_path %&gt;
+</code></pre>
+
+<p>Creamos el archivo <code>app/views/admin/products/index.html.erb</code>:</p>
+
+<pre><code class="language-rhtml">&lt;p id="notice"&gt;&lt;%= notice %&gt;&lt;/p&gt;
+
+&lt;h1&gt;Listado de Productos&lt;/h1&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Picture&lt;/th&gt;
+      &lt;th&gt;Nombre&lt;/th&gt;
+      &lt;th&gt;Descripción&lt;/th&gt;
+      &lt;th&gt;Precio&lt;/th&gt;
+      &lt;th&gt;Cantidad&lt;/th&gt;
+      &lt;th colspan="3"&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+
+  &lt;tbody&gt;
+    &lt;% @products.each do |product| %&gt;
+      &lt;tr&gt;
+        &lt;td&gt;&lt;%= image_tag product.picture, width: '50' %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= product.name %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= product.description %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= number_to_currency product.price, precision: 0 %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= product.quantity %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= link_to 'Editar', edit_admin_product_path(product) %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= link_to 'Borrar', admin_product_path(product), method: :delete,
+                        data: { confirm: 'Estás seguro que deseas borrar este producto?' } %&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;% end %&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;br&gt;
+&lt;%= link_to 'Nuevo Producto', new_admin_product_path %&gt;
+</code></pre>
+
+<p>Ahora podemos ir a nuestro navegador web, usando la ruta <code>/admin/products</code>, por ejemplo, para ver una lista de productos pero poder administrarlos, la idea de hacer esto es para que haya una parte de la aplicación encargada de la administración y otra separada para hacer las compras, posibilitando que luego podamos añadir más fácilmente permisos de acceso.</p>
+
+<h2 id="10-registrando-usuarios-autenticación">10. Registrando usuarios (autenticación)</h2>
+
+<p>Vamos a agregar una simple gema de autenticación llamada Devise. Esta nos proporciona formularios de autenticación y métodos para manejar las sesiones de usuario.</p>
+
+<p>Lo primero que tenemos que hacer es instalar la gema. Agregamos al archivo <code>Gemfile</code> la línea:</p>
+
+<pre><code class="language-ruby">gem 'devise'
+</code></pre>
+
+<p><strong>Info</strong>: <a href="https://github.com/plataformatec/devise">https://github.com/plataformatec/devise</a></p>
+
+<p>Ahora instalamos la gema mediante el comando en la terminal:</p>
+
+<pre><code>bundle install
+</code></pre>
+
+<p>Configuramos nuestro proyecto para usar Devise con:</p>
+
+<pre><code>rails generate devise:install
+</code></pre>
+
+<p>Creamos un modelo de Devise para el administrador:</p>
+
+<pre><code>rails generate devise Admin
+</code></pre>
+
+<p>Ahora necesitamos crear un usuario administrador en nuestra base de datos, para esto abrimos la consola de Rails escribiendo:</p>
+
+<pre><code>rake db:migrate
+</code></pre>
+
+<p>Creamos un usuario administrador directamente en la consola de Rails:</p>
+
+<pre><code>Admin.create(email: 'admin@tienda.com', password: 'railsgirls', password_confirmation: 'railsgirls')
+</code></pre>
+
+<p>Y en el controlador de productos para administradores (<code>app/controllers/admin/products_controller.rb</code>) le decimos que antes de hacer cualquier acción debe autenticar el administrador:</p>
+
+<pre><code class="language-ruby">before_action :authenticate_admin!
+</code></pre>
+
+<p>Reiniciamos el servidor de Rails y vamos a la dirección <code>http://localhost:3000/admin/products</code>. Ahora nos debería pedir autenticarnos. Lo hacemos con los datos de email y password del usuario administrador creado anteriormente.</p>
+
+<p>Modificamos la barra de navegación del layout principal <code>app/views/layouts/header.html</code> como lo hicimos en una anterior ocasión, para agregar un enlace para cerrar la sesión:</p>
+
+<pre><code class="language-rhtml">&lt;% if admin_signed_in? %&gt;
+  &lt;ul class="nav navbar-nav navbar-right"&gt;
+    &lt;li&gt;
+      &lt;%= link_to "Cerrar Sesión", destroy_admin_session_path, method: :delete %&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;% end %&gt;
+</code></pre>
+
+<p>Refrescamos la página y probamos el enlace de cierre de sesión.</p>
+
+<p>Eso es todo por ahora, esperamos que tu tienda esté funcionando y que tengas las bases para seguir avanzando. ;)</p>
+
+<h1 id="bonus-track">Bonus track</h1>
+
+<h2 id="el-baile-de-github">El baile de Github</h2>
+
+<p>¡Ahora veremos en secuencia los pasos necesarios para subir tu primer proyecto a la plataforma Github!</p>
+
+<ol>
+  <li>En la parte superior derecha de tu espacio de trabajo en <a href="http://c9.io">C9</a>, haz clic en tu foto para abrir el panel de configuración y clic en <code>Dashboard</code>.
+<a href="https://c9.io/account/ssh">https://c9.io/account/ssh</a></li>
+  <li>Ahora click en el círculo de arriba que tiene un engranaje y después en el menú lateral que dice <code>SSH keys</code></li>
+  <li>Copia todas las lineas que empezan por <code>ssh-rsa...</code></li>
+  <li>Crea una cuenta en GitHub: <a href="https://github.com">https://github.com</a></li>
+  <li>Entra en <a href="https://github.com/settings/profile">tu perfil de usuario</a> y haz clicc en <code>SSH and GPG keys</code>.
+<a href="https://github.com/settings/ssh">https://github.com/settings/ssh</a></li>
+  <li>Ahora Clic en “Add SSH Key”. Introduce el título: “ C9 “, pega la clave SSH en el cuadro “key”, y haz clic en “Add key”.</li>
+  <li>Crea un repositorio nuevo vacío para tu nuevo proyecto. Desde tu repositorio, copia el enlace SSH:
+    <pre><code>git@github.com:sunombre/nombredelproyecto.git
+</code></pre>
+  </li>
+  <li>Convierte tu directorio actual en un repositorio git ejecutando en la consola de C9:
+    <pre><code>git init
+</code></pre>
+  </li>
+  <li>Utilizando el enlace SSH que copiaste en el paso 9, añade el repositorio remoto como origen:
+    <pre><code>git remote add origin git@github.com:sunombre/nombredelproyecto.git
+</code></pre>
+  </li>
+  <li>Añade tus archivos y haz commit
+    <pre><code>git add .
+</code></pre>
+    <pre><code>git commit -m "Mi Primer commit"
+</code></pre>
+  </li>
+  <li>Sube los archivos:
+    <pre><code>git push -u origin master
+</code></pre>
+  </li>
+</ol>
+
+<p><strong>Ahora tienes tu repositorio actualizado en GitHub</strong></p>
+
+<h2 id="tener-nuestra-aplicación-en-la-web">Tener nuestra aplicación en la web</h2>
+
+<p>¿Cómo subir nuestra aplicación en la web, de forma que otros puedan verla? Con un servicio llamado <a href="http://heroku.com">Heroku</a> que permite subir tu aplicación en un servidor gratis en cuestión de segundos.</p>
+
+<h3 id="regístrate-en-heroku">Regístrate en Heroku</h3>
+
+<p><a href="https://www.heroku.com/">https://www.heroku.com/</a></p>
+
+<h3 id="c9-ya-tiene-una-herramienta-que-se-llama-heroku-toolbelt-solo-necesitamos-actualizarla">C9 ya tiene una herramienta que se llama Heroku toolbelt. Solo necesitamos actualizarla</h3>
+
+<pre><code class="language-bash">wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+</code></pre>
+
+<h3 id="inicia-sesión-en-heroku-desde-la-consola">Inicia sesión en Heroku desde la consola</h3>
+
+<pre><code class="language-bash">heroku login
+Email: (Introduce tu correo electrónico)
+Password ( Introduce tu contraseña - se mostrará en blanco y es normal )
+</code></pre>
+
+<h3 id="añade-las-claves-a-heroku">Añade las claves a Heroku</h3>
+
+<pre><code class="language-bash">heroku keys:add
+heroku create #crea una nueva URL para la aplicación
+</code></pre>
+
+<h3 id="añade-las-nuevas-gemas-y-grupos-de-gemas-para-heroku">Añade las nuevas gemas y grupos de gemas para Heroku</h3>
+
+<p><strong>/gemfile</strong></p>
+
+<pre><code class="language-ruby">group :development, :test do
+     gem 'sqlite3'
+end
+
+group :production do
+     gem 'pg'
+     gem 'rails_12factor'
+end
+</code></pre>
+
+<p>Nota: Después de crear un grupo <code>producción</code> a tu Gemfile, debes cambiar a utilizar <code>bundle install --without production</code></p>
+
+<h3 id="entonces-instalamos-las-gemas">Entonces instalamos las gemas</h3>
+
+<pre><code class="language-bash">bundle install --without production
+</code></pre>
+
+<h3 id="el-baile-de-git">El baile de git</h3>
+
+<pre><code class="language-bash">git add --all
+git commit -m "¡Lista para subir a Heroku!"
+git push origin master
+</code></pre>
+
+<h3 id="sube-a-heroku">Sube a Heroku</h3>
+
+<pre><code class="language-bash">git push heroku master
+heroku open
+heroku rename instagram #Reemplaza "instagram" con el nombre de tu proyecto
+heroku run rake db:migrate #Para correr las migraciones
+</code></pre>
+
+<h3 id="authors">Authors</h3>
+
+<p>Miguél Díaz (miguel.diaz@codescrum.com)</p>
+
+<p>Victor Cortés (ie.cortex@gmail.com)</p>
+:ET

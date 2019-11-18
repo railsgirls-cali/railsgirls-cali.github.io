@@ -1,6 +1,6 @@
 main:
     - { url: '/', text: 'Home' }
-    - { url: '/instagram', text: 'Instagram' }
+    - { url: '/instagram-r6', text: 'Instagram' }
     - { url: '/forum', text: 'Foro' }
     - { url: '/tienda', text: 'Tienda' }
     - { url: '/slack', text: 'Railslack' }

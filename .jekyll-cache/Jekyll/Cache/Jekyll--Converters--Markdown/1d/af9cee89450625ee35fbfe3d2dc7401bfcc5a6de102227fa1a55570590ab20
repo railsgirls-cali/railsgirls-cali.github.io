@@ -1,0 +1,1981 @@
+I"p<div class="repo">
+  <h3>repositorio de la aplicación</h3>
+  <a href="https://github.com/railsgirls-cali/example-instagram">
+    https://github.com/railsgirls-cali/example-instagram</a>
+</div>
+
+<div class="repo">
+  <h3>Ejemplo de la aplicación</h3>
+  <a href="https://instagram-example-chrisestanol.c9users.io/">
+    https://instagram-example-chrisestanol.c9users.io/</a>
+</div>
+
+<h2 id="convenciones">CONVENCIONES</h2>
+
+<h3 id="1-consola">1. consola</h3>
+
+<p>La interfaz de línea de comandos, terminal o consola es un método que permite a los usuarios dar instrucciones a algún programa informático por medio de una línea de texto simple.</p>
+
+<p>Lo primero que debemos saber es que el terminal se utiliza para dar órdenes al sistema mediante unas palabras llamadas comandos de Linux. Estos comandos pueden servir para muchas cosas, como por ejemplo: copiar archivos, comprimir carpetas, reproducir música, descargar archivos, etc.</p>
+
+<p>Para que nosotros sepamos que el sistema está preparado para recibir órdenes, en el terminal aparecerá una línea de texto llamada prompt</p>
+
+<pre><code>$
+</code></pre>
+
+<p>Entonces cada vez que vas a encontrar referencia a la <code>consola</code> en la guía, solo copia el comando y ejecútalo en la consola.</p>
+
+<h3 id="2-modificación-de-archivos">2. Modificación de archivos</h3>
+
+<p>Encontrarás referencias como la siguiente para ubicar el archivo que tienes que cambiar</p>
+
+<p><strong>app/views/pages/home.html.erb</strong></p>
+
+<p>Con instrucciones y el código/contenido que tienes que agregar o cambiar</p>
+
+<pre><code>[...]
+
+código/contenido
+
+[...]
+</code></pre>
+
+<h2 id="inicio">INICIO</h2>
+
+<h2 id="1-arranca-el-servidor-de-rails">1. Arranca el servidor de Rails</h2>
+
+<p><code>consola</code></p>
+
+<pre><code>rails server -b 0.0.0.0 -p 8080
+</code></pre>
+
+<p>El comando anterior usa las siguientes opciones:</p>
+
+<ul>
+  <li><strong>-b</strong> <em>especifica que el servidor será accesible desde clientes externos, en este caso desde internet utilizando cualquier navegador web si estás usando c9</em>.</li>
+  <li><strong>-p</strong> <em>especifica el puerto en el cual el servidor abre la conexión</em>.</li>
+</ul>
+
+<h2 id="2-página-de-inicio">2. Página de inicio</h2>
+
+<p>C9 te creas una URL especial, para el caso del taller la URL será generada de la siguiente forma:</p>
+
+<p>http://<strong>nombre_del_proyecto</strong>-<strong>tu_usuario_de_c9</strong>.c9users.io/</p>
+
+<p>Deberías ver la página de información por defecto de Rails.</p>
+
+<p>La página “Welcome Aboard” es la primera prueba para una nueva aplicación Rails: Ésta asegura que tienes el software configurado correctamente para servir una página.</p>
+
+<h2 id="3-crea-una-nueva-página">3. Crea una nueva página</h2>
+
+<p>Para crear nuestra nueva página, necesitas crear como mínimo un controlador y una vista.</p>
+
+<p>El propósito de un controlador es recibir las peticiones (requests) de la aplicación. El enrutamiento (routing) decide qué controlador recibe qué petición.</p>
+
+<p>A menudo, hay más de una ruta para cada controlador, y diferentes rutas pueden ser servidas por diferentes acciones (actions). El propósito de cada acción es obtener información para pasarla después a la vista.</p>
+
+<p>El propósito de una vista es mostrar la información en un formato legible para los humanos. Una distinción importante que hacer, es que es el controlador, y no la vista, donde la información es recolectada. La vista sólo debería mostrar la información. Por defecto, las plantillas de las vistas están escritas en un lenguaje llamado ERB (del inglés, Embedded Ruby), que se procesa automáticamente para cada petición servida por Rails.</p>
+
+<p>Para crear un nuevo controlador, necesitas ejecutar el generador de controladores y decirle que quieres un controlador llamado por ejemplo <code>pages</code> con una acción llamada <code>home</code>. Para ello, ejecuta lo siguiente:</p>
+
+<p><strong>NOTA</strong> El primer tab de tu consola ya tiene el servidor de Rails corriendo que lanzaste con el comando:</p>
+
+<pre><code>rails server -b 0.0.0.0 -p 8080
+</code></pre>
+
+<p>Ahora tienes que abrir un nuevo tab.
+En el terminal aparecerá un nuevo prompt <code>$ </code> donde puedes ejecutar:</p>
+
+<p><code>consola</code></p>
+
+<pre><code>rails generate controller pages home
+</code></pre>
+
+<p>Rails creará una serie de archivos y añadirá una ruta por ti.</p>
+
+<pre><code>create  app/controllers/pages_controller.rb
+ route  get 'pages/home'
+invoke  erb
+create    app/views/pages
+create    app/views/pages/home.html.erb
+invoke  test_unit
+create    test/controllers/pages_controller_test.rb
+invoke  helper
+create    app/helpers/pages_helper.rb
+invoke    test_unit
+invoke  assets
+invoke    coffee
+create      app/assets/javascripts/pages.coffee
+invoke    scss
+create      app/assets/stylesheets/pages.scss
+</code></pre>
+
+<p>Los archivos más importantes de éstos son por supuesto el controlador, que se encuentra en <strong>app/controllers/pages_controller.rb</strong> y la vista, que se encuentra en <strong>app/views/pages/home.html.erb</strong>.</p>
+
+<h3 id="actualiza-el-texto-en-la-nueva-página">Actualiza el texto en la nueva página</h3>
+
+<p>Abre el archivo <strong>app/views/pages/home.html.erb</strong> en tu editor de texto y edítalo para que contenga sólo está línea de código:</p>
+
+<pre><code class="language-html">&lt;h1&gt;¡Bienvenidos a Instagram!&lt;/h1&gt;
+</code></pre>
+
+<p>En tu navegador, ve a la URL : <a href="http://**nombre_del_proyecto**-**tu_usuario_de_c9**.c9users.io/pages/home">http://<strong>nombre_del_proyecto</strong>-<strong>tu_usuario_de_c9</strong>.c9users.io/pages/home</a> y ve la nueva página que se acaba de crear.</p>
+
+<h3 id="mostrar-la-página-de-inicio-de-tu-aplicación-home">Mostrar la página de inicio de tu aplicación (Home)</h3>
+
+<p>¿Cómo conectar la raíz de tu sitio a un controlador y acción específica?</p>
+
+<p>Debemos configurar la ruta de acceso a la aplicación editando el archivo <code>config/routes.rb</code>, para esto debemos cambiar la siguiente línea en el mismo:</p>
+
+<p><strong>config/routes.rb</strong></p>
+
+<p>Reemplazar la línea</p>
+
+<pre><code class="language-ruby">get 'pages/home'
+</code></pre>
+
+<p>…por:</p>
+
+<pre><code class="language-ruby">root 'pages#home'
+</code></pre>
+
+<h2 id="4-crea-más-paginas">4. Crea más paginas</h2>
+
+<h3 id="añade-una-nueva-acción-en-el-controlador">Añade una nueva acción en el controlador</h3>
+
+<p><strong>app/controllers/pages_controller.rb</strong></p>
+
+<pre><code class="language-ruby">class PagesController &lt; ApplicationController
+  def home
+  end
+
+  def about
+  end
+end
+</code></pre>
+
+<h3 id="crea-el-siguiente-archivo">Crea el siguiente archivo:</h3>
+
+<p><strong>app/views/pages/about.html.erb</strong></p>
+
+<h4 id="y-agrega-lo-siguiente">y agrega lo siguiente:</h4>
+
+<pre><code class="language-html">&lt;h1&gt;¿Quién soy?&lt;/h1&gt;
+&lt;p&gt;¡Una Rails Girl creando mi propia app de Instagram!&lt;/p&gt;
+</code></pre>
+
+<h3 id="vamos-a-agregar-una-nueva-ruta">Vamos a Agregar una nueva ruta</h3>
+
+<p><strong>config/routes.rb</strong></p>
+
+<p>Debajo de</p>
+
+<pre><code class="language-ruby">root 'pages#home'
+
+</code></pre>
+
+<p>Añade:</p>
+
+<pre><code class="language-ruby">get 'about' =&gt; 'pages#about'
+</code></pre>
+
+<h2 id="5-instalemos-bootstrap">5. ¡Instalemos Bootstrap!</h2>
+
+<h3 id="añade-la-gema-de-bootstrap-y-sass">Añade la gema de Bootstrap Y Sass</h3>
+
+<p><em>“Las gemas en Ruby son las bibliotecas o paquetes (código Ruby empaquetado de una manera predeterminada) de software que se instalan en el sistema para aumentar las funcionalidades del interprete”</em>.</p>
+
+<ul>
+  <li>
+    <p><strong>Bootstrap</strong> es una biblioteca multiplataforma o conjunto de herramientas de código abierto para diseño de sitios y aplicaciones web. Contiene plantillas de diseño con tipografía, formularios, botones, cuadros, menús de navegación y otros elementos de diseño basado en HTML y CSS, así como extensiones de JavaScript adicionales.</p>
+  </li>
+  <li>
+    <p><strong>Sass</strong> (acrónimo de Syntactically Awesome StyleSheets) es una extensión de CSS que añade características muy potentes y elegantes a este lenguaje de estilos. Sass permite el uso de variables, reglas CSS anidadas, mixins, importación de hojas de estilos y muchas otras características, al tiempo que mantiene la compatibilidad con CSS.</p>
+  </li>
+</ul>
+
+<p>En</p>
+
+<p><strong>/Gemfile</strong></p>
+
+<p>Y justo antes de <code>group :development, :test do</code> inserta:</p>
+
+<pre><code class="language-ruby">[...]
+
+gem 'bootstrap-sass'
+
+[...]
+</code></pre>
+
+<h3 id="siempre-pare-el-servidor-con-control--c-y-corre-bundle-install-para-instalar-una-nueva-gema">Siempre pare el servidor con <code>CONTROL + C</code> y corre <code>bundle install</code> para instalar una nueva gema</h3>
+
+<p><code>consola</code></p>
+
+<pre><code class="language-bash">CONTROL + C
+bundle install
+</code></pre>
+
+<h3 id="vuelve-a-iniciar-el-servidor">Vuelve a iniciar el servidor</h3>
+
+<p><code>consola</code></p>
+
+<pre><code class="language-bash">rails server -b 0.0.0.0 -p 8080
+</code></pre>
+
+<h3 id="crea-un-nuevo-documento-scss">Crea un nuevo documento SCSS</h3>
+
+<p>Una vez instalado Bootstrap en nuestra aplicación, crearemos un nuevo documento SASS en <code>app/assets/stylesheets/custom_bootstrap.scss</code> para importar todas las funcionalidades CSS de boostrap a nuestro proyecto. En este nuevo documento debemos añadir lo siguiente:</p>
+
+<p><strong>app/assets/stylesheets/custom_bootstrap.scss</strong></p>
+
+<pre><code>@import "bootstrap";
+</code></pre>
+
+<h3 id="importa-el-javascript-para-bootstrap">Importa el Javascript para Bootstrap</h3>
+
+<p>Igualmente, en el archivo <code>app/assets/javascripts/application.js</code> debemos agregar el código de abajo para importar todas las funcionalidades JS de Boostrap en nuestro proyecto.</p>
+
+<p><strong>app/assets/javascripts/application.js</strong></p>
+
+<pre><code>[...]
+//= require bootstrap-sprockets
+[...]
+//= require_tree .
+</code></pre>
+
+<h3 id="añade-el-viewport">Añade el viewport</h3>
+<h5 id="esto-sirve-para-permitir-que-tu-app-se-vea-bien-en-varios-tamaños-de-pantalla">Esto sirve para permitir que tu app se vea bien en varios tamaños de pantalla</h5>
+<p><strong>views/layouts/application.html.erb</strong></p>
+
+<p>Después del <code>&lt;head&gt;</code> y antes del <code>&lt;title&gt;</code>.</p>
+
+<p>Inserta:</p>
+
+<pre><code class="language-html">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+</code></pre>
+
+<h3 id="vuelve-a-iniciar-el-servidor-1">Vuelve a iniciar el servidor</h3>
+
+<p><code>consola</code></p>
+
+<pre><code class="language-bash">CONTROL + C
+rails server -b 0.0.0.0 -p 8080
+</code></pre>
+
+<h2 id="6-añade-elementos-de-bootstrap-a-la-página">6. Añade elementos de Bootstrap a la página</h2>
+
+<h3 id="añade-un-contenedor-a-tu-aplicación">¡Añade un contenedor a tu aplicación!</h3>
+
+<p><strong>views/layouts/application.html.erb</strong></p>
+
+<p>Dentro de la etiqueta <code>&lt;body&gt;</code>, reemplaza</p>
+
+<pre><code class="language-rhtml">&lt;%= yield %&gt;
+</code></pre>
+
+<p>por…</p>
+
+<pre><code class="language-rhtml">&lt;div class="container"&gt;
+    &lt;%= yield %&gt;
+&lt;/div&gt;
+</code></pre>
+
+<h3 id="crea-un-parcial-de-encabezado">Crea un parcial de encabezado</h3>
+
+<p>Por convención un parcial es un archivo de plantilla cuyo nombre empieza por un guion bajo y cuyo contenido se reutiliza en varias plantillas diferentes. Aquí el encabezado es un ejemplo de contenido que se repite en varias páginas.</p>
+
+<p>Crea el archivo <strong>app/views/layouts/_header.html.erb</strong></p>
+
+<h3 id="añade-la-barra-de-navegación">Añade la barra de navegación</h3>
+
+<p><strong>app/views/layouts/_header.html.erb</strong></p>
+
+<pre><code class="language-rhtml">&lt;nav class="navbar navbar-default" role="navigation"&gt;
+  &lt;div class="container"&gt;
+    &lt;!-- Brand and toggle get grouped for better mobile display --&gt;
+    &lt;div class="navbar-header"&gt;
+      &lt;button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"&gt;
+        &lt;span class="sr-only"&gt;Toggle navigation&lt;/span&gt;
+        &lt;span class="icon-bar"&gt;&lt;/span&gt;
+        &lt;span class="icon-bar"&gt;&lt;/span&gt;
+        &lt;span class="icon-bar"&gt;&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;%= link_to "Instagram", root_path, class: "navbar-brand" %&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Collect the nav links, forms, and other content for toggling --&gt;
+    &lt;div class="collapse navbar-collapse navbar-ex1-collapse"&gt;
+      &lt;ul class="nav navbar-nav navbar-right"&gt;
+        &lt;li&gt;&lt;%= link_to "Home", root_path %&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;%= link_to "Quiénes somos", about_path %&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;&lt;!-- /.navbar-collapse --&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;
+</code></pre>
+
+<p><strong>NOTA</strong> <strong>Embedded Ruby?</strong> – <strong>¿Ruby embebido?</strong></p>
+
+<p>En Ruby se usa mucho ERB como sistema de plantillas para crear archivos HTML con código Ruby embebido.</p>
+
+<p>En HTML, un enlace es así:</p>
+
+<pre><code class="language-html">&lt;a href="#"&gt; aquí &lt;/a&gt;
+</code></pre>
+
+<p>Estas son etiquetas de Ruby:</p>
+
+<pre><code class="language-erb">&lt; % = % &gt;
+</code></pre>
+
+<p>En Ruby on Rails un enlace se verá así:</p>
+
+<pre><code class="language-erb">&lt;%= link_to "aquí", "#" %&gt;
+</code></pre>
+
+<h3 id="añade-el-parcial-de-encabezado-a-la-página-de-inicio">Añade el parcial de encabezado a la página de inicio</h3>
+
+<p><strong>app/views/layouts/application.html.erb</strong></p>
+
+<p>Después de la etiqueta <code>&lt;body&gt;</code> inserta:</p>
+
+<pre><code class="language-erb">&lt;%= render 'layouts/header' %&gt;
+</code></pre>
+
+<h3 id="añade-el-contenido-del-home">Añade el contenido del home</h3>
+
+<p>Reemplaza todo el contenido del archivo</p>
+
+<p><strong>views/pages/home.html.erb</strong></p>
+
+<pre><code class="language-rhtml">&lt;div class="jumbotron text-center"&gt;
+  &lt;h2&gt;¡Bienvenidos a Instagram!&lt;/h2&gt;
+  &lt;p&gt;
+   &lt;%= link_to "Iniciar sesión", "#", class: "btn btn-default btn-lg" %&gt;
+   &lt;%= link_to "Regístrate", "#", class: "btn btn-primary btn-lg" %&gt;
+  &lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+
+<h2 id="8-personalicemos-bootstrap">8. Personalicemos Bootstrap</h2>
+
+<h3 id="cambios-de-estilo">Cambios de estilo</h3>
+
+<p>Ahora agregamos un poco de estilos CSS (<em>usando SASS</em>).</p>
+
+<p><strong>app/assets/stylesheets/custom_bootstrap.scss</strong></p>
+
+<p>Reemplaza:</p>
+
+<pre><code class="language-scss">@import 'bootstrap';
+</code></pre>
+
+<p>por los siguientes estilos:</p>
+
+<pre><code class="language-scss">@import url(http://fonts.googleapis.com/css?family=Lato:400,700);
+@import url(http://fonts.googleapis.com/css?family=Oleo+Script);
+
+$body-bg:                          #fafafa !important;
+$font-family-sans-serif:           'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$navbar-height:                    70px;
+$navbar-default-bg:                white;
+$navbar-default-brand-color:       #3897F0;
+$navbar-default-link-color:        #3897F0;
+$brand-primary:                    #3897F0 !default;
+$jumbotron-bg:                     white;
+
+@import 'bootstrap-sprockets';
+@import 'bootstrap';
+
+.navbar-default .navbar-brand {
+  font-family: 'Oleo Script', cursive;
+  font-size: 25px;
+  font-weight: bold;
+  color: #262626;
+}
+
+.navbar-nav {
+  font-weight: bold;
+}
+</code></pre>
+
+<h2 id="9-añadir-devise-para-autenticación-de-usuarios">9. Añadir Devise para Autenticación de usuarios</h2>
+
+<h3 id="añade-la-gema-de-devise">Añade la gema de Devise</h3>
+
+<p>La mayoría de las aplicaciones web necesitan que los usuarios puedan crear una cuenta, modificar su perfil, iniciar y cerrar sesión. En el contexto de rails hay una gema que se integra naturalmente con él y gestiona estos componentes; esta gema se llama Devise.</p>
+
+<p><strong>/Gemfile</strong></p>
+
+<pre><code class="language-ruby">[...]
+gem 'devise'
+[...]
+</code></pre>
+
+<h3 id="siempre-pare-el-servidor-con-control--c-y-corre-bundle-install-para-instalar-una-nueva-gema-1">Siempre pare el servidor con <code>CONTROL + C</code> y corre <code>bundle install</code> para instalar una nueva gema</h3>
+
+<p><code>consola</code></p>
+
+<pre><code class="language-bash">CONTROL + C
+bundle install
+</code></pre>
+
+<h3 id="vuelve-a-iniciar-el-servidor-2">Vuelve a iniciar el servidor</h3>
+
+<p><code>consola</code></p>
+
+<pre><code class="language-bash">rails server -b 0.0.0.0 -p 8080
+</code></pre>
+
+<h2 id="10-configuración-de-devise">10. Configuración de Devise</h2>
+
+<p><strong>NOTA</strong> El primer tab de tu consola todavía tiene el servidor de Rails corriendo.
+Sigue usando el otro tab.</p>
+
+<h3 id="instala-devise">Instala Devise</h3>
+
+<p><code>consola</code></p>
+
+<pre><code class="language-bash">rails generate devise:install
+</code></pre>
+
+<h3 id="crea-las-vistas-de-devise">Crea las vistas de Devise</h3>
+
+<p>Generar las vistas para la personalización del manejo de sesiones de usuario.</p>
+
+<p><code>consola</code></p>
+
+<pre><code>rails g devise:views
+</code></pre>
+
+<h3 id="crea-un-modelo-de-usuario">Crea un modelo de usuario</h3>
+
+<p><code>consola</code></p>
+
+<pre><code class="language-bash">rails generate devise User
+</code></pre>
+
+<p>La línea de arriba crea un modelo de usuario y un nuevo archivo: <strong>app/models/user.rb</strong></p>
+
+<p>Ve a <strong>db/migration</strong> y deberías tener en los archivos algo así como <strong>db/migration/20170218022322_devise_create_users.rb</strong></p>
+
+<p>El número es la fecha de creación.</p>
+
+<h3 id="migra-la-base-de-datos">Migra la base de datos</h3>
+
+<p><code>consola</code></p>
+
+<pre><code class="language-bash">rake db:migrate
+</code></pre>
+
+<p>Este comando toma el archivo de migración y lo ejecuta, de manera que genere tablas en la base de datos.</p>
+
+<h3 id="vuelve-a-iniciar-el-servidor-3">Vuelve a iniciar el servidor</h3>
+
+<pre><code class="language-bash">CONTROL + C (para parar el servidor)
+rails server -b 0.0.0.0 -p 8080 (para volver a iniciar el servidor)
+</code></pre>
+
+<p>Tendrás que reiniciar la aplicación cada vez que instales una gema o cada vez que ejecutes <code>rake db:migrate</code></p>
+
+<h2 id="11-mensajes-flash">11. Mensajes flash</h2>
+
+<p>Los mensajes flash son los mensajes en sitios web que dicen “Gracias por registrarse en …” o “Gracias por suscribirse a …”</p>
+
+<p><strong>app/views/layouts/application.html.erb</strong></p>
+
+<p>Agrega lo siguiente Debajo de <code>&lt;div class="container"&gt;</code> y antes de <code>&lt;%= yield %&gt;</code>:</p>
+
+<pre><code class="language-rhtml">
+&lt;% flash.each do |name, msg| %&gt;
+  &lt;% if msg.is_a?(String) %&gt;
+    &lt;div class="alert alert-&lt;%= name.to_s == 'notice' ? 'success' : 'danger' %&gt; fade in"&gt;
+      &lt;button type="button" class="close" data-dismiss="alert" aria-hidden="true"&gt;&amp;times;&lt;/button&gt;
+      &lt;%= content_tag :div, msg, :id =&gt; "flash_#{name}" %&gt;
+    &lt;/div&gt;
+  &lt;% end %&gt;
+&lt;% end %&gt;
+
+</code></pre>
+
+<h2 id="12-registrar-nuevos-usuarios-o-iniciar-sesión">12. Registrar nuevos usuarios o iniciar sesión</h2>
+
+<h3 id="modifica-la-vista-de-inicio">Modifica la vista de inicio</h3>
+
+<p><strong>app/views/pages/home.html.erb</strong></p>
+
+<p>¡Actualicemos la página de inicio!</p>
+
+<pre><code class="language-rhtml">&lt;div class="jumbotron text-center"&gt;
+ &lt;h2&gt;¡Bienvenidos a Instagram!&lt;/h2&gt;
+ &lt;% if user_signed_in? %&gt;
+      # haz algo
+ &lt;% else %&gt;
+   &lt;p&gt;
+     &lt;%= link_to "Iniciar sesión", new_user_session_path, class: "btn btn-default btn-lg" %&gt;
+     &lt;%= link_to "Regístrate", new_user_registration_path, class: "btn btn-primary btn-lg" %&gt;
+   &lt;/p&gt;
+  &lt;% end %&gt;
+&lt;/div&gt;
+</code></pre>
+
+<h3 id="modifica-el-parcial-de-navegación">Modifica el parcial de navegación</h3>
+
+<p><strong>app/views/layout/_header.html.erb</strong></p>
+
+<p>Reemplaza</p>
+
+<pre><code class="language-rhtml">&lt;ul class="nav navbar-nav navbar-right"&gt;
+  &lt;li&gt;&lt;%= link_to "Home", root_path %&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;%= link_to "Quiénes somos", about_path %&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<p>por</p>
+
+<pre><code class="language-rhtml">&lt;ul class="nav navbar-nav navbar-right"&gt;
+  &lt;li&gt;&lt;%= link_to "Home", root_path %&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;%= link_to "About", about_path %&gt;&lt;/li&gt;
+  &lt;% if user_signed_in? %&gt;
+    &lt;li&gt;&lt;%= link_to "Cerrar sesión", destroy_user_session_path, method: :delete %&gt;&lt;/li&gt;
+  &lt;% else %&gt;
+    &lt;li&gt;&lt;%= link_to "Regístrate", new_user_registration_path %&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;%= link_to "Iniciar sesión", new_user_session_path %&gt;&lt;/li&gt;
+  &lt;% end %&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p><strong>NOTA</strong> Usa el tabulador, la tecla Tab (Tab ↹) nos permite indentar el texto que este en nuestra selección y así mantener el código organizado y indentado.</p>
+
+<h2 id="13-cambia-las-vistas-de-devise">13. Cambia las vistas de Devise</h2>
+
+<h3 id="reemplaza-el-código-para-cada-una-de-las-vistas-de-devise">Reemplaza el código para cada una de las vistas de Devise</h3>
+
+<p><strong>app/views/devise/registrations/new.html.erb</strong></p>
+
+<h4 id="esta-vista-se-encarga-del-formulario-de-registro-de-usuarios-en-tu-app"><em>Esta vista se encarga del formulario de registro de usuarios en tu app.</em></h4>
+
+<pre><code class="language-rhtml">&lt;div class="form-wrapper"&gt;
+  &lt;h1&gt;Regístrate&lt;/h1&gt;
+
+  &lt;%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %&gt;
+    &lt;%= devise_error_messages! %&gt;
+
+    &lt;div class="form-group"&gt;
+      &lt;%= f.label :email %&gt;
+      &lt;%= f.email_field :email, autofocus: true, class: "form-control" %&gt;
+    &lt;/div&gt;
+
+    &lt;div class="form-group"&gt;
+      &lt;%= f.label :password %&gt;
+      &lt;%= f.password_field :password, class: "form-control" %&gt;
+    &lt;/div&gt;
+
+    &lt;div class="form-group"&gt;
+      &lt;%= f.submit "Regístrate", class: "btn btn-success" %&gt;
+    &lt;/div&gt;
+  &lt;% end %&gt;
+
+  &lt;%= render "devise/shared/links" %&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p><strong>app/views/devise/registrations/edit.html.erb</strong></p>
+
+<p><em>Esta vista se encarga del formulario de edición de la información de usuarios en tu app.</em></p>
+
+<pre><code class="language-rhtml">
+&lt;div class="form-wrapper"&gt;
+  &lt;h1&gt;Editar &lt;%= resource_name.to_s.humanize %&gt;&lt;/h1&gt;
+
+  &lt;%= form_for(resource, :as =&gt; resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %&gt;
+    &lt;%= devise_error_messages! %&gt;
+
+    &lt;div class="form-group"&gt;
+      &lt;%= f.label :email %&gt;
+      &lt;%= f.email_field :email, class: "form-control", autofocus: true %&gt;
+    &lt;/div&gt;
+
+    &lt;div class="form-group"&gt;
+      &lt;%= f.label :password %&gt; &lt;i&gt;(déjala en blanco si no quieres cambiarla)&lt;/i&gt;
+      &lt;%= f.password_field :password, class: "form-control", autocomplete: "off" %&gt;
+    &lt;/div&gt;
+
+    &lt;div class="form-group"&gt;
+      &lt;%= f.label :current_password %&gt; &lt;i&gt;(necesitamos tu contraseña actual para confirmar los cambios)&lt;/i&gt;
+      &lt;%= f.password_field :current_password, class: "form-control" %&gt;
+    &lt;/div&gt;
+
+    &lt;div class="form-group"&gt;
+      &lt;%= f.submit "Actualizar", class: "btn btn-success" %&gt;
+    &lt;/div&gt;
+  &lt;% end %&gt;
+
+  &lt;h3&gt;Cancelar mi cuenta&lt;/h3&gt;
+
+  &lt;p&gt;Unhappy? &lt;%= button_to "Cancelar mi cuenta", registration_path(resource_name), data: { confirm: "¿Estás segura/o?" }, method: :delete, class: "btn btn-warning" %&gt;&lt;/p&gt;
+
+  &lt;%= link_to "Volver", :back %&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p><strong>app/views/devise/passwords/new.html.erb</strong></p>
+
+<p><em>Esta vista está encargada de mostrar el formulario para la solicitud de contraseña al sistema en caso de olvido.</em></p>
+
+<pre><code class="language-rhtml">&lt;div class="form-wrapper"&gt;
+  &lt;h1&gt;¿Olvidaste tu contraseña?&lt;/h1&gt;
+
+  &lt;%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %&gt;
+    &lt;%= devise_error_messages! %&gt;
+
+    &lt;div class="form-group"&gt;
+      &lt;%= f.label :email %&gt;
+      &lt;%= f.email_field :email, class: "form-control", autofocus: true %&gt;
+    &lt;/div&gt;
+
+    &lt;div class="form-group"&gt;
+      &lt;%= f.submit "Envíame las instrucciones para restablecer mi contraseña", class: "btn btn-success" %&gt;
+    &lt;/div&gt;
+  &lt;% end %&gt;
+
+  &lt;%= render "devise/shared/links" %&gt;
+
+&lt;/div&gt;
+</code></pre>
+
+<p><strong>app/views/devise/passwords/edit.html.erb</strong></p>
+
+<p><em>En esta vista se encuentra el formulario para el cambio de la contraseña de un usuario de tu app</em></p>
+
+<pre><code class="language-rhtml">&lt;div class="form-wrapper"&gt;
+  &lt;h1&gt;Cambia tu contraseña&lt;/h1&gt;
+
+  &lt;%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %&gt;
+    &lt;%= devise_error_messages! %&gt;
+    &lt;%= f.hidden_field :reset_password_token %&gt;
+
+    &lt;div class="form-group"&gt;
+      &lt;%= f.label :password, "Nueva contraseña" %&gt;
+      &lt;%= f.password_field :password, class: "form-control", autofocus: true %&gt;
+    &lt;/div&gt;
+
+    &lt;div class="form-group"&gt;
+      &lt;%= f.label :password_confirmation, "Confirmar nueva contraseña" %&gt;
+      &lt;%= f.password_field :password_confirmation %&gt;
+    &lt;/div&gt;
+
+    &lt;div class="form-group"&gt;
+      &lt;%= f.submit "Cambiar mi contraseña", class: "btn btn-success" %&gt;
+    &lt;/div&gt;
+  &lt;% end %&gt;
+
+  &lt;%= render "devise/shared/links" %&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p><strong>app/views/devise/sessions/new.html.erb</strong></p>
+
+<p><em>¡Este es el formulario de login (inicio de sesión) de tu Instagram app!</em></p>
+
+<pre><code class="language-rhtml">&lt;div class="form-wrapper"&gt;
+  &lt;h1&gt;Iniciar Sesion&lt;/h1&gt;
+  &lt;%= form_for(resource, :as =&gt; resource_name, :url =&gt; session_path(resource_name)) do |f| %&gt;
+    &lt;div class="form-group"&gt;
+      &lt;%= f.label :email %&gt;
+      &lt;%= f.email_field :email, class: "form-control", autofocus: true %&gt;
+    &lt;/div&gt;
+
+    &lt;div class="form-group"&gt;
+      &lt;%= f.label :password %&gt;
+      &lt;%= f.password_field :password, class: "form-control" %&gt;
+    &lt;/div&gt;
+
+    &lt;div class="checkbox"&gt;
+      &lt;%= f.check_box :remember_me %&gt;
+      &lt;%= f.label :remember_me %&gt;
+    &lt;/div&gt;
+
+    &lt;div class="form-group"&gt;
+      &lt;%= f.submit "Ingresa", class: "btn btn-success" %&gt;
+    &lt;/div&gt;
+  &lt;% end %&gt;
+
+  &lt;%= render "devise/shared/links" %&gt;
+&lt;/div&gt;
+</code></pre>
+<h3 id="añade-estos-estilos-para-que-tus-formularios-se-vean-más-geniales-3">Añade estos estilos para que tus formularios se vean más geniales &lt;3</h3>
+
+<p>Al final del archivo: <strong>app/assets/stylesheets/custom_bootstrap.scss</strong></p>
+
+<pre><code class="language-css">.form-wrapper {
+  width: 60%;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 40px;
+  border: 1px solid #eeefef;
+  border-radius: 3px;
+}
+</code></pre>
+
+<h3 id="añade-un-enlace-mi-cuenta-al-parcial-de-navegacíon">Añade un enlace “Mi cuenta” al parcial de navegacíon</h3>
+
+<p><strong>app/views/layouts/_header.html.erb</strong></p>
+
+<p>Debajo de <code>&lt;% if user_signed_in? %&gt;</code>:</p>
+
+<pre><code class="language-rhtml">&lt;li&gt;&lt;%= link_to "Mi cuenta", edit_user_registration_path %&gt;&lt;/li&gt;
+
+</code></pre>
+
+<h2 id="14-genera-el-scaffold-para-posts">14. Genera el scaffold para Posts</h2>
+
+<p><code>Posts</code> serán nuestras publicaciones o, mejor dicho, ¡Las imágenes que publicamos en nuestro Instagram!</p>
+
+<h3 id="genera-un-scaffold-para-posts">Genera un scaffold para Posts</h3>
+
+<p>Un scaffold es un generador automático de modelo + controlador + vistas</p>
+
+<pre><code class="language-bash">rails generate scaffold posts description:string
+rake db:migrate
+</code></pre>
+
+<p>El scaffold también crea un archivo de estilos CSS basicos pero nosotros vamos a usar nuestro propio CSS así que podemos borrar este archivo.</p>
+
+<p><strong>/app/assets/stylesheets/scaffolds.scss</strong></p>
+
+<h2 id="15-simplifiquemos-el-controlador-de-posts">15. Simplifiquemos el controlador de Posts</h2>
+
+<p><strong>app/controllers/posts_controller.rb</strong></p>
+
+<h5 id="reemplaza-todo-el-contenido-del-controlador">Reemplaza todo el contenido del controlador</h5>
+
+<pre><code class="language-ruby">class PostsController &lt; ApplicationController
+  before_action :set_post, only: [:show, :edit, :update, :destroy]
+
+  def index
+    @posts = Post.all
+  end
+
+  def show
+  end
+
+  def new
+    @post = Post.new
+  end
+
+  def edit
+  end
+
+  def create
+    @post = Post.new(post_params)
+    if @post.save
+      redirect_to @post, notice: '¡Post creado satisfactoriamente!'
+    else
+      render :new
+    end
+  end
+
+  def update
+    if @post.update(post_params)
+      redirect_to @post, notice: '¡Post actualizado satisfactoriamente!'
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @post.destroy
+    redirect_to posts_url
+  end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_post
+      @post = Post.find(params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def post_params
+      params.require(:post).permit(:description)
+    end
+end
+</code></pre>
+
+<h2 id="16-las-vistas-de-posts">16. Las vistas de posts</h2>
+
+<h3 id="esto-se-llama-el-parcial-formulario">Esto se llama el parcial “formulario”</h3>
+
+<p>Modifica el parcial del formulario <strong>apps/views/posts/_form.html.erb</strong></p>
+
+<p>Reemplaza todo el contenido por:</p>
+
+<pre><code class="language-rhtml">&lt;%= form_for(@post) do |f| %&gt;
+  &lt;% if @post.errors.any? %&gt;
+    &lt;div class="alert alert-danger alert-dismissable"&gt;&lt;button aria-hidden="true" class="close" data-dismiss="alert" type="button"&gt;×&lt;/button&gt;
+      &lt;ul class="list-unstyled"&gt;
+        &lt;% @post.errors.full_messages.each do |msg| %&gt;
+          &lt;%= content_tag :li, msg, :id =&gt; "error_#{msg}" if msg.is_a?(String) %&gt;
+        &lt;% end %&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;% end %&gt;
+
+  &lt;div class="form-group"&gt;
+    &lt;%= f.label :description %&gt;
+    &lt;%= f.text_field :description, class: "form-control" %&gt;
+  &lt;/div&gt;
+  &lt;div class="form-group"&gt;
+    &lt;%= f.submit class: "btn btn-primary" %&gt;
+  &lt;/div&gt;
+&lt;% end %&gt;
+</code></pre>
+
+<h3 id="para-mantener-nuestros-estilos-tendremos-el-contenido-de-las-siguientes-vistas-dentro-de-un-form-wrapper">Para mantener nuestros estilos, tendremos el contenido de las siguientes vistas dentro de un form-wrapper</h3>
+
+<p>Cambia todo lo que hay en estos dos archivos: <strong>app/views/posts/edit.html.erb</strong>, <strong>app/views/posts/new.html.erb</strong> por:</p>
+
+<pre><code class="language-rhtml">&lt;div class="form-wrapper"&gt;
+
+  &lt;%= render 'form' %&gt;
+
+&lt;/div&gt;
+</code></pre>
+
+<h3 id="añade-un-enlace-en-el-navbar-barra-de-navegación-para-crear-un-nuevo-post">Añade un enlace en el navbar (barra de navegación) para crear un nuevo post</h3>
+
+<p><strong>app/views/layouts/_header.html.erb</strong></p>
+
+<p>Debajo de <code>&lt;% if user_signed_in? %&gt;</code>:</p>
+
+<pre><code class="language-rhtml">&lt;li&gt;&lt;%= link_to 'Nuevo post', new_post_path %&gt;&lt;/li&gt;
+</code></pre>
+
+<h3 id="redireccionamos-la-raíz-de-nuestra-aplicación-al-index-de-posts">Redireccionamos la raíz de nuestra aplicación al <code>index</code> de Posts</h3>
+
+<h5 id="no-te-diremos-en-qué-archivo-es-un-desafío---si-tienes-dudas-pregúntale-a-uno-de-tus-mentores-">(no te diremos en qué archivo, es un desafío ;) , si tienes dudas, ¡Pregúntale a uno de tus mentores! )</h5>
+
+<p>reemplaza <code>root 'pages#home'</code> por <code>root 'posts#index'</code></p>
+
+<h2 id="17-posts-usuarios-y-asociaciones">17. Posts, Usuarios y Asociaciones</h2>
+
+<h4 id="recursos">Recursos</h4>
+
+<p><strong>Asociaciones:</strong> https://makeitrealcamp.gitbook.io/ruby-on-rails-5/asociaciones</p>
+
+<h3 id="configura-tus-asociaciones">Configura tus asociaciones</h3>
+
+<p>Un Post <code>belongs_to</code> un Usuario.</p>
+
+<h5 id="una-publicación-pertenece-a-un-usuario">Una Publicación <strong><em>pertenece</em></strong> a un Usuario</h5>
+
+<p><strong>app/models/post.rb</strong></p>
+
+<pre><code class="language-ruby">class Post &lt; ActiveRecord::Base
+	belongs_to :user
+end
+</code></pre>
+
+<h3 id="genera-una-nueva-migración-de-índice-de-un-usuario">Genera una nueva migración de índice de un usuario</h3>
+<p><br />
+Esto significa que cada publicación estará relacionada con un usuario.</p>
+
+<p><code>consola</code></p>
+
+<pre><code class="language-bash">rails generate migration add_user_id_to_posts user_id:integer:index
+rake db:migrate
+</code></pre>
+<ul>
+  <li>
+    <h5 id="recuerda-que-hacemos-rake-dbmigrate-porque-acabamos-de-crear-una-migración">Recuerda que hacemos <code>rake db:migrate</code> porque acabamos de crear una migración.</h5>
+  </li>
+  <li>
+    <h5 id="cada-vez-que-hagas-una-migración-debes-reiniciar-el-servidor-de-rails">Cada vez que hagas una migración, debes reiniciar el servidor de Rails.</h5>
+  </li>
+</ul>
+
+<p><code>consola</code></p>
+
+<pre><code class="language-bash">CONTROL + C (para parar el servidor)
+rails server -b 0.0.0.0 -p 8080 (para volver a iniciar el servidor)
+</code></pre>
+
+<h3 id="un-usuario-has_many-posts">Un Usuario <code>has_many</code> Posts</h3>
+
+<h5 id="un-usuario-tiene-muchas-publicaciones">Un Usuario <strong><em>tiene</em></strong> muchas Publicaciones</h5>
+
+<p><strong>app/models/user.rb</strong></p>
+
+<pre><code class="language-ruby">class User &lt; ActiveRecord::Base
+
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
+
+  has_many :posts
+end
+</code></pre>
+
+<h2 id="18-autorización-quién-puede-quién-no-puede">18. Autorización: ¿Quién puede? ¿Quién no puede?</h2>
+
+<p>Una vez que un usuario tiene acceso a la plataforma, hay que ver los permisos que este usuario tiene.</p>
+
+<ul>
+  <li>
+    <p>Tenemos que asegurar que un usuario no puede cambiar la publicación de otro usuario.</p>
+  </li>
+  <li>
+    <p>También que las acciones (crear, cambiar o borrar una publicación) se puede hacer solamente si estas autenticado.</p>
+  </li>
+</ul>
+
+<h3 id="actualiza-el-controlador-posts">Actualiza el controlador Posts</h3>
+
+<p><strong>app/controllers/posts_controller.rb</strong></p>
+
+<pre><code class="language-ruby">class PostsController &lt; ApplicationController
+  before_action :set_post, only: [:show, :edit, :update, :destroy]
+
+  def index
+    @posts = Post.all
+  end
+
+  def show
+  end
+
+  def new
+    @post = current_user.posts.build
+  end
+
+  def edit
+  end
+
+  def create
+    @post = current_user.posts.build(post_params)
+    if @post.save
+      redirect_to @post, notice: '¡Post creado satisfactoriamente!'
+    else
+      render :new
+    end
+  end
+
+  def update
+    if @post.update(post_params)
+      redirect_to @post, notice: '¡Post actualizado satisfactoriamente!'
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @post.destroy
+    redirect_to posts_url
+  end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_post
+      @post = Post.find_by(id: params[:id])
+    end
+
+    def correct_user
+      @post = current_user.posts.find_by(id: params[:id])
+      redirect_to posts_path, notice: "¡No estás autorizada/o para editar este post!" if @post.nil?
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def post_params
+      params.require(:post).permit(:description)
+    end
+end
+</code></pre>
+
+<h3 id="agreguemos-autenticación-de-usuarios-con-devise">Agreguemos autenticación de usuarios con Devise</h3>
+
+<p>Recursos: https://github.com/plataformatec/devise</p>
+
+<p>Añade <code>before_action</code> al Controlador Posts</p>
+
+<p><strong>app/controllers/posts_controller.rb</strong></p>
+
+<p>Debajo de <code>before_action :set_post ...</code></p>
+
+<pre><code class="language-ruby">before_action :authenticate_user!, except: [:index, :show]
+</code></pre>
+
+<h3 id="añade-el-correct_user">Añade el <code>:correct_user</code></h3>
+
+<p>Añade el método <code>before_action</code> a tu controlador de Posts</p>
+
+<p><strong>app/controllers/posts_controller.rb</strong></p>
+
+<p>Debajo de <code>before_action :authenticate_user! ...</code></p>
+
+<pre><code class="language-ruby">before_action :correct_user, only: [:edit, :update, :destroy]
+</code></pre>
+
+<h2 id="19-sube-imágenes-con-paperclip">19. Sube imágenes con Paperclip</h2>
+
+<h3 id="instala-el-procesador-de-imágenes-imagemagick">Instala el procesador de imágenes ImageMagick</h3>
+
+<p>Paperclip requiere la instalación de ImageMagick. Necesitas esto para procesamiento de imagen. Para instalar ImageMagick, usa los comandos abajo.</p>
+
+<p><code>consola</code></p>
+
+<pre><code class="language-bash">sudo apt-get update
+sudo apt-get install imagemagick
+</code></pre>
+
+<h3 id="instala-la-gema-paperclip">Instala la gema Paperclip</h3>
+
+<p>Paperclip es una gema que permite mediante el comando <code>has_attached_file</code> poder adjuntar imágenes de manera fácil.</p>
+
+<p>https://github.com/thoughtbot/paperclip</p>
+
+<p><strong>/Gemfile</strong></p>
+
+<pre><code class="language-ruby">gem 'paperclip'
+</code></pre>
+
+<p><code>consola</code></p>
+
+<pre><code>bundle install
+</code></pre>
+<p>Actualiza el model <code>Post</code></p>
+
+<p><strong>/app/models/post.rb</strong></p>
+
+<pre><code class="language-ruby">class Post &lt; ActiveRecord::Base
+  belongs_to :user
+  has_attached_file :image, styles: { medium: "600x600#" }
+  validates_attachment_content_type :image, :content_type =&gt; /\Aimage\/.*\Z/
+end
+</code></pre>
+
+<h3 id="genera-la-migración-de-paperclip">Genera la migración de paperclip</h3>
+
+<p><code>consola</code></p>
+
+<pre><code>rails generate paperclip post image
+</code></pre>
+
+<p>Ejecuta y verifica la migración</p>
+
+<p><code>consola</code></p>
+
+<pre><code class="language-bash">rake db:migrate
+</code></pre>
+
+<h3 id="vuelve-a-iniciar-el-servidor-después-de-agregar-una-librería-gema">Vuelve a iniciar el servidor después de agregar una librería (gema)</h3>
+
+<p><code>consola</code></p>
+
+<pre><code class="language-bash">CONTROL + C
+rails server -b 0.0.0.0 -p 8080
+</code></pre>
+
+<h3 id="edita-el-formulario-de-post">Edita el formulario de Post</h3>
+
+<p><strong>/app/views/posts/_form.html.erb</strong></p>
+
+<p>Reemplaza la primera línea por:</p>
+
+<pre><code class="language-rhtml">&lt;%= form_for @post, html: { multipart: true } do |f| %&gt;
+</code></pre>
+
+<p>Y justo antes de</p>
+
+<pre><code class="language-rhtml">&lt;div class="form-group"&gt;
+    &lt;%= f.label :description %&gt;
+</code></pre>
+
+<p>Añade:</p>
+
+<pre><code class="language-rhtml">  &lt;div class="form-group"&gt;
+    &lt;%= f.label :image %&gt;
+    &lt;%= f.file_field :image %&gt;
+  &lt;/div&gt;
+</code></pre>
+
+<h3 id="actualiza-el-controlador-de-posts-para-parámetros-strong">Actualiza el controlador de Posts para parámetros “strong”</h3>
+
+<p><strong>/app/controllers/concerns/posts_controller.rb</strong></p>
+
+<p><code>def post_params</code></p>
+
+<pre><code class="language-ruby">
+.
+  def post_params
+    params.require(:post).permit(:description, :image)
+  end
+.
+
+</code></pre>
+
+<h3 id="actualiza-la-vista-index-de-posts">Actualiza la vista <code>index</code> de Posts</h3>
+
+<p><strong>/app/views/posts/index.html.erb</strong></p>
+
+<pre><code class="language-rhtml">&lt;% if user_signed_in? %&gt;
+  &lt;div class="main-wrapper"&gt;
+    &lt;div class="row"&gt;
+      &lt;% @posts.each do |post| %&gt;
+        &lt;div class="col-sm-4"&gt;
+          &lt;div class="image center-block"&gt;
+            &lt;%= link_to (image_tag post.image.url(:medium), class:'img-responsive'), post_path(post) %&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;% end %&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;% else %&gt;
+  &lt;div class="jumbotron text-center"&gt;
+   &lt;h1&gt;¡Bienvenidos a Instagram!&lt;/h1&gt;
+     &lt;p&gt;
+       &lt;%= link_to "Iniciar sesión", new_user_session_path, class: "btn btn-default btn-lg" %&gt;
+       &lt;%= link_to "Regístrate", new_user_registration_path, class: "btn btn-primary btn-lg" %&gt;
+     &lt;/p&gt;
+  &lt;/div&gt;
+&lt;% end %&gt;
+</code></pre>
+
+<h3 id="actualiza-la-vista-show-de-posts">Actualiza la vista <code>show</code> de Posts</h3>
+
+<p><strong>/app/views/posts/show.html.erb</strong></p>
+
+<pre><code class="language-rhtml">&lt;div class="posts-wrapper row"&gt;
+  &lt;div class="post"&gt;
+    &lt;div class="image center-block"&gt;
+      &lt;%= image_tag @post.image.url(:medium),class:'img-responsive' %&gt;
+    &lt;/div&gt;
+    &lt;div class="post-head"&gt;
+      &lt;div class="name"&gt;
+        &lt;%= @post.user.email if @post.user %&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;p class="description"&gt;
+      &lt;%= @post.description %&gt;
+    &lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+</code></pre>
+
+<h3 id="con-el-estilo-instagram">Con el estilo Instagram</h3>
+
+<p>Abajo del archivo <strong>app/assets/stylesheets/custom_bootstrap.scss</strong></p>
+
+<pre><code class="language-css">
+.main-wrapper {
+  margin-top: 100px
+}
+
+.posts-wrapper {
+  padding-top: 40px;
+  margin: 0 auto;
+  max-width: 642px;
+  width: 100%;
+}
+
+.post {
+  background-color: #fff;
+  border-color: #edeeee;
+  border-style: solid;
+  border-radius: 3px;
+  border-width: 1px;
+  margin-bottom: 60px;
+}
+
+.post-head {
+  height: 64px;
+  padding: 14px 20px;
+  color: #125688;
+  font-size: 15px;
+  line-height: 18px;
+  .thumbnail {}
+  .name {
+    display: block;
+  }
+}
+
+.image {
+  padding-bottom: 30px;
+}
+
+.description {
+  padding: 24px 24px;
+  font-size: 15px;
+  line-height: 18px;
+}
+</code></pre>
+
+<h2 id="20-editar-y-borrar-posts">20. Editar y borrar Posts</h2>
+
+<h3 id="ahora-queremos-editar-nuestros-posts">Ahora queremos editar nuestros posts</h3>
+
+<p><strong>app/views/posts/show.html.erb</strong></p>
+
+<p>Dentro de <code>&lt;div class="post"&gt;</code> abajo colocamos:</p>
+
+<pre><code class="language-rhtml">&lt;div class="text-center edit-links"&gt;
+  &lt;%= link_to "← Volver", posts_path %&gt;
+  |
+  &lt;%= link_to "Editar Post", edit_post_path(@post) %&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>y añade los siguientes estilos</p>
+
+<p><strong>app/assets/stylesheets/custom_bootstrap.scss</strong></p>
+
+<pre><code class="language-css">.edit-links {
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+</code></pre>
+
+<p>y en <strong>app/views/posts/edit.html.erb</strong>, lo más arriba, añade</p>
+
+<pre><code class="language-rhtml">&lt;div class="text-center"&gt;
+  &lt;%= image_tag @post.image.url(:medium) %&gt;
+&lt;/div&gt;
+</code></pre>
+
+<h3 id="y-si-queremos-borrar-nuestro-post">¿Y si queremos borrar nuestro post?</h3>
+
+<p><strong>app/views/posts/edit.html.erb</strong></p>
+
+<p>Completamente abajo colocamos:</p>
+
+<pre><code class="language-rhtml">&lt;div class="text-center edit-links"&gt;
+  &lt;%= link_to "Borrar Post", post_path(@post), method: :delete, data: { confirm: "¿Estás segura que quieres eliminar este post?" } %&gt;
+  |
+  &lt;%= link_to "cancelar", posts_path %&gt;
+&lt;/div&gt;
+</code></pre>
+
+<h2 id="21-añade-un-nombre-de-usuario-para-personalizar-la-aplicación">21. Añade un nombre de usuario para personalizar la aplicación</h2>
+
+<h3 id="crea-la-migración-en-la-base-de-datos">Crea la migración en la base de datos</h3>
+
+<p><code>consola</code></p>
+
+<pre><code class="language-bash">rails generate migration AddNameToUsers name:string
+</code></pre>
+
+<h3 id="migra-la-base-de-datos-1">Migra la base de datos</h3>
+
+<p><code>consola</code></p>
+
+<pre><code class="language-bash">rake db:migrate
+</code></pre>
+
+<h3 id="vuelve-a-iniciar-el-servidor-después-de-correr-una-migración">Vuelve a iniciar el servidor después de correr una migración</h3>
+
+<p><code>consola</code></p>
+
+<pre><code class="language-bash">CONTROL + C
+rails server -b 0.0.0.0 -p 8080
+</code></pre>
+
+<h3 id="indica-a-devise-autorizar-este-nuevo-parámetro">Indica a Devise autorizar este nuevo parámetro</h3>
+
+<p>Actualiza <strong>app/controllers/application_controller.rb</strong></p>
+
+<pre><code class="language-ruby">class ApplicationController &lt; ActionController::Base
+ protect_from_forgery with: :exception
+ before_filter :configure_permitted_parameters, if: :devise_controller?
+
+protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:name])
+  end
+end
+</code></pre>
+
+<h3 id="y-también-agregamos-el-campo-en-las-vistas">Y también agregamos el campo en las vistas</h3>
+
+<p><strong>app/views/devise/registrations/new.html.erb</strong>, <strong>app/views/devise/registrations/edit.html.erb</strong></p>
+
+<p>Justo antes de</p>
+
+<pre><code class="language-rhtml">&lt;div class="form-group"&gt;
+  &lt;%= f.label :email %&gt;
+</code></pre>
+
+<p>Añade</p>
+
+<pre><code class="language-rhtml">.
+  &lt;div class="form-group"&gt;
+    &lt;%= f.label :name %&gt;
+    &lt;%= f.text_field :name, autofocus: true, class: "form-control" %&gt;
+  &lt;/div&gt;
+.
+</code></pre>
+
+<h3 id="terminamos-con-un-nuevo-controlador">Terminamos con un nuevo controlador</h3>
+
+<p>Crea el archivo <strong>app/controllers/registrations_controller.rb</strong>:</p>
+
+<pre><code class="language-ruby">class RegistrationsController &lt; Devise::RegistrationsController
+
+  private
+
+  def sign_up_params
+    params.require(:user).permit(:email, :name, :password, :password_confirmation)
+  end
+
+  def account_update_params
+    params.require(:user).permit(:email, :name, :password, :password_confirmation, :current_password)
+  end
+end
+</code></pre>
+
+<h3 id="corrige-la-ruta">Corrige la ruta</h3>
+
+<p><strong>/config/routes.rb</strong></p>
+
+<p>Reemplaza</p>
+
+<pre><code class="language-ruby">devise_for :users
+</code></pre>
+
+<p>con…</p>
+
+<pre><code class="language-ruby">devise_for :users, :controllers =&gt; { registrations: 'registrations' }
+</code></pre>
+
+<h3 id="ahora-cambiamos-el-correo-por-el-nombre">Ahora cambiamos el correo por el nombre</h3>
+
+<p><strong>app/views/posts/show.html.erb</strong></p>
+
+<p>Reemplaza</p>
+
+<pre><code class="language-rhtml">&lt;%= @post.user.email if @post.user %&gt;
+``
+
+con...
+
+```rhtml
+&lt;%= @post.user.name if @post.user %&gt;
+</code></pre>
+
+<h2 id="22-protege-tus-posts">22. Protege tus posts</h2>
+
+<h3 id="rodea-el-enlace-de-edición-con-un-si-condicional">Rodea el enlace de edición con un “si” condicional</h3>
+
+<p>De esta manera sólo se pueden ver tus posts. Para poner esto de otra manera: Un usuario sólo puede ver sus posts (y no los posts de otros usuarios). ¿Tiene algún sentido?</p>
+
+<p><strong>app/views/posts/show.html.erb</strong></p>
+
+<p>Reemplaza</p>
+
+<pre><code class="language-rhtml">&lt;div class="text-center edit-links"&gt;
+  &lt;%= link_to "← Volver", posts_path %&gt;
+    |
+  &lt;%= link_to "Editar Post", edit_post_path(@post) %&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>con</p>
+
+<pre><code class="language-rhtml">&lt;% if @post.user == current_user %&gt;
+  &lt;div class="text-center edit-links"&gt;
+    &lt;%= link_to "← Volver", posts_path %&gt;
+    |
+    &lt;%= link_to "Edit post", edit_post_path(@post) %&gt;
+  &lt;/div&gt;
+&lt;% else %&gt;
+  &lt;div class="text-center edit-links"&gt;
+    &lt;%= link_to "← Volver", posts_path %&gt;
+  &lt;/div&gt;
+&lt;% end  %&gt;
+</code></pre>
+
+<h3 id="proteger-los-posts-también-desde-el-controlador">Proteger los posts también desde el controlador</h3>
+
+<p><strong>app/controllers/posts_controller.rb</strong></p>
+
+<p>Agrega debajo de <code>private</code></p>
+
+<pre><code class="language-ruby">private
+
+def owned_post
+  unless current_user == @post.user
+    flash[:alert] = "¡Este post no te pertenece!"
+    redirect_to root_path
+  end
+end
+</code></pre>
+
+<p>Después, inserta un <code>before_action</code> en la parte superior del controlador, especificando el método <code>owned_post</code> solamente para las acciones de edición, actualización y destruir.</p>
+
+<pre><code class="language-ruby">before_action :owned_post, only: [:edit, :update, :destroy]
+</code></pre>
+
+<h2 id="23-añadiremos-la-opción-de-comentar-posts">23. Añadiremos la opción de comentar posts</h2>
+
+<h3 id="empezamos-por-generar-un-modelo">Empezamos por generar un modelo</h3>
+
+<p><code>consola</code></p>
+
+<pre><code class="language-bash">rails g model Comment user:references post:references content:text
+</code></pre>
+
+<p>Este comando nos genera una migración <strong>db/migrate/</strong> para añadir los campos en la base de datos y un modelo <strong>app/model/comment.rb</strong>.</p>
+
+<h3 id="migra-la-base-de-datos-2">Migra la base de datos</h3>
+
+<p><code>consola</code></p>
+
+<pre><code class="language-bash">rake db:migrate
+</code></pre>
+
+<h3 id="vuelve-a-iniciar-el-servidor-después-de-correr-una-migración-1">Vuelve a iniciar el servidor después de correr una migración</h3>
+
+<p><code>consola</code></p>
+
+<pre><code class="language-bash">CONTROL + C
+rails server -b 0.0.0.0 -p 8080
+</code></pre>
+
+<h3 id="asocia-los-comentarios">Asocia los comentarios</h3>
+
+<p>Ahora nuestro modelo <strong>app/model/comment.rb</strong> está configurado para indicar a quién pertenecen los comentarios.</p>
+
+<pre><code class="language-ruby">class Comment &lt; ActiveRecord::Base
+  belongs_to :user
+  belongs_to :post
+end
+</code></pre>
+
+<p>Por último, en <strong>app/models/user.rb</strong> and <strong>app/models/post.rb</strong> añade la siguiente línea a cada uno:</p>
+
+<pre><code class="language-ruby">has_many :comments, dependent: :destroy
+</code></pre>
+
+<h3 id="crea-la-ruta-para-los-comentarios">Crea la ruta para los comentarios</h3>
+
+<p>En <strong>config/routes.rb</strong> Reemplaza</p>
+
+<pre><code class="language-ruby">resources :posts
+</code></pre>
+<p>con…</p>
+
+<pre><code class="language-ruby">resources :posts do
+  resources :comments
+end
+</code></pre>
+
+<h3 id="para-terminar-con-la-lógica-creamos-el-controlador">Para terminar con la lógica, creamos el controlador</h3>
+
+<p><code>consola</code></p>
+
+<pre><code class="language-bash">rails g controller comments
+</code></pre>
+
+<p>El controlador de comentarios solo va a tener las acciones de crear y borrar comentarios.</p>
+
+<p><strong>app/controllers/comments_controller.rb</strong></p>
+
+<pre><code class="language-ruby">class CommentsController &lt; ApplicationController
+  before_action :set_post
+
+  def create
+    @comment = @post.comments.build(comment_params)
+    @comment.user_id = current_user.id
+
+    if @comment.save
+      flash[:success] = "¡Has comentado este post!"
+      redirect_to :back
+    else
+      flash[:alert] = "Revisa el formulario de comentarios, algo salió mal :/"
+      render root_path
+    end
+  end
+
+  def destroy
+    @comment = @post.comments.find(params[:id])
+
+    @comment.destroy
+    flash[:success] = "Comentario eliminado :("
+    redirect_to root_path
+  end
+
+  private
+
+  def comment_params
+    params.require(:comment).permit(:content)
+  end
+
+  def set_post
+    @post = Post.find(params[:post_id])
+  end
+end
+</code></pre>
+
+<h2 id="24-las-vistas-y-los-estilos-de-los-comentarios">24. Las vistas y los estilos de los comentarios</h2>
+
+<p>Reemplaza <strong>app/views/posts/show.html.erb</strong></p>
+
+<pre><code class="language-rhtml">&lt;div class="posts-wrapper"&gt;
+  &lt;div class="post"&gt;
+    &lt;div class="image center-block"&gt;
+      &lt;%= image_tag @post.image.url(:medium), class:'img-responsive' %&gt;
+    &lt;/div&gt;
+    &lt;div class="post-bottom"&gt;
+      &lt;div class="description"&gt;
+        &lt;div class="user-name"&gt;
+          &lt;%= @post.user.name %&gt;
+        &lt;/div&gt;
+        &lt;%= @post.description %&gt;
+      &lt;/div&gt;
+      &lt;% if @post.comments %&gt;
+        &lt;% @post.comments.each do |comment| %&gt;
+          &lt;div class="comment"&gt;
+            &lt;div class="user-name"&gt;
+              &lt;%= comment.user.name %&gt;
+            &lt;/div&gt;
+            &lt;div class="comment-content"&gt;
+              &lt;%= comment.content %&gt;
+            &lt;/div&gt;
+            &lt;% if comment.user == current_user %&gt;
+              &lt;%= link_to post_comment_path(@post, comment), method: :delete, data: { confirm: "¿Estás segura?" } do %&gt;
+                &lt;span class="glyphicon glyphicon-remove delete-comment"&gt;&lt;/span&gt;
+              &lt;% end %&gt;
+            &lt;% end %&gt;
+          &lt;/div&gt;
+        &lt;% end %&gt;
+      &lt;% end %&gt;
+    &lt;/div&gt;
+    &lt;div class="comment-like-form row"&gt;
+      &lt;div class="like-button col-sm-1"&gt;
+        &lt;span class="glyphicon glyphicon-heart-empty"&gt;&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class="comment-form col-sm-11"&gt;
+        &lt;%= form_for [@post, @post.comments.new] do |f| %&gt;
+          &lt;%= f.text_field :content, placeholder: 'Añade un comentario...' %&gt;
+        &lt;% end %&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;% if @post.user.id == current_user.id %&gt;
+  &lt;div class="text-center edit-links"&gt;
+    &lt;%= link_to "Cancelar", posts_path %&gt;
+    |
+    &lt;%= link_to "Editar el post", edit_post_path(@post) %&gt;
+  &lt;/div&gt;
+&lt;% else %&gt;
+  &lt;div class="text-center edit-links"&gt;
+    &lt;%= link_to "← Volver", posts_path %&gt;
+  &lt;/div&gt;
+&lt;% end %&gt;
+</code></pre>
+
+<h3 id="los-estilos-para-ponerlo-bonito">Los estilos para ponerlo bonito</h3>
+
+<p>En <strong>app/assets/stylesheets/custom_bootstrap.scss</strong></p>
+
+<p>Borra los estilos debajo de</p>
+
+<pre><code class="language-css">.navbar-brand {
+  font-weight: bold;
+}
+</code></pre>
+
+<p>Y reemplaza con</p>
+
+<pre><code class="language-css">
+.main-wrapper {
+  margin-top: 100px
+}
+
+.image {
+  padding-bottom: 30px;
+}
+
+.posts-wrapper {
+  padding-top: 40px;
+  margin: 0 auto;
+  max-width: 642px;
+  width: 100%;
+}
+
+.post {
+  background-color: #fff;
+  border-color: #edeeee;
+  border-style: solid;
+  border-radius: 3px;
+  border-width: 1px;
+  margin-bottom: 60px;
+  .post-head {
+    flex-direction: row;
+    height: 64px;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 24px;
+    color: #125688;
+    font-size: 15px;
+    line-height: 18px;
+    .user-name, .time-ago {
+      display: inline;
+    }
+    .user-name {
+      font-weight: 500;
+    }
+    .time-ago {
+      color: #A5A7AA;
+      float: right;
+    }
+  }
+}
+
+.post-bottom {
+  .user-name, .comment-content {
+    display: inline;
+  }
+  .description {
+    margin-bottom: 7px;
+  }
+  .user-name {
+    font-weight: 500;
+    margin-right: 0.3em;
+    color: #125688;
+    font-size: 15px;
+  }
+  .user-name, .caption-content {
+    display: inline;
+  }
+  .comment {
+    margin-top: 7px;
+    .user-name {
+      font-weight: 500;
+      margin-right: 0.3em;
+    }
+    .delete-comment {
+      float: right;
+      color: #515151;
+    }
+  }
+  margin-bottom: 7px;
+  padding-top: 24px;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-bottom: 10px;
+  font-size: 15px;
+  line-height: 18px;
+}
+
+.comment_content {
+  font-size: 15px;
+  line-height: 18px;
+  border: medium none;
+  width: 100%;
+  color: #4B4F54;
+}
+
+.comment-like-form {
+  padding-top: 24px;
+  margin-top: 13px;
+  margin-left: 24px;
+  margin-right: 24px;
+  min-height: 68px;
+  align-items: center;
+  border-top: 1px solid #EEEFEF;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.form-wrapper {
+  width: 60%;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 40px;
+  border: 1px solid #eeefef;
+  border-radius: 3px;
+}
+
+.edit-links {
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+</code></pre>
+
+<h2 id="25-control-de-versiones-y-github">25. Control de versiones y Github</h2>
+
+<p><strong>Recursos:</strong>
+<a href="http://wikis.fdi.ucm.es/ELP/Control_de_versiones_con_Git_y_GitHub">Control de versiones con Git y GitHub</a></p>
+
+<p>¡Ahora veremos en secuencia los pasos necesarios para subir tu primer proyecto a la plataforma Github!</p>
+
+<ol>
+  <li>En la parte superior derecha de tu espacio de trabajo en <a href="http://c9.io">C9</a>, haz clic en tu foto para abrir el panel de configuración y clic en <code>Dashboard</code>.
+<a href="https://c9.io/account/ssh">https://c9.io/account/ssh</a></li>
+  <li>Ahora click en el círculo de arriba que tiene un engranaje y después en el menú lateral que dice <code>SSH keys</code></li>
+  <li>Copia todas las líneas que empiezan por <code>ssh-rsa...</code></li>
+  <li>Crea una cuenta en GitHub: <a href="https://github.com">https://github.com</a></li>
+  <li>Entra en <a href="https://github.com/settings/profile">tu perfil de usuario</a> y haz clic en <code>SSH and GPG keys</code>.
+<a href="https://github.com/settings/ssh">https://github.com/settings/ssh</a></li>
+  <li>Ahora clic en “Add SSH Key”. Introduce el título: “C9”, pega la clave SSH en el cuadro “key”, y haz clic en “Add key”.</li>
+  <li>Crea un repositorio nuevo vacío para tu nuevo proyecto. Desde tu repositorio, copia el enlace SSH:
+    <pre><code>git@github.com:sunombre/nombredelproyecto.git
+</code></pre>
+  </li>
+  <li>Convierte tu directorio actual en un repositorio git ejecutando en la consola de C9:
+    <pre><code>git init
+</code></pre>
+  </li>
+  <li>Utilizando el enlace SSH que copiaste en el paso 7, añade el repositorio remoto como origen:
+    <pre><code>git remote add origin git@github.com:sunombre/nombredelproyecto.git
+</code></pre>
+  </li>
+  <li>Añade tus archivos y haz commit
+    <pre><code>git add .
+</code></pre>
+    <pre><code>git commit -m "Mi Primer commit"
+</code></pre>
+  </li>
+  <li>Sube los archivos:
+    <pre><code>git push -u origin master
+</code></pre>
+  </li>
+</ol>
+
+<p><strong>Ahora tienes tu repositorio actualizado en GitHub</strong></p>
+
+<h2 id="26-tener-nuestra-aplicación-en-la-web">26. Tener nuestra aplicación en la web</h2>
+
+<p>¿Cómo subir nuestra aplicación en la web, de forma que otros puedan verla? Con un servicio llamado <a href="http://heroku.com">Heroku</a> que permite subir tu aplicación en un servidor gratis en cuestión de segundos.</p>
+
+<h3 id="regístrate-en-heroku">Regístrate en Heroku</h3>
+
+<p><a href="https://www.heroku.com/">https://www.heroku.com/</a></p>
+
+<h3 id="c9-ya-tiene-una-herramienta-que-se-llama-heroku-toolbelt-solo-necesitamos-actualizarla">C9 ya tiene una herramienta que se llama Heroku toolbelt. Solo necesitamos actualizarla</h3>
+
+<pre><code class="language-bash">wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+</code></pre>
+
+<h3 id="inicia-sesión-en-heroku-desde-la-consola">Inicia sesión en Heroku desde la consola</h3>
+
+<pre><code class="language-bash">heroku login
+Email: (Introduce tu correo electrónico)
+Password ( Introduce tu contraseña - se mostrará en blanco y es normal )
+</code></pre>
+
+<h3 id="añade-las-claves-a-heroku">Añade las claves a Heroku</h3>
+
+<pre><code class="language-bash">heroku keys:add
+heroku create #crea una nueva URL para la aplicación
+</code></pre>
+
+<h3 id="añade-las-nuevas-gemas-y-grupos-de-gemas-para-heroku">Añade las nuevas gemas y grupos de gemas para Heroku</h3>
+
+<p><strong>/gemfile</strong></p>
+
+<pre><code class="language-ruby">group :development, :test do
+     gem 'sqlite3'
+end
+
+group :production do
+     gem 'pg'
+     gem 'rails_12factor'
+end
+</code></pre>
+
+<p>Nota: Después de crear un grupo <code>producción</code> a tu Gemfile, debes cambiar a utilizar <code>bundle install --without production</code></p>
+
+<h3 id="entonces-instalamos-las-gemas">Entonces instalamos las gemas</h3>
+
+<pre><code class="language-bash">bundle install --without production
+</code></pre>
+
+<h3 id="el-baile-de-git">El baile de git</h3>
+
+<pre><code class="language-bash">git add --all
+git commit -m "¡Lista para subir a Heroku!"
+git push origin master
+</code></pre>
+
+<h3 id="sube-a-heroku">Sube a Heroku</h3>
+
+<pre><code class="language-bash">git push heroku master
+heroku open
+heroku rename instagram #Reemplaza "instagram" con el nombre de tu proyecto
+heroku run rake db:migrate #Para correr las migraciones
+</code></pre>
+
+<h2 id="bonus-comentarios-con-ajax">Bonus: Comentarios con AJAX</h2>
+
+<p>¿Cómo intercambiar información con el servidor sin tener que refrescar la página? Ese es el problema que soluciona <a href="https://es.wikipedia.org/wiki/AJAX">Ajax</a>.
+En nuestro caso sería como añadir comentarios sin tener que refrescar la página.</p>
+
+<ul>
+  <li>recursos: <a href="http://blog.makeitreal.camp/javascript-jquery-y-ajax">JavaScript, jQuery y Ajax</a></li>
+</ul>
+
+<h2 id="27--mueve-los-comentarios-en-un-parcial">27.  Mueve los comentarios en un parcial</h2>
+
+<p>Ajax en Rails se maneja con parciales, entonces crea un nuevo archivo</p>
+
+<p><strong>app/views/comments/_comment.html.erb</strong></p>
+
+<pre><code class="language-rhtml">&lt;div class="comment" id="comment_&lt;%= comment.id %&gt;"&gt;
+  &lt;div class="user-name"&gt;
+    &lt;%= comment.user.name %&gt;
+  &lt;/div&gt;
+  &lt;div class="comment-content"&gt;
+    &lt;%= comment.content %&gt;
+  &lt;/div&gt;
+  &lt;% if comment.user == current_user %&gt;
+    &lt;%= link_to post_comment_path(post, comment), method: :delete, data: { confirm: "¿Estás segura?" } do %&gt;
+      &lt;span class="glyphicon glyphicon-remove delete-comment"&gt;&lt;/span&gt;
+    &lt;% end %&gt;
+  &lt;% end %&gt;
+&lt;/div&gt;
+</code></pre>
+
+<h3 id="ahora-podemos-cambiar-showhtmlerb">Ahora podemos cambiar <code>show.html.erb</code></h3>
+
+<p>Acabamos de mudar el comentario aparte en un archivo separado. Ahora, vamos a tener que ajustar nuestro <code>show</code> para seguir monstrando los comentarios de manera apropiada.</p>
+
+<p>En <strong>app/views/posts/show.html.erb</strong></p>
+
+<p>Reemplaza</p>
+
+<pre><code class="language-rhtml">&lt;% @post.comments.each do |comment| %&gt;
+  &lt;div class="comment"&gt;
+    &lt;div class="user-name"&gt;
+      &lt;%= comment.user.name %&gt;
+    &lt;/div&gt;
+    &lt;div class="comment-content"&gt;
+      &lt;%= comment.content %&gt;
+    &lt;/div&gt;
+    &lt;% if comment.user == current_user %&gt;
+      &lt;%= link_to post_comment_path(@post, comment), method: :delete, data: { confirm: "¿Estás segura?" } do %&gt;
+        &lt;span class="glyphicon glyphicon-remove delete-comment"&gt;&lt;/span&gt;
+      &lt;% end %&gt;
+    &lt;% end %&gt;
+  &lt;/div&gt;
+&lt;% end %&gt;
+</code></pre>
+
+<p>con…</p>
+
+<pre><code class="language-rhtml">&lt;%= render @post.comments, post: @post %&gt;
+</code></pre>
+
+<p>Y sigue funcionando igual.</p>
+
+<h3 id="añadiendo-remote-true-a-nuestro-formulario">Añadiendo <code>remote: true</code> a nuestro formulario</h3>
+
+<p>En <strong>app/views/posts/show.html.erb</strong></p>
+
+<p>reemplaza</p>
+
+<pre><code class="language-rhtml">&lt;% if post.comments %&gt;
+  &lt;%= render @post.comments, post: @post %&gt;
+&lt;% end %&gt;
+</code></pre>
+
+<p>con…</p>
+
+<pre><code class="language-rhtml">&lt;div class="comments" id="comments_&lt;%= @post.id %&gt;"&gt;
+  &lt;% if @post.comments %&gt;
+    &lt;%= render @post.comments, post: @post %&gt;
+  &lt;% end %&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>y las líneas</p>
+
+<pre><code class="language-rhtml">&lt;%= form_for [@post, @post.comments.new] do |f| %&gt;
+  &lt;%= f.text_field :content, placeholder: 'Añade un comentario...' %&gt;
+&lt;% end %&gt;
+</code></pre>
+
+<p>con…</p>
+
+<pre><code class="language-rhtml">&lt;%= form_for([@post, @post.comments.build], remote: true) do |f| %&gt;
+  &lt;%= f.text_field :content, placeholder: 'Añade un comentario...', id: "comment_content_#{@post.id}" %&gt;
+&lt;% end %&gt;
+</code></pre>
+
+<h3 id="tenemos-que-ajustar-también-el-controlador">Tenemos que ajustar también el controlador</h3>
+
+<p><strong>app/controllers/comments_controller.rb</strong></p>
+
+<p>Reemplaza el <code>action</code> para crear con:</p>
+
+<pre><code class="language-ruby">def create
+  @comment = @post.comments.build(comment_params)
+  @comment.user_id = current_user.id
+
+  if @comment.save
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.js
+    end
+  else
+    flash[:alert] = "Revisa el formulario de comentarios, algo salió mal :/"
+    render root_path
+  end
+end
+</code></pre>
+
+<h3 id="creamos-la-respuesta-javascript">Creamos la respuesta Javascript</h3>
+
+<p>¡jQuery al rescate!
+Crea un nuevo archivo en la carpeta <strong>app/views/comments/</strong> un archivo <strong>create.js.erb</strong>. En ese archivo, agrega la siguiente combinación de Javascript / Ruby</p>
+
+<pre><code class="language-erb">$('#comments_&lt;%= @post.id %&gt;').append("&lt;%=j render 'comments/comment', post: @post, comment: @comment %&gt;");
+$('#comment_content_&lt;%= @post.id %&gt;').val('')
+</code></pre>
+
+<h3 id="ahora-también-para-borrar-comentarios">Ahora también para borrar comentarios</h3>
+
+<p>Añadir <code>remote: true</code> al enlace para borrar</p>
+
+<p><strong>app/views/comments/_comment.html</strong></p>
+
+<p>Al final de esta línea y antes de <code>do</code>, añade <code>, remote: true</code></p>
+
+<pre><code class="language-rhtml">&lt;%= link_to post_comment_path(post, comment), method: :delete, data: { confirm: "¿Estás segura?" } do %&gt;
+</code></pre>
+
+<p>Quedaría:</p>
+
+<pre><code class="language-rhtml">&lt;%= link_to post_comment_path(post, comment), method: :delete, data: { confirm: "¿Estás segura?" }, remote: true do %&gt;
+</code></pre>
+
+<h3 id="añade-la-respuesta-javascript-para-la-acción-del-controlador">Añade la respuesta Javascript para la acción del controlador</h3>
+
+<p>Al igual que antes, ahora podemos asegurar que rails responde no sólo con HTML, sino también con Javascript.</p>
+
+<p>Añade el método <code>responds_to</code> a la acción <code>destroy</code> dentro del <code>comments_controller</code></p>
+
+<pre><code class="language-ruby">def destroy
+  @comment = @post.comments.find(params[:id])
+
+  if @comment.user_id == current_user.id
+   @comment.delete
+   respond_to do |format|
+     format.html { redirect_to root_path }
+     format.js
+   end
+  end
+end
+</code></pre>
+
+<p>Y por último pero no menos importante..</p>
+
+<h3 id="finalizar-con-jquery">Finalizar con jQuery</h3>
+
+<p>¡Simplemente estamos añadiendo nuestra lista de comentarios actualizada!</p>
+
+<p>Crea el nuevo archivo <strong>destroy.js.erb</strong> dentro de la carpeta <strong>app/views/comments/</strong> ( en la misma ubicación que el archivo create.js.erb ).</p>
+
+<pre><code class="language-erb">$('#comments_&lt;%= @post.id %&gt;').html("&lt;%= j render @post.comments, post: @post, comment: @comment %&gt;");
+</code></pre>
+:ET

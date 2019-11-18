@@ -1,8 +1,8 @@
 ---
 layout: inner
-title: Instagram
+title: Instagram - Rails 6
 lead_text: Crea un clon de Instagram desde cero
-permalink: /instagram/
+permalink: /instagram-r6/
 ---
 
 <div class="repo">
