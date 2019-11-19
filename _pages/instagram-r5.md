@@ -52,29 +52,50 @@ código/contenido
 
 ## INICIO
 
-## 1. Arranca el servidor de Rails
-
+## 1. Creando una aplicación nueva
 `consola`
 
 ```
-rails server -b 0.0.0.0 -p 8080
+rails new instagram
 ```
 
-El comando anterior usa las siguientes opciones:
+```
+cd instagram/
+```
 
-- **-b** *especifica que el servidor será accesible desde clientes externos, en este caso desde internet utilizando cualquier navegador web si estás usando c9*.
-- **-p** *especifica el puerto en el cual el servidor abre la conexión*.
-
+```
+bundle install
+```
 
 ## 2. Página de inicio
 
-C9 te creas una URL especial, para el caso del taller la URL será generada de la siguiente forma:
+Una vez que tenemos la primera parte lista podemos ejecutar un nuevo comando en la consola:
 
-http://**nombre_del_proyecto**-**tu_usuario_de_c9**.c9users.io/
+```
+rails server
+```
 
-Deberías ver la página de información por defecto de Rails.
+Eso va a arrancar nuestro servidor de aplicación.
 
-La página "Welcome Aboard" es la primera prueba para una nueva aplicación Rails: Ésta asegura que tienes el software configurado correctamente para servir una página.
+Deberías ver algo parecido a:
+
+```
+=> Booting Puma
+=> Rails 6.0.0 application starting in development
+=> Run `rails server --help` for more startup options
+Puma starting in single mode...
+* Version 3.12.1 (ruby 2.6.2-p47), codename: Llamas in Pajamas
+* Min threads: 5, max threads: 5
+* Environment: development
+* Listening on tcp://localhost:3000
+Use Ctrl-C to stop
+```
+
+Que significa que nuestra aplicacion ya esta corriendo en el navegador.
+
+En el navegador, ve a la URL: (https://localhost-[user-name].paiza-user.cloud:3000/) . Esta es la página de inicio por defecto para las aplicaciones Rails.
+
+La página "Yay! You’re on Rails!" es la primera prueba para una nueva aplicación Rails. Ésta asegura que tienes el software configurado correctamente para servir una página.
 
 
 ## 3. Crea una nueva página
@@ -92,7 +113,7 @@ Para crear un nuevo controlador, necesitas ejecutar el generador de controladore
 **NOTA** El primer tab de tu consola ya tiene el servidor de Rails corriendo que lanzaste con el comando:
 
 ```
-rails server -b 0.0.0.0 -p 8080
+rails server
 ```
 
 Ahora tienes que abrir un nuevo tab.
@@ -136,7 +157,7 @@ Abre el archivo **app/views/pages/home.html.erb** en tu editor de texto y edíta
 <h1>¡Bienvenidos a Instagram!</h1>
 ```
 
-En tu navegador, ve a la URL : [http://**nombre_del_proyecto**-**tu_usuario_de_c9**.c9users.io/pages/home](http://**nombre_del_proyecto**-**tu_usuario_de_c9**.c9users.io/pages/home) y ve la nueva página que se acaba de crear.
+En tu navegador, ve a la URL : (https://localhost-[user-name].paiza-user.cloud:3000//pages/home) y ve la nueva página que se acaba de crear.
 
 
 ### Mostrar la página de inicio de tu aplicación (Home)
@@ -159,7 +180,7 @@ get 'pages/home'
 root 'pages#home'
 ```
 
-## 4. Crea más paginas
+## 4. Crea más páginas
 
 ### Añade una nueva acción en el controlador
 
@@ -242,7 +263,7 @@ bundle install
 `consola`
 
 ```bash
-rails server -b 0.0.0.0 -p 8080
+rails server
 ```
 
 ### Crea un nuevo documento SCSS
@@ -286,7 +307,7 @@ Inserta:
 
 ```bash
 CONTROL + C
-rails server -b 0.0.0.0 -p 8080
+rails server
 ```
 
 ## 6. Añade elementos de Bootstrap a la página
@@ -305,7 +326,7 @@ por...
 
 ```rhtml
 <div class="container">
-    <%= yield %>
+  <%= yield %>
 </div>
 ```
 
@@ -466,7 +487,7 @@ bundle install
 `consola`
 
 ```bash
-rails server -b 0.0.0.0 -p 8080
+rails server
 ```
 
 
@@ -512,7 +533,7 @@ El número es la fecha de creación.
 `consola`
 
 ```bash
-rake db:migrate
+rails db:migrate
 ```
 
 Este comando toma el archivo de migración y lo ejecuta, de manera que genere tablas en la base de datos.
@@ -522,10 +543,10 @@ Este comando toma el archivo de migración y lo ejecuta, de manera que genere ta
 
 ```bash
 CONTROL + C (para parar el servidor)
-rails server -b 0.0.0.0 -p 8080 (para volver a iniciar el servidor)
+rails server (para volver a iniciar el servidor)
 ```
 
-Tendrás que reiniciar la aplicación cada vez que instales una gema o cada vez que ejecutes `rake db:migrate`
+Tendrás que reiniciar la aplicación cada vez que instales una gema o cada vez que ejecutes `rails db:migrate`
 
 
 ## 11. Mensajes flash
@@ -598,7 +619,7 @@ por
 </ul>
 ```
 
-**NOTA** Usa el tabulador, la tecla Tab (Tab ↹) nos permite indentar el texto que este en nuestra selección y así mantener el código organizado y indentado.
+**NOTA** Usa el tabulador, la tecla Tab (Tab ↹) nos permite indentar el texto que este en nuestra selección y así mantener el código organizado e indentado.
 
 
 ## 13. Cambia las vistas de Devise
@@ -799,10 +820,13 @@ Un scaffold es un generador automático de modelo + controlador + vistas
 
 ```bash
 rails generate scaffold posts description:string
-rake db:migrate
 ```
 
-El scaffold también crea un archivo de estilos CSS basicos pero nosotros vamos a usar nuestro propio CSS así que podemos borrar este archivo.
+```
+rails db:migrate
+```
+
+El scaffold también crea un archivo de estilos CSS básicos pero nosotros vamos a usar nuestro propio CSS así que podemos borrar este archivo.
 
 **/app/assets/stylesheets/scaffolds.scss**
 
@@ -939,7 +963,7 @@ Un Post `belongs_to` un Usuario.
 **app/models/post.rb**
 
 ```ruby
-class Post < ActiveRecord::Base
+class Post < ApplicationRecord
 	belongs_to :user
 end
 ```
@@ -952,9 +976,12 @@ Esto significa que cada publicación estará relacionada con un usuario.
 
 ```bash
 rails generate migration add_user_id_to_posts user_id:integer:index
-rake db:migrate
 ```
-* ##### Recuerda que hacemos `rake db:migrate` porque acabamos de crear una migración.
+
+```
+rails db:migrate
+```
+* ##### Recuerda que hacemos `rails db:migrate` porque acabamos de crear una migración.
 
 * ##### Cada vez que hagas una migración, debes reiniciar el servidor de Rails.
 
@@ -962,7 +989,7 @@ rake db:migrate
 
 ```bash
 CONTROL + C (para parar el servidor)
-rails server -b 0.0.0.0 -p 8080 (para volver a iniciar el servidor)
+rails server (para volver a iniciar el servidor)
 ```
 
 
@@ -973,7 +1000,7 @@ rails server -b 0.0.0.0 -p 8080 (para volver a iniciar el servidor)
 **app/models/user.rb**
 
 ```ruby
-class User < ActiveRecord::Base
+class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
@@ -1100,7 +1127,7 @@ Paperclip es una gema que permite mediante el comando `has_attached_file` poder 
 
 https://github.com/thoughtbot/paperclip
 
-**/Gemfile**
+Vamos a agregarla en nuestro archivo **/Gemfile**
 
 ```ruby
 gem 'paperclip'
@@ -1116,7 +1143,7 @@ Actualiza el model `Post`
 **/app/models/post.rb**
 
 ```ruby
-class Post < ActiveRecord::Base
+class Post < ApplicationRecord
   belongs_to :user
   has_attached_file :image, styles: { medium: "600x600#" }
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
@@ -1136,7 +1163,7 @@ Ejecuta y verifica la migración
 `consola`
 
 ```bash
-rake db:migrate
+rails db:migrate
 ```
 
 ### Vuelve a iniciar el servidor después de agregar una librería (gema)
@@ -1145,7 +1172,7 @@ rake db:migrate
 
 ```bash
 CONTROL + C
-rails server -b 0.0.0.0 -p 8080
+rails server
 ```
 
 ### Edita el formulario de Post
@@ -1356,7 +1383,7 @@ rails generate migration AddNameToUsers name:string
 `consola`
 
 ```bash
-rake db:migrate
+rails db:migrate
 ```
 
 ### Vuelve a iniciar el servidor después de correr una migración
@@ -1365,7 +1392,7 @@ rake db:migrate
 
 ```bash
 CONTROL + C
-rails server -b 0.0.0.0 -p 8080
+rails server
 ```
 
 ### Indica a Devise autorizar este nuevo parámetro
@@ -1376,7 +1403,7 @@ Actualiza **app/controllers/application_controller.rb**
 ```ruby
 class ApplicationController < ActionController::Base
  protect_from_forgery with: :exception
- before_filter :configure_permitted_parameters, if: :devise_controller?
+ before_action :configure_permitted_parameters, if: :devise_controller?
 
 protected
 
@@ -1401,12 +1428,10 @@ Justo antes de
 Añade
 
 ```rhtml
-.
   <div class="form-group">
     <%= f.label :name %>
     <%= f.text_field :name, autofocus: true, class: "form-control" %>
   </div>
-.
 ```
 
 ### Terminamos con un nuevo controlador
@@ -1464,7 +1489,7 @@ con...
 
 ### Rodea el enlace de edición con un "si" condicional
 
-De esta manera sólo se pueden ver tus posts. Para poner esto de otra manera: Un usuario sólo puede ver sus posts (y no los posts de otros usuarios). ¿Tiene algún sentido?
+De esta manera sólo tú puedes editar tus posts. Para poner esto de otra manera: Un usuario sólo puede editar sus posts (y no los posts de otros usuarios). ¿Tiene algún sentido?
 
 
 **app/views/posts/show.html.erb**
@@ -1535,7 +1560,7 @@ Este comando nos genera una migración **db/migrate/** para añadir los campos e
 `consola`
 
 ```bash
-rake db:migrate
+rails db:migrate
 ```
 
 ### Vuelve a iniciar el servidor después de correr una migración
@@ -1544,7 +1569,7 @@ rake db:migrate
 
 ```bash
 CONTROL + C
-rails server -b 0.0.0.0 -p 8080
+rails server
 ```
 
 ### Asocia los comentarios
@@ -1552,7 +1577,7 @@ rails server -b 0.0.0.0 -p 8080
 Ahora nuestro modelo **app/model/comment.rb** está configurado para indicar a quién pertenecen los comentarios.
 
 ```ruby
-class Comment < ActiveRecord::Base
+class Comment < ApplicationRecord
   belongs_to :user
   belongs_to :post
 end
@@ -1601,7 +1626,7 @@ class CommentsController < ApplicationController
 
     if @comment.save
       flash[:success] = "¡Has comentado este post!"
-      redirect_to :back
+      redirect_to request.referer
     else
       flash[:alert] = "Revisa el formulario de comentarios, algo salió mal :/"
       render root_path
