@@ -12,7 +12,7 @@ permalink: /tienda/
 [https://railsgirls-cali-store-2017.herokuapp.com/](https://railsgirls-cali-store-2017.herokuapp.com/)
 
 
-### Guía detalla
+### Guía detallada
 
 Puedes ver la guía más detallada en Google Docs [aquí](https://docs.google.com/document/d/1Uvk-ile_XPTGowkneNc49l2SPNSzUe7KSFKlMUrGp28/edit?usp=sharing).
 
@@ -56,7 +56,7 @@ rails generate scaffold product name:string description:text picture:string pric
 
 Al correr el generador, vemos que rails de nuevo ha generado otro montón de archivos, todos ellos relacionados con lo que le llamamos productos (products).
 
-El código que hemos generado ha debido de crear una página básica dedicada a gestionar productos (products). 
+El código que hemos generado ha debido de crear una página básica dedicada a gestionar productos (products).
 
 ### Migraciones
 
@@ -332,7 +332,7 @@ div {
 ```
 ### Vistas
 
-También tenemos que actualizar las vistas para aplicar estos estilos. 
+También tenemos que actualizar las vistas para aplicar estos estilos.
 
 Primero actualizamos el "encuadre" de la aplicación. Sustituimos completamente el archivo `app/views/layouts/application.html.erb`:
 
@@ -380,7 +380,7 @@ Entonces creamos un nuevo archivo `app/views/layouts/_header.html.erb`, con el s
 </nav>
 ```
 
-Además del layout debemos actualizar las demás vistas de productos. 
+Además del layout debemos actualizar las demás vistas de productos.
 Para esto vamos a reemplazar todo el código de `app/views/products/index.html.erb`, `show.html.erb`, `new.html.erb`, `edit.html.erb` y `form.html.erb`.
 
 Vamos al [repositorio](https://github.com/railsgirls-cali/example-store-2017) para copiar el código de estas vistas.
@@ -413,7 +413,7 @@ por
 resources :products do
   get 'search', on: :collection
 end
-``` 
+```
 
 Esto hará que nuestra aplicación responda a la url `/products/search` (que es lo mismo que el search_products_path que se ve en el código agregado) que es a donde nuestro formulario enviará los datos ingresados en el campo de texto de búsqueda.
 
@@ -456,8 +456,8 @@ Por último creamos la vista `app/views/products/search.html.erb` y colocamos lo
 ```
 
 Refresca la página y escribe una palabra o parte de ella en la caja de búsqueda para ver los resultados de productos.
- 
- 
+
+
 ## 9. ¿Quién administra mi tienda?
 
 En esta parte vamos a realizar las funcionalidades de crear, editar y eliminar productos. Esto lo vamos a hacer en una ruta diferente a la que acceden los usuarios normales, que es la ruta del administrador.
