@@ -5,10 +5,9 @@ lead_text: Crea un clon de Instagram desde cero
 permalink: /instagram-r6/
 ---
 
-<div class="repo">
-  <h3>repositorio de la aplicación</h3>
-  <a href="https://github.com/railsgirls-cali/instagram-2019</a>
-</div>
+### Repositorio de la aplicación
+
+[https://github.com/railsgirls-cali/instagram-2019](https://github.com/railsgirls-cali/instagram-2019)
 
 
 ## RUBY ON RAILS
