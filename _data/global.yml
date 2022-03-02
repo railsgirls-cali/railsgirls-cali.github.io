@@ -1,9 +1,9 @@
 # Site Settings
 title: 'RailsGirls Cali'
 description: 'Aquí encontrarás las guías de nuestros talleres.'
-url: 'http://railsgirlscali.com' # the base hostname & protocol for your site
-footer_text: 'Rails Girls Cali 2019'
-new_event_message: 'Inscríbete a Rails Girls Cali 2019 <a target="_blank" href="http://bit.ly/2o26wvV">aquí</a>'
+url: 'https://railsgirlscali.com' # the base hostname & protocol for your site
+footer_text: 'Rails Girls Cali 2022'
+new_event_message: 'Inscríbete a Rails Girls Cali 2022 <a target="_blank" href="http://bit.ly/2o26wvV">aquí</a>'
 
 # Admin Settings
 admin_name: 'Juan Roa'
