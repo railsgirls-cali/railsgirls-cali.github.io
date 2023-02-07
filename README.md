@@ -13,6 +13,8 @@ View the guides at http://guides.railsgirls.com or clone this repo and install &
 
 ### Installing jekyll
 
+*Use Ruby version 2.6.2*
+
 `cd railsgirls-cali.github.com`
 
 `bundle install`
