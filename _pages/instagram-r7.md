@@ -2,12 +2,12 @@
 layout: inner
 title: Instagram - Rails 6
 lead_text: Crea un clon de Instagram desde cero
-permalink: /instagram-r6/
+permalink: /instagram-r7/
 ---
 
 ### Repositorio de la aplicación
 
-[https://github.com/railsgirls-cali/instagram-2019](https://github.com/railsgirls-cali/instagram-2019)
+[https://github.com/railsgirls-cali/instagram-2023](https://github.com/railsgirls-cali/instagram-2023)
 
 
 ## RUBY ON RAILS
@@ -83,17 +83,146 @@ codigo
 
 ## INICIO
 
+## 0. interactuando con Cloud9 - Instalemos lo necesario...
+
+Para evitar instalar programas en tu computador, hemos seleccionado esta plataforma que ofrece Amazon AWS y se ejecuta en una explorador web, te provee un entorno completo de trabajo:
+
+1. Computador virtual en la nube de AWS
+2. Terminal de comandos
+3. Editor de código (editor de texto)
+4. Explorador web
+
+Dile a tu coach que te recuerde cómo usar Cloud9...
+
+Ahora bien, dentro de la terminal de Cloud9 debes digitar el siguiente comando:
+
+`consola`
+
+```bash
+cd
+```
+
+y luego vamos a crear una nueva carpeta, recuerda que a final de cuentas, una terminal es una interfz de usuario, pero en lugar de usar el ratón para interactuar con los archivos y carpetas, usamos el teclado, muy retro no...?
+
+`consola`
+
+```bash
+mkdir aplicaciones
+```
+
+aquí estamos creando la carpeta `aplicaciones` y es la carpeta que vamos a usar dentro de nuestro computador virtual para almacenar todo el código de nuestra aplicación.
+
+Esta será una de las pocas palabras que usaremos en español... a Ruby on Rails le gusta más que usemos el inglés :)
+
+Muy bien, ahora vamos a proceder a instalar la versión 2.7.7 del lenguaje de programación Ruby, es la versión más reciente con la que es compatible Cloud9, sin embargo, no es la versión más reciente del lenguaje...
+
+Para hacerlo, digitamos el siguiente comando:
+
+`consola`
+
+```bash
+rvm install 2.7.7
+```
+
+`rvm` es un programa que ya viene pre-instalado en Cloud9 con el cual podemos instalar diferentes versiones de Ruby, al final del proceso vamos a ver algo como esto:
+
+```bash
+ruby-2.7.7 - #extracting ruby-2.7.7 to /home/ec2-user/.rvm/src/ruby-2.7.7.....
+ruby-2.7.7 - #configuring.............................................................
+ruby-2.7.7 - #post-configuration..
+ruby-2.7.7 - #compiling............................................................................................
+ruby-2.7.7 - #installing................................
+ruby-2.7.7 - #making binaries executable...
+Installed rubygems 3.1.6 is newer than 3.0.9 provided with installed ruby, skipping installation, use --force to force installation.
+ruby-2.7.7 - #gemset created /home/ec2-user/.rvm/gems/ruby-2.7.7@global
+ruby-2.7.7 - #importing gemset /home/ec2-user/.rvm/gemsets/global.gems................................................................
+ruby-2.7.7 - #generating global wrappers.......
+ruby-2.7.7 - #gemset created /home/ec2-user/.rvm/gems/ruby-2.7.7
+ruby-2.7.7 - #importing gemsetfile /home/ec2-user/.rvm/gemsets/default.gems evaluated to empty gem list
+ruby-2.7.7 - #generating default wrappers.......
+ruby-2.7.7 - #adjusting #shebangs for (gem irb erb ri rdoc testrb rake).
+Install of ruby-2.7.7 - #complete 
+Ruby was built without documentation, to build it run: rvm docs generate-ri
+```
+
+Para terminar este paso, debemos ahora decirle a `rvm` que la version que vamos a usar por defecto será siempre la versión de RUby 2.7.7. digitando este comando:
+
+`consola`
+
+```bash
+rvm default 2.7.7
+```
+
+Luego procederemos a instalar la ultima versión de Ruby on Rails, recuerda Ruby es el lenguaje, y Rails es un Framework que usa a Ruby para poder construir aplicaciones web asombrosas
+
+Para hacerlo digita el siguiente comando, la opción --no-document evitará instalar la documentación, sólo por esta vez lo haremos así, para hacer la instalación más ligera:
+
+
+`consola`
+
+```
+gem install rails --no-document
+```
+
+al final deberas ver algo como:
+
+```
+Successfully installed rails-7.0.4.2
+37 gems installed
+```
+
+la versión de Rails que estaremos usando es **Rails 7.0.4**
+
+Ahor vamos a instalar un par de herramientas que son necesarias como complemento de Rails en el entorno de Cloud9
+
+1. YARN, en la console ejecutaremos lo siguiente:
+
+`consola`
+
+```
+npm install -g yarn
+```
+
+2. ESBUILD, en la console ejecutaremos lo siguiente:
+
+`consola`
+
+```
+curl -fsSL https://esbuild.github.io/dl/v0.17.5 | sh
+```
+
+y luego
+
+```
+sudo mv esbuild /usr/bin/
+```
+
+3. SASS, en la console ejecutaremos lo siguiente:
+
+`consola`
+
+```
+npm install -g sass
+```
+
+Por último dile a tu coach que modifique los siguientes parámetros del editor:
+
+1. Soft Tabs en **2** en el Porject Settings
+2. Auto Save en **on-focus** en Experimental
+
 ## 1. Crea una aplicación nueva
 
 ### ¡Vamos a crear  una nueva aplicación basada en Instagram!
 
-En la consola, escribímos
+En la consola, y dentro de la carpeta `aplicaciones`, escribímos
+
+`consola`
 
 ```bash
 rails new instagram -j esbuild --css bootstrap
 ```
 
-Despues de este comando presiona enter y se va a crear una serie de archivos y dependencias organizados en carpetas que conforman la estructura de una aplicación Rails
+Despues de este comando presiona enter y se va a crear una serie de archivos y dependencias organizados en carpetas que conforman la estructura de una aplicación Rails, la carpeta principal tendrá el mismo nombre de la aplcación en este caso sera: **instagram**
 
 Una vez terminado puedes ver la ultima linea que dice (la cantidad de sgundos puede variar):
 
@@ -109,6 +238,7 @@ En la consola
 cd instagram
 ```
 
+En este punto, vamos a declarar la carpeta como favorito en el editor de Cloud9, pidele ayuda a tu coach para hacer esta parte, la idea es que el ábrol de directorios sólo veas la carpeta `instagram`
 
 ### El archivo Gemfile
 
@@ -139,15 +269,46 @@ Puma starting in single mode...
 *  Min threads: 5
 *  Max threads: 5
 *  Environment: development
-*          PID: 35482
-* Listening on http://127.0.0.1:3000
-* Listening on http://[::1]:3000
+*          PID: 29530
+* Listening on http://127.0.0.1:8080
+* Listening on http://[::1]:8080
 Use Ctrl-C to stop
 ```
 
 Que significa que nuestra aplicacion ya esta corriendo en el navegador.
 
-En el navegador, ve a la URL: [http://localhost:3000](http://localhost:3000) . Esta es la página de inicio por defecto para las aplicaciones Rails.
+En el navegador, ve a la URL: http://localhost:8080 Esta es la página de inicio por defecto para las aplicaciones Rails.
+
+Pero para verla usando Cloud9 debes usar el proxy de Cloud9, dado que estás usando un computador virtual en la nube, no vas a poder acceder directamente a un explorador, y es por esa razón que debemos usar el proxy que Cloud9 nos provee.
+
+Para previsualizar nuestra aplicación debemos ir a nuestra pataforma en Cloud9, dar clic en **Preview** de la parte superior, y luego clic en **preview running application**, allí una nueva pestaña se te abrirá y para maor comodida te recomiendo que debes copiar la URL completa para llevarla a una pestaña de tu explorador web (en el que estás trabajando), la URL se debe ver similar a esta `https://716cb3ec2b8244ffada0813ea864deb0.vfs.cloud9.us-east-1.amazonaws.com/`
+
+**NOTA** si estás usando safari, es importante que habilites el uso de cookies, o puedes igualmente iniciar sesión en otro explorador, la guía fue probada en Google Chrome.
+
+Una vez hayas abierto esta pestaña, veras un error en color rojo, hey! es normal, no te asustes ;) es sólo un sistema de seguridad de Rails que usa para evitar que tu aplicación sea usada en dominios no autorizados.
+
+para corregir este error deberas copiar la siguiente línea:
+
+```
+config.hosts << /[a-z0-9]+\.vfs\.cloud9\..*\.amazonaws\.com/
+```
+
+en el archivo `config/environments/development.rb` justo después de la línea `Rails.application.configure do` algo así:
+```
+Rails.application.configure do
+  config.hosts << /[a-z0-9]+\.vfs\.cloud9\..*\.amazonaws\.com/
+  # Settings specified here will take precedence over those in config/application.rb.
+```
+
+una vez añadida esta línea, deberas guardar el archivo, y reiniciar el servidor que esta corriendo en la temrinal:
+
+CONTROL + C (para parar el servidor)
+
+`consola`
+
+```bash
+rails server # (para volver a iniciar el servidor)
+```
 
 La página "Rails!" es la primera prueba para una nueva aplicación Rails. Ésta asegura que tienes el software configurado correctamente para servir una página.
 
@@ -251,7 +412,7 @@ Abre el archivo **app/views/pages/home.html.erb** en tu editor de texto y edíta
 <h1>¡Bienvenidos a Instagram!</h1>
 ```
 
-En tu navegador, ve a la URL : [http://localhost:3000/pages/home](http://localhost:3000/pages/home) y ve la nueva página que se acaba de crear.
+En tu navegador, ve a la URL : /pages/home y ve la nueva página que se acaba de crear.
 
 
 ### Mostrar la página de inicio de tu aplicación (Home)
@@ -274,7 +435,7 @@ get 'pages/home'
 root 'pages#home'
 ```
 
-Este pequeño cambio indica a Rails que en la pagina de inicio de nuestra aplicación ubicada enla direccion web [http://localhost:3000/](http://localhost:3000/) queremos mostrar la pagina `home`.
+Este pequeño cambio indica a Rails que en la pagina de inicio de nuestra aplicación ubicada enla direccion web [/] queremos mostrar la pagina `home`.
 
 
 ## 4. Crea más paginas
@@ -328,8 +489,8 @@ get 'about' => 'pages#about'
 
 Ahora en el navegador puedes visitar nuestras dos paginas:
 
-- [http://localhost:3000/](http://localhost:3000/): la pagina de inicio
-- [http://localhost:3000/pages/about](http://localhost:3000/pages/about): la pagina donde encontrar información sobre ti en tu proyecto.
+- [/]: la pagina de inicio
+- [/about]: la pagina donde encontrar información sobre ti en tu proyecto.
 
 
 ## 5. ¡Instalemos Bootstrap!
