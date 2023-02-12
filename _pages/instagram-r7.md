@@ -352,6 +352,7 @@ por...
 
 ```rhtml
 <div class="container">
+  <br>
   <%= yield %>
 </div>
 ```
@@ -460,9 +461,8 @@ por los siguientes estilos:
 @import url(http://fonts.googleapis.com/css?family=Lato:400,700);
 @import url(http://fonts.googleapis.com/css?family=Oleo+Script);
 
-$body-bg:                          #fafafa !important;
 $font-family-sans-serif:           'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-$primary:                          #3897F0;
+$primary:                          #d3252c;
 $jumbotron-bg:                     white;
 
 @import 'bootstrap/scss/bootstrap';
@@ -471,7 +471,6 @@ $jumbotron-bg:                     white;
 .navbar {
   background-color: #fff;
   font-weight: bold;
-  height: 77px;
   border-bottom: 1px solid #dbdbdb;
 }
 
@@ -522,12 +521,40 @@ bundle install
 
 ### Vuelve a iniciar el servidor
 
+**NOTA** pero esta vez no vamos a usar `rails server` ahora vamos a usar `bin/dev` la razón de usar este comando es porque nos facilitará el proceso de creación de todos los archivos necesarios para nuestra aplicación, antes sólo estabamos corriendo el servidor que permite ejecutar el código Ruby que hemos hecho hasta ahora, pero con el nuevo comando `bin/dev` no sólo ejecutaremos código Ruby, sino también le permitiremos a nuestra ejecución interpretar de algún modo JS (javascript) y (SCSS/CSS), que por el momento diremos que son tecnologías que nos permiten volver nuestra aplicación web (la que ves desde el explorador) más bonita e interactiva. Así que al correr el comando `bin/dev` estás corriendo implicitamente el servidor, y otros dos procesos más en una misma consola, además vas a notar cambios importantes en la interfaz gráfica, cambios que tu está generando pero que ahora los podrás ver de forma automática.
+
 `consola`
 
 ```bash
-rails server
+bin/dev
 ```
 
+al ejecutarlo, veras algo como lo siguiente:
+
+```bash
+18:47:44 web.1  | started with pid 43338
+18:47:44 js.1   | started with pid 43339
+18:47:44 css.1  | started with pid 43340
+18:47:45 css.1  | yarn run v1.22.19
+18:47:45 js.1   | yarn run v1.22.19
+18:47:45 css.1  | $ sass ./app/assets/stylesheets/application.bootstrap.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules --watch
+18:47:45 js.1   | $ esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=assets --watch
+18:47:45 js.1   | [watch] build finished, watching for changes...
+18:47:46 web.1  | => Booting Puma
+18:47:46 web.1  | => Rails 7.0.4.2 application starting in development 
+18:47:46 web.1  | => Run `bin/rails server --help` for more startup options
+18:47:46 css.1  | Sass is watching for changes. Press Ctrl-C to stop.
+18:47:46 css.1  | 
+18:47:47 web.1  | Puma starting in single mode...
+18:47:47 web.1  | * Puma version: 5.6.5 (ruby 2.7.7-p221) ("Birdie's Version")
+18:47:47 web.1  | *  Min threads: 5
+18:47:47 web.1  | *  Max threads: 5
+18:47:47 web.1  | *  Environment: development
+18:47:47 web.1  | *          PID: 43341
+18:47:47 web.1  | * Listening on http://127.0.0.1:3000
+18:47:47 web.1  | * Listening on http://[::1]:3000
+18:47:47 web.1  | Use Ctrl-C to stop
+```
 
 ## 10. Configuración de Devise
 
@@ -617,7 +644,7 @@ Los mensajes flash son los mensajes en sitios web que dicen "Gracias por registr
 
 **app/views/layouts/application.html.erb**
 
-Agrega lo siguiente Debajo de `<div class="container">` y antes de `<%= yield %>`:
+Agrega lo siguiente Debajo de `<div class="container">` y antes de `<br>`:
 
 ```rhtml
 
@@ -675,7 +702,7 @@ por
 ```rhtml
 <nav class="navbar navbar-expand-lg bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="#">Rails Girls Cali</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -689,7 +716,7 @@ por
         </li>
         <% if user_signed_in? %>
           <li class="nav-item">
-            <%= link_to "Cerrar sesión", destroy_user_session_path, class: "nav-link", method: :delete %>
+            <%= link_to "Cerrar sesión", destroy_user_session_path, class: "nav-link", data: { turbo_method: :delete } %>
           </li>
         <% else %>
           <li class="nav-item">
@@ -722,29 +749,33 @@ Ahora vamos a mejorar un poco estos archvos agregando CSS de Bootstrap.
 *Esta vista se encarga del formulario de registro de usuarios en tu app.*
 
 ```rhtml
-<div class="form-wrapper">
-  <h1>Regístrate</h1>
+<div class="form-wrapper container">
+  <div class="row justify-content-md-center mt-3">
+    <div class="col-lg-6">
+      <h1>Regístrate</h1>
 
-  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-    <%= devise_error_messages! %>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <%= devise_error_messages! %>
 
-    <div class="form-group">
-      <%= f.label :email %>
-      <%= f.email_field :email, autofocus: true, class: "form-control" %>
+        <div class="form-group">
+          <%= f.label :email %>
+          <%= f.email_field :email, autofocus: true, class: "form-control" %>
+        </div>
+
+        <div class="form-group mt-3">
+          <%= f.label :password %>
+          <%= f.password_field :password, class: "form-control" %>
+        </div>
+
+        <div class="form-group mt-3">
+          <%= f.submit "Regístrate", class: "btn btn-success" %>
+        </div>
+      <% end %>
+
+      <div class="form-group text-center">
+        <%= render "devise/shared/links" %>
+      </div>
     </div>
-
-    <div class="form-group">
-      <%= f.label :password %>
-      <%= f.password_field :password, class: "form-control" %>
-    </div>
-
-    <div class="form-group">
-      <%= f.submit "Regístrate", class: "btn btn-success" %>
-    </div>
-  <% end %>
-
-  <div class="form-group text-center">
-    <%= render "devise/shared/links" %>
   </div>
 </div>
 ```
@@ -754,38 +785,43 @@ Ahora vamos a mejorar un poco estos archvos agregando CSS de Bootstrap.
 *Esta vista se encarga del formulario de edición de la información de usuarios en tu app.*
 
 ```rhtml
-<div class="form-wrapper">
-  <h1>Editar <%= resource_name.to_s.humanize %></h1>
+<div class="form-wrapper container">
+  <div class="row justify-content-md-center mt-3">
+    <div class="col-lg-6">
+      <h1>Editar <%= resource_name.to_s.humanize %></h1>
 
-  <%= form_for(resource, :as => resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-    <%= devise_error_messages! %>
+      <%= form_for(resource, :as => resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+        <%= devise_error_messages! %>
 
-    <div class="form-group">
-      <%= f.label :email %>
-      <%= f.email_field :email, class: "form-control", autofocus: true %>
+        <div class="form-group">
+          <%= f.label :email %>
+          <%= f.email_field :email, class: "form-control", autofocus: true %>
+        </div>
+
+        <div class="form-group mt-3">
+          <%= f.label :password %> <i>(déjala en blanco si no quieres cambiarla)</i>
+          <%= f.password_field :password, class: "form-control", autocomplete: "off" %>
+        </div>
+
+        <div class="form-group mt-3">
+          <%= f.label :current_password %> <i>(necesitamos tu contraseña actual para confirmar los cambios)</i>
+          <%= f.password_field :current_password, class: "form-control" %>
+        </div>
+
+        <div class="form-group mt-3">
+          <%= f.submit "Actualizar", class: "btn btn-success" %>
+        </div>
+      <% end %>
+
+      <h3>Cancelar mi cuenta</h3>
+
+      <p>Unhappy? <%= button_to "Cancelar mi cuenta", registration_path(resource_name), data: { confirm: "¿Estás segura/o?" }, method: :delete, class: "btn btn-warning" %></p>
+
+      <%= link_to "Volver", :back %>
     </div>
-
-    <div class="form-group">
-      <%= f.label :password %> <i>(déjala en blanco si no quieres cambiarla)</i>
-      <%= f.password_field :password, class: "form-control", autocomplete: "off" %>
-    </div>
-
-    <div class="form-group">
-      <%= f.label :current_password %> <i>(necesitamos tu contraseña actual para confirmar los cambios)</i>
-      <%= f.password_field :current_password, class: "form-control" %>
-    </div>
-
-    <div class="form-group">
-      <%= f.submit "Actualizar", class: "btn btn-success" %>
-    </div>
-  <% end %>
-
-  <h3>Cancelar mi cuenta</h3>
-
-  <p>Unhappy? <%= button_to "Cancelar mi cuenta", registration_path(resource_name), data: { confirm: "¿Estás segura/o?" }, method: :delete, class: "btn btn-warning" %></p>
-
-  <%= link_to "Volver", :back %>
+  </div>
 </div>
+
 ```
 
 **app/views/devise/passwords/new.html.erb**
@@ -793,24 +829,28 @@ Ahora vamos a mejorar un poco estos archvos agregando CSS de Bootstrap.
 *Esta vista está encargada de mostrar el formulario para la solicitud de contraseña al sistema en caso de olvido.*
 
 ```rhtml
-<div class="form-wrapper">
-  <h1>¿Olvidaste tu contraseña?</h1>
+<div class="form-wrapper container">
+  <div class="row justify-content-md-center mt-3">
+    <div class="col-lg-6">
+      <h1>¿Olvidaste tu contraseña?</h1>
 
-  <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-    <%= devise_error_messages! %>
+      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+        <%= devise_error_messages! %>
 
-    <div class="form-group">
-      <%= f.label :email %>
-      <%= f.email_field :email, class: "form-control", autofocus: true %>
+        <div class="form-group">
+          <%= f.label :email %>
+          <%= f.email_field :email, class: "form-control", autofocus: true %>
+        </div>
+
+        <div class="form-group mt-3 d-grid">
+          <%= f.submit "Envíame las instrucciones para restablecer mi contraseña", class: "btn btn-block btn-success" %>
+        </div>
+      <% end %>
+
+      <div class="form-group text-center">
+        <%= render "devise/shared/links" %>
+      </div>
     </div>
-
-    <div class="form-group">
-      <%= f.submit "Envíame las instrucciones para restablecer mi contraseña", class: "btn btn-success" %>
-    </div>
-  <% end %>
-
-  <div class="form-group text-center">
-    <%= render "devise/shared/links" %>
   </div>
 </div>
 ```
@@ -820,30 +860,34 @@ Ahora vamos a mejorar un poco estos archvos agregando CSS de Bootstrap.
 *En esta vista se encuentra el formulario para el cambio de la contraseña de un usuario de tu app*
 
 ```rhtml
-<div class="form-wrapper">
-  <h1>Cambia tu contraseña</h1>
+<div class="form-wrapper container">
+  <div class="row justify-content-md-center mt-3">
+    <div class="col-lg-6">
+      <h1>Cambia tu contraseña</h1>
 
-  <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
-    <%= devise_error_messages! %>
-    <%= f.hidden_field :reset_password_token %>
+      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+        <%= devise_error_messages! %>
+        <%= f.hidden_field :reset_password_token %>
 
-    <div class="form-group">
-      <%= f.label :password, "Nueva contraseña" %>
-      <%= f.password_field :password, class: "form-control", autofocus: true %>
+        <div class="form-group">
+          <%= f.label :password, "Nueva contraseña" %>
+          <%= f.password_field :password, class: "form-control", autofocus: true %>
+        </div>
+
+        <div class="form-group mt-3">
+          <%= f.label :password_confirmation, "Confirmar nueva contraseña" %>
+          <%= f.password_field :password_confirmation %>
+        </div>
+
+        <div class="form-group mt-3">
+          <%= f.submit "Cambiar mi contraseña", class: "btn btn-success" %>
+        </div>
+      <% end %>
+
+      <div class="form-group text-center">
+        <%= render "devise/shared/links" %>
+      </div>
     </div>
-
-    <div class="form-group">
-      <%= f.label :password_confirmation, "Confirmar nueva contraseña" %>
-      <%= f.password_field :password_confirmation %>
-    </div>
-
-    <div class="form-group">
-      <%= f.submit "Cambiar mi contraseña", class: "btn btn-success" %>
-    </div>
-  <% end %>
-
-  <div class="form-group text-center">
-    <%= render "devise/shared/links" %>
   </div>
 </div>
 ```
@@ -853,48 +897,37 @@ Ahora vamos a mejorar un poco estos archvos agregando CSS de Bootstrap.
 *¡Este es el formulario de login (inicio de sesión) de tu Instagram app!*
 
 ```rhtml
-<div class="form-wrapper">
-  <h1>Iniciar Sesion</h1>
-  <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-    <div class="form-group">
-      <%= f.label :email %>
-      <%= f.email_field :email, class: "form-control", autofocus: true %>
-    </div>
+<div class="form-wrapper container">
+  <div class="row justify-content-md-center mt-3">
+    <div class="col-lg-6">
+      <h1>Iniciar Sesion</h1>
+      <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+        <div class="form-group">
+          <%= f.label :email %>
+          <%= f.email_field :email, class: "form-control", autofocus: true %>
+        </div>
 
-    <div class="form-group">
-      <%= f.label :password %>
-      <%= f.password_field :password, class: "form-control" %>
-    </div>
+        <div class="form-group mt-3">
+          <%= f.label :password %>
+          <%= f.password_field :password, class: "form-control" %>
+        </div>
 
-    <div class="checkbox">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
-    </div>
+        <div class="checkbox">
+          <%= f.check_box :remember_me %>
+          <%= f.label :remember_me %>
+        </div>
 
-    <div class="form-group">
-      <%= f.submit "Ingresa", class: "btn btn-success" %>
-    </div>
-  <% end %>
+        <div class="form-group mt-3">
+          <%= f.submit "Ingresa", class: "btn btn-success" %>
+        </div>
+      <% end %>
 
-  <div class="form-group text-center">
-    <%= render "devise/shared/links" %>
+      <div class="form-group text-center">
+        <%= render "devise/shared/links" %>
+      </div>
+    </div>
   </div>
 </div>
-```
-
-### Añade estos estilos para que tus formularios se vean más geniales <3
-
-Al final del archivo: **app/javascript/stylesheets/application.scss**
-
-```css
-.form-wrapper {
-  width: 60%;
-  margin: 20px auto;
-  background-color: #fff;
-  padding: 40px;
-  border: 1px solid #eeefef;
-  border-radius: 3px;
-}
 ```
 
 ### Añade un enlace "Mi cuenta" al parcial de navegacíon
@@ -946,12 +979,6 @@ Una migración es un archivo que se crea dentro de la carpeta **db/migrate** y q
 Cuando creas un modelo desde la línea de comandos con el generador de Rails, automáticamente se crea una migración con las instrucciones para crear la tabla.
 
 
-**IMPORTANTE**
-El scaffold también crea un archivo de estilos CSS basicos pero nosotros vamos a usar nuestro propio CSS así que podemos borrar este archivo para no interferir con nuestros estilos.
-
-Borra **/app/assets/stylesheets/scaffolds.scss**.
-
-
 ## 15. Simplifiquemos el controlador de Posts
 
 **app/controllers/posts_controller.rb**
@@ -960,42 +987,62 @@ Borra **/app/assets/stylesheets/scaffolds.scss**.
 
 ```ruby
 class PostsController < ApplicationController
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_post, only: %i[ show edit update destroy ]
 
+  # GET /posts or /posts.json
   def index
     @posts = Post.all
   end
 
+  # GET /posts/1 or /posts/1.json
   def show
   end
 
+  # GET /posts/new
   def new
     @post = Post.new
   end
 
+  # GET /posts/1/edit
   def edit
   end
 
+  # POST /posts or /posts.json
   def create
     @post = Post.new(post_params)
-    if @post.save
-      redirect_to @post, notice: '¡Post creado satisfactoriamente!'
-    else
-      render :new
+
+    respond_to do |format|
+      if @post.save
+        format.html { redirect_to post_url(@post), notice: "El post fue exitosamente creado." }
+        format.json { render :show, status: :created, location: @post }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @post.errors, status: :unprocessable_entity }
+      end
     end
   end
 
+  # PATCH/PUT /posts/1 or /posts/1.json
   def update
-    if @post.update(post_params)
-      redirect_to @post, notice: '¡Post actualizado satisfactoriamente!'
-    else
-      render :edit
+    respond_to do |format|
+      if @post.update(post_params)
+        format.html { redirect_to post_url(@post), notice: "El post fue exitosamente actualizado." }
+        format.json { render :show, status: :ok, location: @post }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @post.errors, status: :unprocessable_entity }
+      end
     end
   end
 
+  # DELETE /posts/1 or /posts/1.json
   def destroy
     @post.destroy
-    redirect_to posts_url
+
+    respond_to do |format|
+      format.html { redirect_to posts_url, notice: "El post fue exitosamente eliminado." }
+      format.json { head :no_content }
+    end
   end
 
   private
@@ -1004,7 +1051,7 @@ class PostsController < ApplicationController
       @post = Post.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+    # Only allow a list of trusted parameters through.
     def post_params
       params.require(:post).permit(:description)
     end
@@ -1023,24 +1070,25 @@ Modifica el parcial del formulario **apps/views/posts/_form.html.erb**
 Reemplaza todo el contenido por:
 
 ```rhtml
-<h1>Crear un post</h1>
-<%= form_for(@post) do |f| %>
-  <% if @post.errors.any? %>
-    <div class="alert alert-danger alert-dismissable"><button aria-hidden="true" class="close" data-dismiss="alert" type="button">×</button>
-      <ul class="list-unstyled">
-        <% @post.errors.full_messages.each do |msg| %>
-          <%= content_tag :li, msg, :id => "error_#{msg}" if msg.is_a?(String) %>
+<%= form_with(model: post) do |form| %>
+  <% if post.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(post.errors.count, "error") %> están evitando que el post sea guardado:</h2>
+
+      <ul>
+        <% post.errors.each do |error| %>
+          <li><%= error.full_message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
   <div class="form-group">
-    <%= f.label :description %>
-    <%= f.text_field :description, class: "form-control" %>
+    <%= form.label :description %>
+    <%= form.text_field :description, class: "form-control" %>
   </div>
-  <div class="form-group">
-    <%= f.submit class: "btn btn-primary" %>
+  <div class="form-group mt-3">
+    <%= form.submit class: "btn btn-primary" %>
   </div>
 <% end %>
 ```
@@ -1052,7 +1100,11 @@ Cambia todo lo que hay en este archivos: **app/views/posts/new.html.erb** por:
 ```rhtml
 <div class="form-wrapper">
   <h2>Crear un post</h2>
-  <%= render 'form' %>
+  <%= render "form", post: @post %>
+</div>
+
+<div>
+  <%= link_to "Back to posts", posts_path %>
 </div>
 ```
 
@@ -1061,7 +1113,12 @@ Y lo que hay en este archivo **app/views/posts/edit.html.erb** por
 ```rhtml
 <div class="form-wrapper">
   <h2>Actualizar un post</h2>
-  <%= render 'form' %>
+  <%= render "form", post: @post %>
+</div>
+
+<div>
+  <%= link_to "Show this post", @post %> |
+  <%= link_to "Back to posts", posts_path %>
 </div>
 ```
 
@@ -1107,8 +1164,8 @@ Una Publicación ***pertenece*** a un Usuario.
 En el model `Post` **app/models/post.rb** remplaza el contenido por:
 
 ```ruby
-class Post < ActiveRecord::Base
-	belongs_to :user
+class Post < ApplicationRecord
+  belongs_to :user
 end
 ```
 
@@ -1129,13 +1186,15 @@ rails db:migrate
 ```
 * ##### Recuerda que hacemos `rails db:migrate` porque acabamos de crear una migración.
 
-* ##### Cada vez que hagas una migración, debes reiniciar el servidor de Rails.
+TODO: * ##### Cada vez que hagas una migración, debes reiniciar el servidor de Rails.
 
 `consola`
 
-```bash
 CONTROL + C (para parar el servidor)
-rails server (para volver a iniciar el servidor)
+
+```bash
+
+bin/dev # (para volver a iniciar el servidor)
 ```
 
 
@@ -1146,8 +1205,9 @@ rails server (para volver a iniciar el servidor)
 En el modelo `User` **app/models/user.rb** remplaza el contenido por:
 
 ```ruby
-class User < ActiveRecord::Base
-
+class User < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
@@ -1173,56 +1233,76 @@ Ahora vamos a cambiar el codigo para que un usuario pueda crear, editar y borrar
 
 ```ruby
 class PostsController < ApplicationController
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_post, only: %i[ show edit update destroy ]
 
+  # GET /posts or /posts.json
   def index
     @posts = Post.all
   end
 
+  # GET /posts/1 or /posts/1.json
   def show
   end
 
+  # GET /posts/new
   def new
     @post = current_user.posts.build
   end
 
+  # GET /posts/1/edit
   def edit
   end
 
+  # POST /posts or /posts.json
   def create
     @post = current_user.posts.build(post_params)
-    if @post.save
-      redirect_to @post, notice: '¡Post creado satisfactoriamente!'
-    else
-      render :new
+
+    respond_to do |format|
+      if @post.save
+        format.html { redirect_to post_url(@post), notice: "El post fue exitosamente creado." }
+        format.json { render :show, status: :created, location: @post }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @post.errors, status: :unprocessable_entity }
+      end
     end
   end
 
+  # PATCH/PUT /posts/1 or /posts/1.json
   def update
-    if @post.update(post_params)
-      redirect_to @post, notice: '¡Post actualizado satisfactoriamente!'
-    else
-      render :edit
+    respond_to do |format|
+      if @post.update(post_params)
+        format.html { redirect_to post_url(@post), notice: "El post fue exitosamente actualizado." }
+        format.json { render :show, status: :ok, location: @post }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @post.errors, status: :unprocessable_entity }
+      end
     end
   end
 
+  # DELETE /posts/1 or /posts/1.json
   def destroy
     @post.destroy
-    redirect_to posts_url
+
+    respond_to do |format|
+      format.html { redirect_to posts_url, notice: "El post fue exitosamente eliminado." }
+      format.json { head :no_content }
+    end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
-      @post = Post.find_by(id: params[:id])
+      @post = Post.find(params[:id])
     end
 
     def correct_user
       @post = current_user.posts.find_by(id: params[:id])
-      redirect_to posts_path, notice: "¡No estás autorizada/o para editar este post!" if @post.nil?
+      redirect_to posts_path, notice: "¡No tienes permisos para editar este post!" if @post.nil?
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+    # Only allow a list of trusted parameters through.
     def post_params
       params.require(:post).permit(:description)
     end
@@ -1245,7 +1325,7 @@ Añade `before_action` al Controlador Posts
 Debajo de `before_action :set_post ...`
 
 ```ruby
-before_action :authenticate_user!, except: [:index, :show]
+before_action :authenticate_user!, except: %i[index show]
 ```
 
 ### Añade el `:correct_user`
@@ -1257,8 +1337,22 @@ Añade el método `before_action` a tu controlador de Posts
 Debajo de `before_action :authenticate_user! ...`
 
 ```ruby
-before_action :correct_user, only: [:edit, :update, :destroy]
+before_action :correct_user, only: %i[edit update destroy]
 ```
+
+### Experimentar con usuarios
+
+Con tu coach trata de crear nuevos usuarios y posts, luego trata de editar la información de los posts con diferentes usuarios.
+
+**NOTA** sólo si ves este error `undefined method `user_url' for #<Devise::RegistrationsController:0x0000000000....>` comunicate con tu coach, el problema es debido a una incompatibilidad de redireccionamiento entre Devise y un sistema interno de Ruby on Rails llamado Turbo.
+
+la solución es sencilla, sólo debes añadir la siguiente línea de código al bloque de configuración del archivo `config/initializers/devise.rb`
+
+```ruby
+config.navigational_formats = ['*/*', :html, :turbo_stream]
+```
+
+Tu coach puede ver más información al respecto [aquí](https://github.com/heartcombo/devise/issues/5439)
 
 
 ## 19. Sube imágenes con Active Storage
