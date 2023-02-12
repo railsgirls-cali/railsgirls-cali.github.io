@@ -1389,7 +1389,7 @@ Dentro del archivo **/gemfile** busca la linea `gem 'image_processing', '~> 1.2'
 
 ```ruby
 # Use Active Storage variant
-gem 'image_processing', '~> 1.2'
+gem "image_processing", "~> 1.2"
 ```
 
 Acabamos simplemente de remover un character que significa que esta linea es un comentario.
@@ -1397,8 +1397,9 @@ Ahora esta linea es parte del codigo y podemos ejecutar `bundle install` para in
 
 `consola`
 
-```bash
 CONTROL + C (para parar el servidor)
+
+```bash
 bundle install
 ```
 
@@ -1406,7 +1407,7 @@ Y despues
 
 
 ```bash
-rails server
+bin/dev
 ```
 
 Para iniciar el servidor otra vez.
@@ -1424,12 +1425,14 @@ class Post < ApplicationRecord
   has_one_attached :image
 
   def squared_img
-    if image.attached?
-      image.variant(combine_options: { resize: '600x600^', gravity: 'center', extent: '600x600' })
-    end
+    return '/' unless image.attached?
+
+    image.variant(resize_to_fill: [600, 600])
   end
 end
 ```
+
+para parender más del redimensionamiento de imágenes ver [aquí](https://dev.to/mikerogers0/resize-images-with-active-storage-in-rails-481n)
 
 
 ### Edita el formulario de Post
@@ -1440,17 +1443,17 @@ Justo despues de
 
 ```rhtml
 <div class="form-group">
-    <%= f.label :description %>
-    <%= f.text_field :description, class: "form-control" %>
-  </div>
+  <%= form.label :description %>
+  <%= form.text_field :description, class: "form-control" %>
+</div>
 ```
 
 Añade:
 
 ```rhtml
-  <div class="form-group">
-    <%= f.label :image %>
-    <%= f.file_field :image %>
+  <div class="form-group mt-3">
+    <%= form.label :image %>
+    <%= form.file_field :image %>
   </div>
 ```
 
@@ -1483,6 +1486,7 @@ Aqui estamos permitiendo que nuestro controlador pueda manejar un parametro adic
           <div class="image center-block">
             <%= link_to (image_tag post.squared_img, class:'img-fluid'), post_path(post) %>
           </div>
+          <p><%= post.description %></p>
         </div>
       <% end %>
     </div>
@@ -1500,21 +1504,21 @@ Aqui estamos permitiendo que nuestro controlador pueda manejar un parametro adic
 
 ### Actualiza la vista `show` de Posts
 
-**/app/views/posts/show.html.erb**
+**/app/views/posts/_post.html.erb**
 
 ```rhtml
-<div class="posts-wrapper row">
+<div id="<%= dom_id post %>" class="posts-wrapper row">
   <div class="post">
     <div class="image center-block">
-      <%= image_tag @post.squared_img, class:'img-responsive' %>
+      <%= image_tag post.squared_img, class:'img-responsive' %>
     </div>
     <div class="post-head">
       <div class="name">
-        <%= @post.user.email if @post.user %>
+        <%= post.user.email if post.user %>
       </div>
     </div>
     <p class="description">
-      <%= @post.description %>
+      <%= post.description %>
     </p>
   </div>
 </div>
@@ -1522,10 +1526,11 @@ Aqui estamos permitiendo que nuestro controlador pueda manejar un parametro adic
 
 ### Con el estilo Instagram
 
-Abajo del archivo **app/javascript/stylesheets/application.scss** agregamos:
+Ahora vamos a colocar más bonito nuestra aplicación especialmente cuando un Post es presentado
+
+Vamos a crear el archivo `app/assets/stylesheets/post.css.scss` con el siguiente contenido:
 
 ```css
-
 .main-wrapper {
   margin-top: 100px
 }
@@ -1559,7 +1564,8 @@ Abajo del archivo **app/javascript/stylesheets/application.scss** agregamos:
 }
 
 .image {
-  padding-bottom: 30px;
+  text-align: center;
+  padding-top: 20px;
 }
 
 .description {
@@ -1569,7 +1575,53 @@ Abajo del archivo **app/javascript/stylesheets/application.scss** agregamos:
 }
 ```
 
+En este caso, nos estamos saliendo del archivo principal de estilos, esto es una decisión comun dentro del desarrollo de software para no tener un súper archivo lleno de muchas líneas de código... lo que hacemos es dividir ese archivo en partes que tengan más sentido (divide y venceras)m y en este caso hemos creado otro archivo de estilo sólo para volver más bonitos los posts.
 
+Sin embargo, en Ruby on Rails, debemos una sola vez hacer tres pasos más cuando tomamos esta decisión:
+
+1. enlazar el nuevo "asset" creado llamado `post.css.scss`, para esto vamos a reemplazar el contenido completo del archivo `app/assets/config/manifest.js` por:
+
+```js
+//= link_tree ../images
+//= link_tree ../builds
+//= link post.css
+```
+
+Aquí pueden notar que usamos `post.css` en lugar de `post.css.scss` esto es porque al final del día un explorador web sólo entiende CSS, JS y HTML, y SCSS (o SASS) sólo lo usamos para poder escribir los estilos mucho más rápido, SCSS es entonces un meta-lenguaje que nos ayuda a escribir de forma más ordenada reglas de estilo, pero como el explorador web no lo entiende debemos transformar ese SCSS a CSS y enlazarlo así, al final.
+
+2. Para transformar SCSS a CSS debemos decirle a nuestra aplicación cómo hacerlo, y para eso usaremos una gema o biblioteca que nos permitirá darle a nuestra aplicación esa capacidad, esta gema es llamada 'sassc-rails', así que debes ir al archivo Gemfile, y allí buscar la línea `# gem "sassc-rails"` y quitarle el "#" del principio, para al final tener la siguiente línea (aquí estamos descomentando una línea de código):
+
+```ruby
+# Use Sass to process CSS
+gem "sassc-rails"
+```
+
+Ahora esta linea es parte del codigo y podemos ejecutar `bundle install` para instalar esta nueva gema.
+
+`consola`
+
+CONTROL + C (para parar el servidor)
+
+```bash
+bundle install
+```
+
+Y despues
+
+
+```bash
+bin/dev
+```
+
+Para iniciar el servidor otra vez.
+
+3. ahora que Ruby on Rails ya sabe cómo transformar arcvhivos SCSS a CSS, y que ya tenemos nuestros estilos del post, debemos decirle a nuestra aplicación en que punto debemos pemitir que esa hoja de estilo sea colocada. Para este ejercicio, vamos a decidir colocarla en nuestra plantilla principal, para que todas las páginas tengan acceso a nuestra hoja de estilos.
+
+Deste modo debes ir al archivo `app/views/layouts/application.html.erb` y abajo de la línea `<%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>` colocar:
+
+```rhtml
+<%= stylesheet_link_tag "post", "data-turbo-track": "reload" %>
+```
 
 ## 20. Editar y borrar Posts
 
@@ -1577,19 +1629,20 @@ Abajo del archivo **app/javascript/stylesheets/application.scss** agregamos:
 
 **app/views/posts/show.html.erb**
 
-Dentro de `<div class="post">` abajo colocamos:
+cambiamos el contenido de todo el archivo por el siguiente:
 
 ```rhtml
+<%= render @post %>
+
 <div class="text-center edit-links">
-  <%= link_to "← Volver", posts_path %>
-  |
-  <%= link_to "Editar Post", edit_post_path(@post) %>
+  <%= link_to "Editar este post", edit_post_path(@post) %> |
+  <%= link_to "Lista de posts", posts_path %>
 </div>
 ```
 
-y añade los siguientes estilos
+y añade los siguientes estilos al final de este archivo
 
-**app/javascript/stylesheets/application.scss**
+**app/assets/stylesheets/post.css.scss**
 
 ```css
 .edit-links {
@@ -1598,25 +1651,18 @@ y añade los siguientes estilos
 }
 ```
 
-y en **app/views/posts/edit.html.erb**, lo más arriba, añade
+y en **app/views/posts/edit.html.erb**, cambiamos el contenido de todo el archivo por el siguiente:
 
 ```rhtml
-<div class="text-center">
-  <%= image_tag @post.squared_img %>
+<div class="form-wrapper">
+  <h2>Actualizar un post</h2>
+  <%= render "form", post: @post %>
 </div>
-```
 
-### ¿Y si queremos borrar nuestro post?
-
-**app/views/posts/edit.html.erb**
-
-Completamente abajo colocamos:
-
-```rhtml
 <div class="text-center edit-links">
-  <%= link_to "Borrar Post", post_path(@post), method: :delete, data: { confirm: "¿Estás segura que quieres eliminar este post?" } %>
-  |
-  <%= link_to "cancelar", posts_path %>
+  <%= link_to "Mirá este post", @post %> |
+  <%= link_to "Eliminar este Post", post_path(@post), data: { turbo_method: :delete, turbo_confirm: "¿Estás segura que quieres eliminar este post?" } %> |
+  <%= link_to "Lista de posts", posts_path %>
 </div>
 ```
 
@@ -1642,9 +1688,10 @@ rails db:migrate
 
 `consola`
 
-```bash
 CONTROL + C
-rails server
+
+```bash
+bin/dev
 ```
 
 ### Indica a Devise autorizar este nuevo parámetro  
@@ -1688,6 +1735,8 @@ Añade
 .
 ```
 
+**RETO** añade la clase de estilo "mt-3" al `form-group` del email, pregúntale a tu coach cómo hacerlo y qué significa
+
 ### Terminamos con un nuevo controlador
 
 Crea el archivo **app/controllers/registrations_controller.rb**:
@@ -1720,23 +1769,23 @@ devise_for :users
 con...
 
 ```ruby
-devise_for :users, :controllers => { registrations: 'registrations' }
+devise_for :users, controllers: { registrations: 'registrations' }
 ```
 
 ### Ahora cambiamos el correo por el nombre
 
-**app/views/posts/show.html.erb**
+**app/views/posts/_post.html.erb**
 
 Reemplaza
 
 ```rhtml
-<%= @post.user.email if @post.user %>
+<%= post.user.email if post.user %>
 ``
 
 con...
 
 ```rhtml
-<%= @post.user.name if @post.user %>
+<%= post.user.name || post.user.email if post.user %>
 ```
 
 ## 22. Protege tus posts
@@ -1752,9 +1801,8 @@ Reemplaza
 
 ```rhtml
 <div class="text-center edit-links">
-  <%= link_to "← Volver", posts_path %>
-    |
-  <%= link_to "Editar Post", edit_post_path(@post) %>
+  <%= link_to "Editar este post", edit_post_path(@post) %> |
+  <%= link_to "Lista de posts", posts_path %>
 </div>
 ```
 
@@ -1763,15 +1811,14 @@ con
 ```rhtml
 <% if @post.user == current_user %>
   <div class="text-center edit-links">
-    <%= link_to "← Volver", posts_path %>
-    |
-    <%= link_to "Edit post", edit_post_path(@post) %>
+    <%= link_to "Editar este post", edit_post_path(@post) %> |
+    <%= link_to "Lista de posts", posts_path %>
   </div>
 <% else %>
   <div class="text-center edit-links">
-    <%= link_to "← Volver", posts_path %>
+    <%= link_to "Lista de posts", posts_path %>
   </div>
-<% end  %>
+<% end %>
 ```
 
 
@@ -1799,8 +1846,9 @@ rails db:migrate
 
 `consola`
 
-```bash
 CONTROL + C
+
+```bash
 rails server
 ```
 
@@ -1809,7 +1857,7 @@ rails server
 Ahora nuestro modelo **app/model/comment.rb** debe estar configurado para indicar a quién pertenecen los comentarios.
 
 ```ruby
-class Comment < ActiveRecord::Base  
+class Comment < ApplicationRecord
   belongs_to :user
   belongs_to :post
 end
@@ -1854,7 +1902,7 @@ Actalualiza **app/controllers/comments_controller.rb** con:
 class CommentsController < ApplicationController
   before_action :set_post
 
-  def create  
+  def create
     @comment = @post.comments.build(comment_params)
     @comment.user_id = current_user.id
 
@@ -1867,7 +1915,7 @@ class CommentsController < ApplicationController
     end
   end
 
-  def destroy  
+  def destroy
     @comment = @post.comments.find(params[:id])
 
     @comment.destroy
@@ -1877,11 +1925,11 @@ class CommentsController < ApplicationController
 
   private
 
-  def comment_params  
+  def comment_params
     params.require(:comment).permit(:content)
   end
 
-  def set_post  
+  def set_post
     @post = Post.find(params[:post_id])
   end
 end
@@ -1890,23 +1938,23 @@ end
 ## 24. Las vistas y los estilos de los comentarios
 
 
-Reemplaza **app/views/posts/show.html.erb**
+Reemplaza **app/views/posts/_post.html.erb**
 
 ```rhtml
-<div class="posts-wrapper">
+<div id="<%= dom_id post %>" class="posts-wrapper row">
   <div class="post">
     <div class="image center-block">
-      <%= image_tag @post.squared_img, class:'img-fluid' %>
+      <%= image_tag post.squared_img, class:'img-fluid' %>
     </div>
     <div class="post-bottom">
       <div class="description">
         <div class="user-name">
-          <%= @post.user.name %>
+          <%= post.user.name || post.user.email if post.user %>
         </div>
-        <%= @post.description %>
+        <%= post.description %>
       </div>
-      <% if @post.comments %>
-        <% @post.comments.each do |comment| %>
+      <% if post.comments %>
+        <% post.comments.each do |comment| %>
           <div class="comment">
             <div class="user-name">
               <%= comment.user.name %>
@@ -1915,7 +1963,7 @@ Reemplaza **app/views/posts/show.html.erb**
               <%= comment.content %>
             </div>
             <% if comment.user == current_user %>
-              <%= link_to post_comment_path(@post, comment), method: :delete, data: { confirm: "¿Estás segura?" } do %>
+              <%= link_to post_comment_path(post, comment), data: { turbo_method: :delete, turbo_confirm: "¿Estás segura?" } do %>
                 <span class="glyphicon glyphicon-remove delete-comment"></span>
               <% end %>
             <% end %>
@@ -1924,11 +1972,8 @@ Reemplaza **app/views/posts/show.html.erb**
       <% end %>
     </div>
     <div class="comment-like-form row">
-      <div class="like-button col-sm-1">
-        <span class="glyphicon glyphicon-heart-empty"></span>
-      </div>
-      <div class="comment-form col-sm-11">
-        <%= form_for [@post, @post.comments.new] do |f| %>
+      <div class="comment-form col">
+        <%= form_for [post, post.comments.new] do |f| %>
           <div class="form-group">
             <%= f.text_field :content, class: 'form-control', placeholder: 'Añade un comentario...' %>
           </div>
@@ -1937,41 +1982,20 @@ Reemplaza **app/views/posts/show.html.erb**
     </div>
   </div>
 </div>
-<% if @post.user.id == current_user.id %>
-  <div class="text-center edit-links">
-    <%= link_to "Cancelar", posts_path %>
-    |
-    <%= link_to "Editar el post", edit_post_path(@post) %>
-  </div>
-<% else %>
-  <div class="text-center edit-links">
-    <%= link_to "← Volver", posts_path %>
-  </div>
-<% end %>
 ```
 
 ### Los estilos para ponerlo bonito
 
-En **app/javascript/stylesheets/application.scss**
-
-Borra los estilos debajo de
+En **app/javascript/stylesheets/post.css.scss** reemplaza todo el contenido con lo siguiente:
 
 ```css
-.navbar-brand {
-  font-weight: bold;
-}
-```
-
-Y reemplaza con
-
-```css
-
 .main-wrapper {
   margin-top: 100px
 }
 
 .image {
-  padding-bottom: 30px;
+  text-align: center;
+  padding-top: 20px;
 }
 
 .posts-wrapper {
@@ -2056,7 +2080,7 @@ Y reemplaza con
 
 .comment-like-form {
   padding-top: 24px;
-  margin-top: 13px;
+  padding-bottom: 24px;
   margin-left: 24px;
   margin-right: 24px;
   min-height: 68px;
@@ -2126,72 +2150,7 @@ git push -u origin master
 
 ## 26. Tener nuestra aplicación en la web
 
-¿Cómo subir nuestra aplicación en la web, de forma que otros puedan verla? Con un servicio llamado [Heroku](http://heroku.com) que permite subir tu aplicación en un servidor gratis en cuestión de segundos.
-
-### Regístrate en Heroku
-
-[https://www.heroku.com/](https://www.heroku.com/)
-
-### C9 ya tiene una herramienta que se llama Heroku toolbelt. Solo necesitamos actualizarla
-
-```bash
-wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
-```
-
-### Inicia sesión en Heroku desde la consola
-
-```bash
-heroku login
-Email: (Introduce tu correo electrónico)
-Password ( Introduce tu contraseña - se mostrará en blanco y es normal )
-```
-
-### Añade las claves a Heroku
-
-```bash
-heroku keys:add
-heroku create #crea una nueva URL para la aplicación
-```
-
-### Añade las nuevas gemas y grupos de gemas para Heroku
-
-**/gemfile**
-
-```ruby
-group :development, :test do
-     gem 'sqlite3'
-end
-
-group :production do
-     gem 'pg'
-     gem 'rails_12factor'
-end
-```
-
-Nota: Después de crear un grupo `producción` a tu Gemfile, debes cambiar a utilizar `bundle install --without production`
-
-### Entonces instalamos las gemas
-
-```bash
-bundle install --without production
-```
-
-### El baile de git
-
-```bash
-git add --all
-git commit -m "¡Lista para subir a Heroku!"
-git push origin master
-```
-
-### Sube a Heroku
-
-```bash
-git push heroku master
-heroku open
-heroku rename instagram #Reemplaza "instagram" con el nombre de tu proyecto
-heroku run rails db:migrate #Para correr las migraciones
-```
+NO LONGER NEEDED
 
 ## Bonus: Comentarios con AJAX
 
