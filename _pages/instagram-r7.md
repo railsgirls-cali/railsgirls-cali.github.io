@@ -2178,7 +2178,7 @@ Reemplaza **app/views/posts/_post.html.erb**
     <div class="post-bottom">
       <div class="post-head">
         <div class="avatar">
-          <%= image_tag "https://robohash.org/#{post.user.email}.png?set=set4" %>
+          <%= image_tag "https://robohash.org/#{post.user&.email}.png?set=set4" %>
         </div>
         <div class="user-name">
           <%= post.user_name if post.user %>
@@ -2376,195 +2376,54 @@ Tal vez lo has notado, pero cada vez que haces un nuevo cambio, es necesario que
 
 Vamos a realizar está configuración para cada comentario nuevo, cada comentario que se cree se publicará en los exploradores de otros usuarios sin que estos tengan que refrescar su página, y lo vamos a hacer de manera muy sencilla con sólo dos líneas más de código...
 
-## 26. Tener nuestra aplicación en la web
+1. al inicio de la vista `app/views/posts/show.html.erb` añade la línea `<%= turbo_stream_from @post %>`
+2. dentro del modelo Comment `app/models/comment.rb` justo despues de la línea  `belongs_to :post` añade la línea `broadcasts_to :post`
 
-NO LONGER NEEDED
+**NOTA** debes reiniciar el servidor
 
-## Bonus: Comentarios con AJAX
+Abre dos exploradores con la aplicación, en ambos exploradores ingresa a un post existente (si no existe uno, lo debes crear), crea un comentario en uno de ellos, y veras que en el otro explorador sin necesidad de refrescar la página estará publicado el comentario nuevo, mágico verdad?
 
-¿Cómo intercambiar información con el servidor sin tener que refrescar la página? Ese es el problema que soluciona [Ajax](https://es.wikipedia.org/wiki/AJAX).
-En nuestro caso sería como añadir comentarios sin tener que refrescar la página.
+## 26. Texto Enriquecido - Bonus 2
 
-- recursos: [JavaScript, jQuery y Ajax](http://blog.makeitreal.camp/javascript-jquery-y-ajax)
+Cada vez que creamos un nuevo post debemos definir una descripción, pero actualmente la descripción sólo puede tener texto plano, hagamos esto más divertido colocándole texto enriquecido:
 
+Para hacerlo debemos usar la característica de Rails llamada ActionText, para instalarla debemos ir a una consola y digitar:
 
-## 27.  Mueve los comentarios en un parcial
+`consola`
 
-Ajax en Rails se maneja con parciales, entonces crea un nuevo archivo
+```
+rails action_text:install
+```
 
-**app/views/comments/_comment.html.erb**
+y luego correr las migraciones
+
+```
+rails db:migrate
+```
+
+**NOTA:** reinicia el servidor
+
+En el archivo **views/posts/_form.html.erb** cambia la siguiente línea
 
 ```rhtml
-<div class="comment" id="comment_<%= comment.id %>">
-  <div class="user-name">
-    <%= comment.user.name %>
-  </div>
-  <div class="comment-content">
-    <%= comment.content %>
-  </div>
-  <% if comment.user == current_user %>
-    <%= link_to post_comment_path(post, comment), method: :delete, data: { confirm: "¿Estás segura?" } do %>
-      <span class="glyphicon glyphicon-remove delete-comment"></span>
-    <% end %>
-  <% end %>
-</div>
+<%= form.text_field :description, class: "form-control" %>
 ```
 
-### Ahora podemos cambiar `show.html.erb`
-
-Acabamos de mudar el comentario aparte en un archivo separado. Ahora, vamos a tener que ajustar nuestro `show` para seguir monstrando los comentarios de manera apropiada.
-
-En **app/views/posts/show.html.erb**
-
-Reemplaza
+por esta línea:
 
 ```rhtml
-<% @post.comments.each do |comment| %>
-  <div class="comment">
-    <div class="user-name">
-      <%= comment.user.name %>
-    </div>
-    <div class="comment-content">
-      <%= comment.content %>
-    </div>
-    <% if comment.user == current_user %>
-      <%= link_to post_comment_path(@post, comment), method: :delete, data: { confirm: "¿Estás segura?" } do %>
-        <span class="glyphicon glyphicon-remove delete-comment"></span>
-      <% end %>
-    <% end %>
-  </div>
-<% end %>
+<%= form.rich_text_area :description, class: "form-control" %>
 ```
 
-con...
+y añade esta línea `has_rich_text :description` justo debajo de la línea `validates :description, presence: true` en el archivo/modelo Post `app/models/post.rb`
 
+Ahora ve y trata de crear un nuevo Post, veras que lo vas a poder hacer usando un editor de texto, donde también podrás añadir imágenes al instante!
 
-```rhtml
-<%= render @post.comments, post: @post %>
-```
+# ¡Felicidades! lo lograste, has terminado con éxito la guía del Rails Girls 2023
+## Gracias por tu dedicación y esfuerzo, hoy puedes decirte que hiciste una apliación web Rails en un día
+### Este es sólo el comienzo, únete a nuestra comunidad de software y emprende tu viaje en los vastos mares del desarrollo de software
 
-Y sigue funcionando igual.
-
-### Añadiendo `remote: true` a nuestro formulario
-
-En **app/views/posts/show.html.erb**
-
-reemplaza
-
-```rhtml
-<% if post.comments %>
-  <%= render @post.comments, post: @post %>
-<% end %>
-```
-
-con...
-
-```rhtml
-<div class="comments" id="comments_<%= @post.id %>">
-  <% if @post.comments %>
-    <%= render @post.comments, post: @post %>
-  <% end %>
-</div>
-```
-
-y las líneas
-
-```rhtml
-<%= form_for [@post, @post.comments.new] do |f| %>
-  <%= f.text_field :content, placeholder: 'Añade un comentario...' %>
-<% end %>
-```
-
-con...
-
-```rhtml
-<%= form_for([@post, @post.comments.build], remote: true) do |f| %>
-  <%= f.text_field :content, placeholder: 'Añade un comentario...', id: "comment_content_#{@post.id}" %>
-<% end %>
-```
-
-### Tenemos que ajustar también el controlador
-
-**app/controllers/comments_controller.rb**
-
-Reemplaza el `action` para crear con:
-
-```ruby
-def create
-  @comment = @post.comments.build(comment_params)
-  @comment.user_id = current_user.id
-
-  if @comment.save
-    respond_to do |format|
-      format.html { redirect_to root_path }
-      format.js
-    end
-  else
-    flash[:alert] = "Revisa el formulario de comentarios, algo salió mal :/"
-    render root_path
-  end
-end
-```
-
-### Creamos la respuesta Javascript
-
-¡jQuery al rescate!
-Crea un nuevo archivo en la carpeta **app/views/comments/** un archivo **create.js.erb**. En ese archivo, agrega la siguiente combinación de Javascript / Ruby
-
-```erb
-$('#comments_<%= @post.id %>').append("<%=j render 'comments/comment', post: @post, comment: @comment %>");
-$('#comment_content_<%= @post.id %>').val('')
-```
-
-### Ahora también para borrar comentarios
-
-Añadir `remote: true` al enlace para borrar
-
-**app/views/comments/_comment.html**
-
-Al final de esta línea y antes de `do`, añade `, remote: true`
-
-```rhtml
-<%= link_to post_comment_path(post, comment), method: :delete, data: { confirm: "¿Estás segura?" } do %>
-```
-
-Quedaría:
-
-```rhtml
-<%= link_to post_comment_path(post, comment), method: :delete, data: { confirm: "¿Estás segura?" }, remote: true do %>
-```
-
-### Añade la respuesta Javascript para la acción del controlador
-
-Al igual que antes, ahora podemos asegurar que rails responde no sólo con HTML, sino también con Javascript.
-
-Añade el método `responds_to` a la acción `destroy` dentro del `comments_controller`
-
-```ruby
-def destroy
-  @comment = @post.comments.find(params[:id])
-
-  if @comment.user_id == current_user.id
-   @comment.delete
-   respond_to do |format|
-     format.html { redirect_to root_path }
-     format.js
-   end
-  end
-end
-```
-
-Y por último pero no menos importante..
-
-### Finalizar con jQuery
-
-¡Simplemente estamos añadiendo nuestra lista de comentarios actualizada!
-
-Crea el nuevo archivo **destroy.js.erb** dentro de la carpeta **app/views/comments/** ( en la misma ubicación que el archivo create.js.erb ).
-
-```erb
-$('#comments_<%= @post.id %>').html("<%= j render @post.comments, post: @post, comment: @comment %>");
-```
+--
 
 ## Resources
 
@@ -2584,12 +2443,3 @@ Algunos sirvieron también en la elaboración de esta guía.
 *Introducción a Ruby on Rails:* [https://uniwebsidad.com/libros/introduccion-rails](https://uniwebsidad.com/libros/introduccion-rails)
 
 *Tutorial de Ruby on Rails (3a. edición.) - Michael Hartl* [https://spanish.railstutorial.org/book](https://spanish.railstutorial.org/book)
-
-
-## Debug
-
-Error para correr `rails console`
-
-`Library not loaded: /usr/local/opt/readline/lib/libreadline.7.dylib (LoadError)`
-
-https://gist.github.com/zulhfreelancer/47efc39584cb9f006da43c41c014e03a
