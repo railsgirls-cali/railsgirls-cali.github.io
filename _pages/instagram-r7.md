@@ -1,6 +1,6 @@
 ---
 layout: inner
-title: Instagram - Rails 6
+title: Instagram - Rails 7
 lead_text: Crea un clon de Instagram desde cero
 permalink: /instagram-r7/
 ---
