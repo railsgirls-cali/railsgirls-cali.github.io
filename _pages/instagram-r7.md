@@ -493,9 +493,9 @@ Ahora en el navegador puedes visitar nuestras dos paginas:
 - [/about]: la pagina donde encontrar información sobre ti en tu proyecto.
 
 
-## 5. ¡Instalemos Bootstrap!
+## 5. ¡Entendiendo Bootstrap!
 
-NO LONGER NEEDED
+Los desarrolladores de aplicaciones web pueden trabajar programando la lógica de la aplicación y programando la interfaz gráfica del usuario final, esta última parte es mucho más estética, y para facilitar la diagramación y el diseño de componentes gráficos usamos herramientas como Bootstrap, dile a tu coach que te acompañe en una revisión rápida de esta tecnología [aquí](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
 
 ## 6. Añade elementos de Bootstrap a la página
 
@@ -518,7 +518,7 @@ por...
 </div>
 ```
 
-TODO: **NOTA** puedes usar el atajo CTRL + X + X para auto-organizar el código
+**NOTA** ten cuidado con la indentación del código que copias y pegas, la legibilidad del código es muy importante para que no te confundas.
 
 ### Crea un parcial de encabezado
 
@@ -684,6 +684,14 @@ bundle install
 
 **NOTA** pero esta vez no vamos a usar `rails server` ahora vamos a usar `bin/dev` la razón de usar este comando es porque nos facilitará el proceso de creación de todos los archivos necesarios para nuestra aplicación, antes sólo estabamos corriendo el servidor que permite ejecutar el código Ruby que hemos hecho hasta ahora, pero con el nuevo comando `bin/dev` no sólo ejecutaremos código Ruby, sino también le permitiremos a nuestra ejecución interpretar de algún modo JS (javascript) y (SCSS/CSS), que por el momento diremos que son tecnologías que nos permiten volver nuestra aplicación web (la que ves desde el explorador) más bonita e interactiva. Así que al correr el comando `bin/dev` estás corriendo implicitamente el servidor, y otros dos procesos más en una misma consola, además vas a notar cambios importantes en la interfaz gráfica, cambios que tu está generando pero que ahora los podrás ver de forma automática.
 
+De igual forma, en Cloud9 el puerto que se está usando para ejecutar es el 8080, normalmente usa el puerto 3000, para configurar esto en el comando `bin/dev` debemos editar el archivo `Procfile.dev` que está en la raíz del proyecto, cambia su contenido completo por el siguiente contenido:
+
+```
+web: unset PORT && bin/rails server -p 8080
+js: yarn build --watch
+css: yarn build:css --watch
+```
+
 `consola`
 
 ```bash
@@ -693,28 +701,24 @@ bin/dev
 al ejecutarlo, veras algo como lo siguiente:
 
 ```bash
-18:47:44 web.1  | started with pid 43338
-18:47:44 js.1   | started with pid 43339
-18:47:44 css.1  | started with pid 43340
-18:47:45 css.1  | yarn run v1.22.19
-18:47:45 js.1   | yarn run v1.22.19
-18:47:45 css.1  | $ sass ./app/assets/stylesheets/application.bootstrap.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules --watch
-18:47:45 js.1   | $ esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=assets --watch
-18:47:45 js.1   | [watch] build finished, watching for changes...
-18:47:46 web.1  | => Booting Puma
-18:47:46 web.1  | => Rails 7.0.4.2 application starting in development 
-18:47:46 web.1  | => Run `bin/rails server --help` for more startup options
-18:47:46 css.1  | Sass is watching for changes. Press Ctrl-C to stop.
-18:47:46 css.1  | 
-18:47:47 web.1  | Puma starting in single mode...
-18:47:47 web.1  | * Puma version: 5.6.5 (ruby 2.7.7-p221) ("Birdie's Version")
-18:47:47 web.1  | *  Min threads: 5
-18:47:47 web.1  | *  Max threads: 5
-18:47:47 web.1  | *  Environment: development
-18:47:47 web.1  | *          PID: 43341
-18:47:47 web.1  | * Listening on http://127.0.0.1:3000
-18:47:47 web.1  | * Listening on http://[::1]:3000
-18:47:47 web.1  | Use Ctrl-C to stop
+22:06:30 css.1  | $ sass ./app/assets/stylesheets/application.bootstrap.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules --watch
+22:06:30 js.1   | $ esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=assets --watch
+22:06:31 js.1   | [watch] build finished, watching for changes...
+22:06:31 web.1  | => Booting Puma
+22:06:31 web.1  | => Rails 7.0.4.2 application starting in development 
+22:06:31 web.1  | => Run `bin/rails server --help` for more startup options
+22:06:32 web.1  | Puma starting in single mode...
+22:06:32 web.1  | * Puma version: 5.6.5 (ruby 2.7.7-p221) ("Birdie's Version")
+22:06:32 web.1  | *  Min threads: 5
+22:06:32 web.1  | *  Max threads: 5
+22:06:32 web.1  | *  Environment: development
+22:06:32 web.1  | *          PID: 10225
+22:06:32 web.1  | * Listening on http://127.0.0.1:8080
+22:06:32 web.1  | * Listening on http://[::1]:8080
+22:06:32 web.1  | Use Ctrl-C to stop
+22:06:37 css.1  | Compiled app/assets/stylesheets/application.bootstrap.scss to app/assets/builds/application.css.
+22:06:37 css.1  | Sass is watching for changes. Press Ctrl-C to stop.
+22:06:37 css.1  | 
 ```
 
 ## 10. Configuración de Devise
@@ -799,7 +803,7 @@ Tendrás que reiniciar la aplicación cada vez que **instales una gema** o cada 
 
 
 
-## 11. Mensajes flash
+## 11. Mensajes flash e I18n
 
 Los mensajes flash son los mensajes en sitios web que dicen "Gracias por registrarse en ..." o "Gracias por suscribirse a ..."
 
@@ -808,16 +812,66 @@ Los mensajes flash son los mensajes en sitios web que dicen "Gracias por registr
 Agrega lo siguiente Debajo de `<div class="container">` y antes de `<br>`:
 
 ```rhtml
-
 <% flash.each do |name, msg| %>
   <% if msg.is_a?(String) %>
-    <div class="alert alert-<%= name.to_s == 'notice' ? 'success' : 'danger' %> fade in">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-      <%= content_tag :div, msg, :id => "flash_#{name}" %>
+    <div class="alert alert-<%= name.to_s == 'notice' ? 'success' : 'danger' %> alert-dismissible fade show text-center">
+      <%= msg %>
     </div>
   <% end %>
 <% end %>
+```
 
+### I18n Internacionalización
+
+Ahora vamos a complementar nuestra aplicación con un sistema básico de traducción estática, normalmente, Rails usa Inglés como su lenguaje base, pero existe una gema que nos permitirá usar el lenguaje español en los términos donde usualmente usa inglés.
+
+Así que para instalar esta gema, debes ir al Gemfile y justo despues de la línea `# gem "image_processing", "~> 1.2"` debes colocar `gem 'rails-i18n'` al final deberá quedarte así:
+
+```
+# gem "image_processing", "~> 1.2"
+
+# I18n
+gem 'rails-i18n'
+```
+
+Ahora le diremos a nuestra aplicación que acepte los lenguajes español : es, e ingles : en, esto lo hacemos en el archivo `config/application.rb`. Dentro de ese archivo y justo después de la línea `config.load_defaults 7.0` debemos colocar lo siguiente:
+
+```
+config.i18n.available_locales = %w[es en]
+```
+
+y luego debemos ir a nuestro controlador principal `app/controllers/application_controller.rb` y cambiar todo su contenido por el siguiente:
+
+```
+class ApplicationController < ActionController::Base
+  before_action :i18n_setup
+
+  protected
+
+  def i18n_setup
+    I18n.locale = 'es'
+  end
+end
+```
+
+Con lo anterior siempre estaremos forzando ek lenguaje español en cada petición/ejecución.
+
+Ahora, ve a la consola donde está corriendo el servidor...
+
+CONTROL + C (para parar el servidor)
+
+`consola`
+
+luego instala la gema usando:
+
+```bash
+bundle install
+```
+
+y despues...
+
+```bash
+bin/dev # (para volver a iniciar el servidor)
 ```
 
 ## 12. Registrar nuevos usuarios o iniciar sesión
@@ -903,7 +957,7 @@ Todos estas vistas están ubicadas dentro de la carpeta **app/views/devise**.
 Ahora vamos a mejorar un poco estos archvos agregando CSS de Bootstrap.
 
 
-### Reemplaza el código para cada una de las vistas de Devise
+### Reemplaza el código completo  para cada una de las vistas de Devise
 
 **app/views/devise/registrations/new.html.erb**
 
@@ -915,8 +969,8 @@ Ahora vamos a mejorar un poco estos archvos agregando CSS de Bootstrap.
     <div class="col-lg-6">
       <h1>Regístrate</h1>
 
-      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-        <%= devise_error_messages! %>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), data: { turbo: false }) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
 
         <div class="form-group">
           <%= f.label :email %>
@@ -951,8 +1005,8 @@ Ahora vamos a mejorar un poco estos archvos agregando CSS de Bootstrap.
     <div class="col-lg-6">
       <h1>Editar <%= resource_name.to_s.humanize %></h1>
 
-      <%= form_for(resource, :as => resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-        <%= devise_error_messages! %>
+      <%= form_for(resource, :as => resource_name, url: registration_path(resource_name), data: { turbo: false }, html: { method: :put }) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
 
         <div class="form-group">
           <%= f.label :email %>
@@ -995,8 +1049,8 @@ Ahora vamos a mejorar un poco estos archvos agregando CSS de Bootstrap.
     <div class="col-lg-6">
       <h1>¿Olvidaste tu contraseña?</h1>
 
-      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-        <%= devise_error_messages! %>
+      <%= form_for(resource, as: resource_name, url: password_path(resource_name), data: { turbo: false }, html: { method: :post }) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
 
         <div class="form-group">
           <%= f.label :email %>
@@ -1026,8 +1080,8 @@ Ahora vamos a mejorar un poco estos archvos agregando CSS de Bootstrap.
     <div class="col-lg-6">
       <h1>Cambia tu contraseña</h1>
 
-      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
-        <%= devise_error_messages! %>
+      <%= form_for(resource, as: resource_name, url: password_path(resource_name), data: { turbo: false }, html: { method: :put }) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
         <%= f.hidden_field :reset_password_token %>
 
         <div class="form-group">
@@ -1062,7 +1116,7 @@ Ahora vamos a mejorar un poco estos archvos agregando CSS de Bootstrap.
   <div class="row justify-content-md-center mt-3">
     <div class="col-lg-6">
       <h1>Iniciar Sesion</h1>
-      <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+      <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), data: { turbo: false }) do |f| %>
         <div class="form-group">
           <%= f.label :email %>
           <%= f.email_field :email, class: "form-control", autofocus: true %>
@@ -1089,6 +1143,25 @@ Ahora vamos a mejorar un poco estos archvos agregando CSS de Bootstrap.
     </div>
   </div>
 </div>
+```
+
+**app/views/devise/shared/_error_messges_.html.erb**
+
+*¡Esta es la vista respecto de cómo se visualizan los errores!*
+
+```
+<% if resource.errors.any? %>
+  <div id="error_explanation">
+    <h2>
+      Los siguientes errores están presentes:
+    </h2>
+    <ul>
+      <% resource.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
 ```
 
 ### Añade un enlace "Mi cuenta" al parcial de navegacíon
@@ -1140,7 +1213,7 @@ Una migración es un archivo que se crea dentro de la carpeta **db/migrate** y q
 Cuando creas un modelo desde la línea de comandos con el generador de Rails, automáticamente se crea una migración con las instrucciones para crear la tabla.
 
 
-## 15. Simplifiquemos el controlador de Posts
+## 15. Modifiquemos el controlador de Posts
 
 **app/controllers/posts_controller.rb**
 
@@ -1248,6 +1321,7 @@ Reemplaza todo el contenido por:
     <%= form.label :description %>
     <%= form.text_field :description, class: "form-control" %>
   </div>
+
   <div class="form-group mt-3">
     <%= form.submit class: "btn btn-primary" %>
   </div>
@@ -1277,9 +1351,10 @@ Y lo que hay en este archivo **app/views/posts/edit.html.erb** por
   <%= render "form", post: @post %>
 </div>
 
-<div>
-  <%= link_to "Show this post", @post %> |
-  <%= link_to "Back to posts", posts_path %>
+<div class="text-center edit-links">
+  <%= link_to "Mirá este post", @post %> |
+  <%= link_to "Eliminar este Post", post_path(@post), data: { turbo_method: :delete, turbo_confirm: "¿Estás segura que quieres eliminar este post?" } %> |
+  <%= link_to "Lista de posts", posts_path %>
 </div>
 ```
 
@@ -1302,7 +1377,7 @@ Debajo de `<% if user_signed_in? %>`:
 reemplaza `root 'pages#home'` por `root 'posts#index'`
 
 
-## 17. Posts, Usuarios y Asociaciones
+## 17. Posts, Usuarios, Asociaciones y Validaciones
 
 ### Asociaciones
 
@@ -1331,7 +1406,7 @@ end
 ```
 
 ### Genera una nueva migración de índice de un usuario
-<br/>
+
 Esto significa que cada publicación estará relacionada con un usuario.
 
 `consola`
@@ -1354,7 +1429,6 @@ TODO: * ##### Cada vez que hagas una migración, debes reiniciar el servidor de 
 CONTROL + C (para parar el servidor)
 
 ```bash
-
 bin/dev # (para volver a iniciar el servidor)
 ```
 
@@ -1376,6 +1450,18 @@ class User < ApplicationRecord
 end
 ```
 
+### Validaciones
+
+Para evitar que un Post pueda ser guardado sin descripción, podemos usar la validaciones de Ruby on Rails, para usarlas añade al archivo `models/post.rb` la línea `validates :description, presence: true` justo después de la línea `belongs_to :user`. Quedando finalmente el archivo `post.rb` así:
+
+```ruby
+class Post < ApplicationRecord
+  belongs_to :user
+  validates :description, presence: true
+end
+```
+
+**NOTA:** intenta interactuar hasta este punto con la aplicación, creando o editando Posts, es posible que te encuentres con algunos errores, los abordaremos más adelante :)
 
 ## 18. Autorización: ¿Quién puede? ¿Quién no puede?
 
@@ -1540,6 +1626,17 @@ rails db:migrate
 
 Con estos comandos acabamos de instalar Active Storage y actualizar la base de datos con campos necesarios para almacenar archivos en nustra aplicación.
 
+### Instalando ImageMagick
+
+Para poder lidiar con imágenes, es bueno tener un editor de imágenes, algo como Photoshop pero en consola (just kiding), por el momento usaremos ImageMagick, y debemos instalarlo, como estamos trabajando con Cloud9 preferiremos usar ImageMagick en lugar de VIPS que por rendimiento es más recomendado.
+
+para instalarlo, en una consola debes digitar el siguiente comando, y aceptar la instalación, dile a tu coach que supervise esta instalación:
+
+`consola`
+
+```bash
+sudo yum install ImageMagick
+```
 
 ### Instalar image_processing
 
@@ -1573,7 +1670,6 @@ bin/dev
 
 Para iniciar el servidor otra vez.
 
-
 ### Actualiza Post
 
 Actualiza el model `Post`
@@ -1583,18 +1679,27 @@ Actualiza el model `Post`
 ```ruby
 class Post < ApplicationRecord
   belongs_to :user
+  validates :description, presence: true
+
   has_one_attached :image
 
+  def user_name
+    user.email
+  end
+
   def squared_img
-    return '/' unless image.attached?
+    return 'https://via.placeholder.com/600' unless image.attached?
 
     image.variant(resize_to_fill: [600, 600])
   end
 end
 ```
 
+Aquí hemos añadido dos nuevos métodos `user_name` `squared_img`, qué crees que hacen esos dos métodos? discútelo con tu coach...
+
 para parender más del redimensionamiento de imágenes ver [aquí](https://dev.to/mikerogers0/resize-images-with-active-storage-in-rails-481n)
 
+Finalmente, para forzar a Rails usar ImageMagick y no VIPS, debemos añadir esta línea `config.active_storage.variant_processor = :mini_magick` justo después de la línea `config.active_storage.service = :local` en el siguiente archivo `config/environments/development.rb`
 
 ### Edita el formulario de Post
 
@@ -1640,14 +1745,22 @@ Aqui estamos permitiendo que nuestro controlador pueda manejar un parametro adic
 
 ```rhtml
 <% if user_signed_in? %>
-  <div class="main-wrapper">
+  <div class="main-wrapper posts">
     <div class="row">
       <% @posts.each do |post| %>
         <div class="col-xs-12 col-sm-6 col-md-4">
           <div class="image center-block">
             <%= link_to (image_tag post.squared_img, class:'img-fluid'), post_path(post) %>
           </div>
-          <p><%= post.description %></p>
+          <p class="text-end small text-muted mb-0">
+            <%= time_ago_in_words post.created_at %>
+          </p>
+          <p class="description">
+            <b>
+              <%= post.user_name if post.user %>
+            </b>
+            <%= truncate(strip_tags(post.description.to_s), length: 70) %>
+          </p>
         </div>
       <% end %>
     </div>
@@ -1812,21 +1925,6 @@ y añade los siguientes estilos al final de este archivo
 }
 ```
 
-y en **app/views/posts/edit.html.erb**, cambiamos el contenido de todo el archivo por el siguiente:
-
-```rhtml
-<div class="form-wrapper">
-  <h2>Actualizar un post</h2>
-  <%= render "form", post: @post %>
-</div>
-
-<div class="text-center edit-links">
-  <%= link_to "Mirá este post", @post %> |
-  <%= link_to "Eliminar este Post", post_path(@post), data: { turbo_method: :delete, turbo_confirm: "¿Estás segura que quieres eliminar este post?" } %> |
-  <%= link_to "Lista de posts", posts_path %>
-</div>
-```
-
 ## 21. Añade un nombre de usuario para personalizar la aplicación
 
 ### Crea la migración en la base de datos
@@ -1862,11 +1960,16 @@ Actualiza **app/controllers/application_controller.rb**
 
 ```ruby
 class ApplicationController < ActionController::Base
- protect_from_forgery with: :exception
- before_action :configure_permitted_parameters, if: :devise_controller?
+  protect_from_forgery with: :exception
+  before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :i18n_setup
 
-protected
+  protected
 
+  def i18n_setup
+    I18n.locale = 'es'
+  end
+  
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
     devise_parameter_sanitizer.permit(:account_update, keys: [:name])
@@ -1898,55 +2001,20 @@ Añade
 
 **RETO** añade la clase de estilo "mt-3" al `form-group` del email, pregúntale a tu coach cómo hacerlo y qué significa
 
-### Terminamos con un nuevo controlador
-
-Crea el archivo **app/controllers/registrations_controller.rb**:
-
-```ruby
-class RegistrationsController < Devise::RegistrationsController
-
-  private
-
-  def sign_up_params
-    params.require(:user).permit(:email, :name, :password, :password_confirmation)
-  end
-
-  def account_update_params
-    params.require(:user).permit(:email, :name, :password, :password_confirmation, :current_password)
-  end
-end  
-```
-
-### Corrige la ruta
-
-**/config/routes.rb**
-
-Reemplaza
-
-```ruby
-devise_for :users
-```
-
-con...
-
-```ruby
-devise_for :users, controllers: { registrations: 'registrations' }
-```
-
 ### Ahora cambiamos el correo por el nombre
 
-**app/views/posts/_post.html.erb**
+**app/models/post.rb**
 
 Reemplaza
 
-```rhtml
-<%= post.user.email if post.user %>
+```ruby
+user.email
 ``
 
 con...
 
-```rhtml
-<%= post.user.name || post.user.email if post.user %>
+```ruby
+user.name || user.email
 ```
 
 ## 22. Protege tus posts
@@ -2108,41 +2176,66 @@ Reemplaza **app/views/posts/_post.html.erb**
       <%= image_tag post.squared_img, class:'img-fluid' %>
     </div>
     <div class="post-bottom">
-      <div class="description">
-        <div class="user-name">
-          <%= post.user.name || post.user.email if post.user %>
+      <div class="post-head">
+        <div class="avatar">
+          <%= image_tag "https://robohash.org/#{post.user.email}.png?set=set4" %>
         </div>
+        <div class="user-name">
+          <%= post.user_name if post.user %>
+        </div>
+        <div class="time-ago">
+          <%= l post.created_at, format: :short %>
+        </div>
+      </div>
+      <div class="description">
         <%= post.description %>
       </div>
-      <% if post.comments %>
+      <hr>
+      <div id="comments">
         <% post.comments.each do |comment| %>
-          <div class="comment">
-            <div class="user-name">
-              <%= comment.user.name %>
-            </div>
-            <div class="comment-content">
-              <%= comment.content %>
-            </div>
-            <% if comment.user == current_user %>
-              <%= link_to post_comment_path(post, comment), data: { turbo_method: :delete, turbo_confirm: "¿Estás segura?" } do %>
-                <span class="glyphicon glyphicon-remove delete-comment"></span>
-              <% end %>
-            <% end %>
-          </div>
-        <% end %>
-      <% end %>
-    </div>
-    <div class="comment-like-form row">
-      <div class="comment-form col">
-        <%= form_for [post, post.comments.new] do |f| %>
-          <div class="form-group">
-            <%= f.text_field :content, class: 'form-control', placeholder: 'Añade un comentario...' %>
-          </div>
+          <%= render "comments/comment", comment: comment %>
         <% end %>
       </div>
     </div>
+    <%= render "comments/new", post: post %>
   </div>
 </div>
+```
+
+ahora vamos a añadir dos parciales para lidiar con la creación y visualización de los comentarios, recuerda divide y venceras, dile a tu coach que te explique el concepto de parcial y el rol del helper `render` en la vista de `_post.html.erb`
+
+en la carpeta **app/views/comments** vamos a crear dos archivos con el siguiente contenido
+
+**app/views/comments/_comment.html.erb**
+
+```
+<div id="<%= dom_id comment %>" class="comment">
+  <div class="user-name">
+    <%= comment.user.name %>
+  </div>
+  <div class="comment-content">
+    <%= comment.content %>
+  </div>
+  <div class="time-ago">
+    <%= time_ago_in_words comment.created_at %>
+  </div>
+</div>
+```
+
+**app/views/comments/_new.html.erb**
+
+```
+<% if current_user %>
+  <div class="comment-like-form row">
+    <div class="comment-form col">
+      <%= form_for [post, post.comments.new] do |f| %>
+        <div class="form-group">
+          <%= f.text_field :content, class: 'form-control', placeholder: 'Añade un comentario...' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
 ```
 
 ### Los estilos para ponerlo bonito
@@ -2151,7 +2244,7 @@ En **app/javascript/stylesheets/post.css.scss** reemplaza todo el contenido con 
 
 ```css
 .main-wrapper {
-  margin-top: 100px
+  margin-top: 15px
 }
 
 .image {
@@ -2176,17 +2269,25 @@ En **app/javascript/stylesheets/post.css.scss** reemplaza todo el contenido con 
   .post-head {
     flex-direction: row;
     height: 64px;
-    padding-left: 24px;
-    padding-right: 24px;
-    padding-top: 24px;
     color: #125688;
     font-size: 15px;
     line-height: 18px;
+    margin-bottom: 15px;
+    .avatar {
+      display: inline;
+      img{
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 2px solid #d62d2d;
+      }
+    }
     .user-name, .time-ago {
       display: inline;
+      margin-left: 5px;
     }
     .user-name {
-      font-weight: 500;
+      font-weight: 800;
     }
     .time-ago {
       color: #A5A7AA;
@@ -2200,7 +2301,8 @@ En **app/javascript/stylesheets/post.css.scss** reemplaza todo el contenido con 
     display: inline;
   }
   .description {
-    margin-bottom: 7px;
+    color: #555;
+    margin-bottom: 15px;
   }
   .user-name {
     font-weight: 500;
@@ -2214,13 +2316,15 @@ En **app/javascript/stylesheets/post.css.scss** reemplaza todo el contenido con 
   .comment {
     margin-top: 7px;
     .user-name {
-      font-weight: 500;
+      font-weight: 800;
       margin-right: 0.3em;
     }
-    .delete-comment {
-      float: right;
-      color: #515151;
+    .time-ago {
+      text-align: right;
+      color: #777;
+      font-size: 10px;
     }
+    padding-bottom: 15px;
   }
   margin-bottom: 7px;
   padding-top: 24px;
@@ -2266,48 +2370,11 @@ En **app/javascript/stylesheets/post.css.scss** reemplaza todo el contenido con 
 }
 ```
 
-## 25. Control de versiones y Github
+## 25. Turbo Streams - Bonus 1
 
-**Recursos:**
-[Control de versiones con Git y GitHub](http://wikis.fdi.ucm.es/ELP/Control_de_versiones_con_Git_y_GitHub)
+Tal vez lo has notado, pero cada vez que haces un nuevo cambio, es necesario que refresques la página, este es un comportamiento de la web tradicional, sin embargo, actualmente para no perder la atención del usuario final, es importante mantenerlo con el nuevo contenido aún sin tener que refrescar la página manualmente.
 
-¡Ahora veremos en secuencia los pasos necesarios para subir tu primer proyecto a la plataforma Github!
-
-1. En la parte superior derecha de tu espacio de trabajo en [C9](http://c9.io), haz clic en tu foto para abrir el panel de configuración y clic en `Dashboard`.
-[https://c9.io/account/ssh](https://c9.io/account/ssh)
-2. Ahora click en el círculo de arriba que tiene un engranaje y después en el menú lateral que dice `SSH keys`
-3. Copia todas las líneas que empiezan por `ssh-rsa...`
-4. Crea una cuenta en GitHub: [https://github.com](https://github.com)
-5. Entra en [tu perfil de usuario](https://github.com/settings/profile) y haz clic en `SSH and GPG keys`.
-[https://github.com/settings/ssh](https://github.com/settings/ssh)
-6. Ahora clic en “Add SSH Key”. Introduce el título: "C9", pega la clave SSH en el cuadro "key", y haz clic en "Add key".
-7. Crea un repositorio nuevo vacío para tu nuevo proyecto. Desde tu repositorio, copia el enlace SSH:
-```
-git@github.com:sunombre/nombredelproyecto.git
-```
-8. Convierte tu directorio actual en un repositorio git ejecutando en la consola de C9:
-```
-git init
-```
-9. Utilizando el enlace SSH que copiaste en el paso 7, añade el repositorio remoto como origen:
-```
-git remote add origin git@github.com:sunombre/nombredelproyecto.git
-```
-10. Añade tus archivos y haz commit
-```
-git add .
-```
-```
-git commit -m "Mi Primer commit"
-```
-11. Sube los archivos:
-```
-git push -u origin master
-```
-
-**Ahora tienes tu repositorio actualizado en GitHub**
-
-
+Vamos a realizar está configuración para cada comentario nuevo, cada comentario que se cree se publicará en los exploradores de otros usuarios sin que estos tengan que refrescar su página, y lo vamos a hacer de manera muy sencilla con sólo dos líneas más de código...
 
 ## 26. Tener nuestra aplicación en la web
 
