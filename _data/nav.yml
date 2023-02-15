@@ -3,6 +3,7 @@ main:
     - { url: '/speakers', text: 'Speakers' }
     - { url: '/instagram-r5', text: 'Instagram 5' }
     - { url: '/instagram-r6', text: 'Instagram 6' }
+    - { url: '/instagram-r7', text: 'Instagram 7' }
     - { url: '/forum', text: 'Foro' }
     - { url: '/tienda', text: 'Tienda' }
     - { url: '/slack', text: 'Railslack' }
