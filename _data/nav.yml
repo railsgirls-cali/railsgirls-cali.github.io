@@ -1,5 +1,6 @@
 main:
     - { url: '/', text: 'Home' }
+    - { url: '/speakers', text: 'Speakers' }
     - { url: '/instagram-r5', text: 'Instagram 5' }
     - { url: '/instagram-r6', text: 'Instagram 6' }
     - { url: '/forum', text: 'Foro' }
