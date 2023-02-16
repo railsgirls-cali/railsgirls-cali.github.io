@@ -1,6 +1,7 @@
 main:
     - { url: '/', text: 'Home' }
     - { url: '/speakers', text: 'Speakers' }
+    - { url: '/coaches', text: 'Coaches' }
     - { url: '/instagram-r5', text: 'Instagram 5' }
     - { url: '/instagram-r6', text: 'Instagram 6' }
     - { url: '/instagram-r7', text: 'Instagram 7' }
