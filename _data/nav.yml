@@ -1,12 +1,24 @@
 main:
-    - { url: '/', text: 'Home' }
-    - { url: '/speakers', text: 'Speakers' }
-    - { url: '/coaches', text: 'Coaches' }
-    - { url: '/instagram-r5', text: 'Instagram 5' }
-    - { url: '/instagram-r6', text: 'Instagram 6' }
-    - { url: '/instagram-r7', text: 'Instagram 7' }
-    - { url: '/forum', text: 'Foro' }
-    - { url: '/tienda', text: 'Tienda' }
-    - { url: '/slack', text: 'Railslack' }
-    - { url: '/location', text: '¿Cómo llegar?' }
-    - { url: '/registro', text: 'Inscríbete' }
+  - { url: "/registro", text: "Inscríbete" }
+  - { url: "/speakers", text: "Speakers" }
+  - { url: "/coaches", text: "Mentoras/es" }
+  - { url: "/instagram-r7", text: "Instagram 7" }
+  # - { url: '/forum', text: 'Foro' }
+  # - { url: '/tienda', text: 'Tienda' }
+  # - { url: '/slack', text: 'Railslack' }
+  - { url: "/location", text: "¿Cómo llegar?" }
+  - {
+      url_is_dropdown: true,
+      text: "Políticas",
+      dropdown:
+        [
+          {
+            url: "/politica-de-datos-participantes",
+            text: "Política de Datos Participantes",
+          },
+          {
+            url: "/politica-de-datos-mentores",
+            text: "Política de Datos Mentores/as",
+          },
+        ],
+    }

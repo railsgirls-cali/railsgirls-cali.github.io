@@ -1,6 +1,8 @@
-source 'https://rubygems.org'
+# Gemfile
+source "https://rubygems.org"
 
-gem 'jekyll'
-gem 'jekyll-paginate'
-gem 'kramdown'
-gem 'pygments.rb'
+ruby "3.3.9"
+
+gem "github-pages", "~> 232", group: :jekyll_plugins
+
+gem "webrick", "~> 1.8"

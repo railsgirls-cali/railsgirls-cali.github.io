@@ -203,3 +203,15 @@ pre {
         line-height: 35px;
     }
 }
+
+.navbar-inverse .navbar-nav .dropdown-menu > li > a {
+    text-transform: none;
+    font-size: 16px;
+    padding: 10px 20px;
+    color: #333;
+}
+
+.navbar-inverse .navbar-nav .dropdown-menu > li > a:hover {
+    background-color: #DD390D;
+    color: #fff;
+}
