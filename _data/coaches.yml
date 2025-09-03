@@ -1,0 +1,40 @@
+- name: Geraldine Caicedo
+  image: /assets/images/coaches/geraldine.jpeg
+  role: Senior Full-stack developer
+  company: Bunny Studio
+- name: Sofia Cantillo
+  image: /assets/images/coaches/sofia.jpg
+  role: Web Developer
+  company: Universidad del Valle
+- name: Johan Tique
+  image: /assets/images/coaches/johan.jpg
+  role: Senior Development Consultant
+  company: Endava
+- name: David Vanegas
+  image: /assets/images/coaches/david.jpg
+  role: Senior Fullstack Engineer
+  company: Pluralang
+- name: Segundo España
+  image: /assets/images/coaches/segundo.jpg
+  role: Senior Developer
+  company: Ideardev LLC
+- name: Brandon Lopez
+  image: /assets/images/coaches/brandon.jpg
+  role: Desarrollador de back-end
+  company: Wompi
+- name: Juan David Mazuera
+  image: /assets/images/coaches/juan_david_mazuera.jpg
+  role: Software Engineer
+  company: LF Technologies
+- name: Julian Castaño
+  image: /assets/images/coaches/julian.jpg
+  role: Instructor en Desarrollo de Software
+  company: Enyoi
+# - name: Pedro Rivera
+#   image: /assets/images/coaches/pedro.jpg
+#   role: Senior Python Developer
+#   company: Globant
+# - name: Victor Cortes
+#   image: /assets/images/coaches/victor.jpg
+#   role: Product Lead
+#   company: Humantelligence Inc
