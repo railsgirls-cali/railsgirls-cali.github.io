@@ -2,6 +2,7 @@ main:
   - { url: "/registro", text: "Inscríbete" }
   - { url: "/speakers", text: "Speakers" }
   - { url: "/mentores", text: "Mentoras/es" }
+  - { url: "/sponsors", text: "Patrocinadores" }
   - { url: "/instagram-r7", text: "Instagram 7" }
   # - { url: '/forum', text: 'Foro' }
   # - { url: '/tienda', text: 'Tienda' }
