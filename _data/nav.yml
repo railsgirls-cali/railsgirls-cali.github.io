@@ -21,5 +21,9 @@ main:
             url: "/politica-de-datos-mentores",
             text: "Política de Datos Mentores/as",
           },
+          {
+            url: "/codigo-de-conducta",
+            text: "Código de conducta",
+          },
         ],
     }
