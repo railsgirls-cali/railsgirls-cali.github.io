@@ -1,11 +1,19 @@
-- name: Geraldine Caicedo
-  image: /assets/images/coaches/geraldine.jpeg
-  role: Senior Full-stack developer
-  company: Bunny Studio
+- name: Nathaly Sotomayor
+  image: /assets/images/coaches/nathaly.jpg
+  role: Backend Developer
+  company: ABA Tech
+- name: Melissa Escobar
+  image: /assets/images/coaches/melissa.jpg
+  role: Ruby on Rails Developer
+  company: Globant
 - name: Sofia Cantillo
   image: /assets/images/coaches/sofia.jpg
   role: Web Developer
-  company: Universidad del Valle
+  company: Univalle
+- name: Geraldine Caicedo
+  image: /assets/images/coaches/geraldine.jpeg
+  role: Sr. Full-stack developer
+  company: Bunny Studio
 - name: Johan Tique
   image: /assets/images/coaches/johan.jpg
   role: Senior Development Consultant
