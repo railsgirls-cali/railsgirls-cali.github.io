@@ -1,6 +1,6 @@
 main:
   - { url: "/registro", text: "Inscríbete" }
-  - { url: "/speakers2023", text: "Speakers 2023" }
+  - { url: "/talks", text: "Charlas" }
   - { url: "/mentores", text: "Mentoras/es" }
   - { url: "/sponsors", text: "Patrocinadores" }
   - { url: "/instagram-r7", text: "Instagram 7" }
