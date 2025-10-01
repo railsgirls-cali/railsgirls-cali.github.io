@@ -1,109 +1,17 @@
-- name: Kelly Solano
-  image: /assets/images/speakers/kelly.jpeg
-  role: Fisioterapeuta
-  company: P&P Health
+- name: Isabella Quitana Vargas
+  image: /assets/images/speakers/isabella.jpeg
+  role: Diseñadora Gráfica y Web UI
+  company: Freelancer en Jaffe Management y DauHerker
   experience: >
-    Fisioterapeuta desde el año 2015, egresada de la Universidad del Valle con experiencia en
-    rehabilitación física ambulatoria en el
-    ámbito musculoesquelético. Magíster en fisiopatologías asociadas a la articulación temporomandibular
-    con enfoque integral
-  talk_title: ¿Cómo puedo cuidar mi metro cuadrado?
+    Soy egresada de la Universidad del Valle y cuento con más de 10 años de experiencia en proyectos de
+    diseño gráfico y web, con una fuerte especialización en mercadeo digital. Como nómada digital y
+    trabajadora remota durante más de siete años, he podido combinar mi amor por la tecnología con la
+    realización de proyectos internacionales y personales. Actualmente, soy una participante activa en
+    diversas comunidades tecnológicas en la ciudad de Cali.
+  talk_title: >
+    Accesibilidad: Un Reto en Equipo y una deuda con el mundo.
   talk_description: >
-    Asumir la responsabilidad de nuestra salud es una vía de empoderamiento que nuestra mente percibe
-    como un factor clave para mejorar
-    la percepción que tenemos de nosotros mismos, y por ende, incrementar nuestra autoestima. En esta
-    charla aprenderás a detectar
-    patrones de movimiento que pueden estar generando una disminución en la funcionalidad de tu cuerpo y
-    posibles factores de riesgo que podrías controlar
-
-- name: Erika Gutiérrez
-  image: /assets/images/speakers/erika.jpeg
-  role: Ingeniera de Software
-  company: Mercado Libre
-  experience: >
-    Ingeniera multimedia, finalizando maestría en ingeniería de software, con experiencia en desarrollo
-    web front y back. He trabajado en el área de la investigación para temas de la salud como desarrollo
-    de terapias para niños con discapacidad auditiva y paralisis cerebral. Experiencia en el área de la
-    tecnología trabajando desde hace 6 años en esta área.
-  talk_title: Mi Superpoder es la Programación
-  talk_description: >
-    En esta charla conoceremos sobre mi superpoder es la programación un proyecto social qu busca
-    enseñar a los niños desde las bases de la computación hasta conceptos avanzados de codificación con
-    el fin de mostrarles alternativas para el buen uso de su tiempo libre y fortalecer otras áreas del
-    conocimiento. A partir de este proyecto social, surge una herramienta para aprender a programar la
-    cual lleva consigo el mismo nombre.
-
-- name: Natalia Cano
-  image: /assets/images/speakers/natalia_cano.jpg
-  role: Recruitment Business Partner
-  company: Endava
-  experience: >
-    Psicóloga de la Universidad EAFIT, Especialista en Gerencia del Talento Humano de la Universidad
-    Pontificia Bolivariana.
-    Profesional con experiencia en el campo de las Organizaciones. Amplia trayectoria en el área de
-    Talento Humano en diversos procesos,
-    destacando la experiencia en Atracción y Selección de Talento en el sector tecnológico. Actualmente
-    me desempeño como Recruitment
-    Business Partner en la multinacional de tecnología Endava.
-  talk_title: "Cartas bajo la manga: ¿Cómo conseguir el trabajo de mis sueños, y no morir en el intento?"
-  talk_description: >
-    Establecer herramientas y métodos efectivos al momento de enfrentar un proceso de selección en el
-    sector de Tecnología.
-    El objetivo será brindar una guía para que la candidata que está desarrollando un proceso de
-    selección, se sienta segura al momento de hacerlo.
-
-- name: Martha Isabel Estupiñán
-  image: /assets/images/speakers/martha.png
-  role: Directora / Cofundadora
-  company: Tribu Evolución / Mercadeo web efectivo
-  experience: >
-    Apoya la equidad de género, acompaña comunidades en conexiones con propósito. Es Feminista,
-    evangelizadora STEAM, speaker TEDxCaliWomen, Co-creadora de Laboratorios de Innovación, tallerista
-    en habilidades digitales y humanas, dirigidos a la niñez, mujeres y étnias.
-    https://linktr.ee/Martic
-  talk_title: Decodofica la Superwoman
-  talk_description: >
-    ASiete de cada diez personas han experimentado el síndrome de la impostora o el impostor. Auto
-    saboteo, miedo al fracaso, no merecer, no liderar, negociar un valor, frustración al crear
-    tecnología y más. Esto impacta en la vida personal y profesional, las mujeres en tecnología, no son
-    la excepción, es clave identificarlo, buscar el apoyo adecuado para ir por tu desarrollo y
-    crecimiento profesional.
-
-- name: Karen Cristina Gómez Muñoz
-  image: /assets/images/speakers/karen_gomez.jpg
-  role: Emprendedora y CEO de empresa de tecnología
-  company: APPSUS SAS
-  experience: >
-    Ingeniera en Electrónica y Telecomunicaciones con especialización en desarrollo de soluciones
-    informáticas de la
-    Universidad del Cauca. Emprendedora, fundadora y CEO de Appsus SAS, empresa dedicada al desarrollo
-    de soluciones software
-    para el sector gobierno de Colombia y LATAM.
-  talk_title: Tips para emprender en la industria 4.0 y no morir en el intento.
-  talk_description: >
-    Quiero compartir desde mi experiencia como emprendedora en la industria 4.0, algunos tips y consejos
-    útiles para quienes se están
-    aventurando en el camino del emprendimiento o que tienen una idea de negocio con potencial, que
-    puedan servir para convertir las
-    ideas o sueños en empresas exitosas.
-
-- name: Elisabete Narvaez
-  image: /assets/images/speakers/elisabete.jpeg
-  role: Agile PM
-  company: Endava
-  experience: >
-    LLevo varios años en proyectos de diferente naturaleza: turismo, mejora de procesos,
-    transformación
-    de organizaciones, cambios de plataformas, pero lo que me apasiona es cambiar el mindset de las
-    personas involucradas en proyectos, es trabajar el "ser" junto con el "hacer". Soy aficionada
-    por
-    Agilismo y gerencia de proyectos, pero son los proyectos de desarrollo y manutención de
-    software,
-    especialmente las de Apps las que más me generan interés.
-  talk_title: ¿Cómo llegar al mundo del desarrollo sin ser ingeniera/o?
-  talk_description: >
-    Entender que la carrera que una persona estudia no define los cambios que uno puede hacer en su
-    vida
-    laboral. Que el mundo de la tecnologia tiene apertura para diferente tipos de caminos y que no
-    está
-    limitado a las tradicionales profesiones.
+    Más allá de las listas de chequeo, la accesibilidad es una deuda que tenemos con millones de personas usuarias.
+    En esta charla, hablaremos cómo un diseño inclusivo no es solo responsabilidad del diseñador, sino un reto en equipo.
+    Aprenderás cambios de paradigma y estrategias prácticas para integrar la accesibilidad en tu flujo de trabajo actual y,
+    lo más importante, cómo iniciar esta conversación crucial tanto con tu equipo como con tus clientes.
