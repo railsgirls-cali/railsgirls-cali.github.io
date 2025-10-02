@@ -6,7 +6,7 @@ permalink: /mentores/
 ---
 
 <div class="row">
-    {% for coach in site.data.coaches %}
+    {% for coach in site.data.mentores %}
     <div class="col-sm-3 col-md-3">
         <div class="thumbnail">
             <img

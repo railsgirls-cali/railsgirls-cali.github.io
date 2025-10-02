@@ -38,10 +38,10 @@
   image: /assets/images/coaches/julian.jpg
   role: Instructor en Desarrollo de Software
   company: Enyoi
-# - name: Pedro Rivera
-#   image: /assets/images/coaches/pedro.jpg
-#   role: Senior Python Developer
-#   company: Globant
+- name: Pedro Rivera
+  image: /assets/images/coaches/pedro_rivera.jpeg
+  role: Senior Python Developer
+  company: Globant
 # - name: Victor Cortes
 #   image: /assets/images/coaches/victor.jpg
 #   role: Product Lead
