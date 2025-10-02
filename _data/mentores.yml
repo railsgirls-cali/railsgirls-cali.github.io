@@ -46,6 +46,10 @@
   image: /assets/images/coaches/juan_felipe.jpeg
   role: Software engineer II
   company: Recurly
+- name: Andrés Clavijo
+  image: /assets/images/coaches/andres_clavijo.jpeg
+  role: Software Engineer III
+  company: BUK
 # - name: Victor Cortes
 #   image: /assets/images/coaches/victor.jpg
 #   role: Product Lead
