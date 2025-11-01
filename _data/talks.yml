@@ -1,5 +1,20 @@
+- name: Karen Campo | Milton Oviedo
+  image: /assets/images/speakers/2025/karen.jpeg
+  role: Desarrolladores
+  experience: >
+    Somos soñadores que creemos que las cosas se hacen con el corazón o no se hacen. Hace más de cinco años nos reunimos para ensayar teatro y explorar cómo aplicar la tecnología en su desarrollo.
+    Tenemos grandes ambiciones: queremos crear nuestro propio sistema de luces potenciado por inteligencia artificial, entrenar modelos que hagan arte y combinar el ancestral arte de los títeres con la robótica.
+    De esos sueños, ya estamos haciendo realidad uno: hemos logrado entrenar un modelo para que actúe, convirtiéndose en un personaje más dentro de la obra Mujer Moderna.
+    Queremos ser disruptivos y revolucionar la forma en que se entregan y reciben las conferencias de tecnología. No buscamos solo decir que usamos IA o explicar para qué la usamos, sino mostrar cómo la aplicamos en un proyecto real, mientras nos divertimos muchísimo en el proceso.
+  talk_title: >
+    Monólogo de la Mujer Moderna
+  talk_description: >
+    Una mujer que ha alcanzado la cúspide de su carrera se detiene a mirar dentro de sí: ¿cuánta libertad hemos conquistado realmente las mujeres en la era moderna? Entre la presión, el éxito y la exigencia de serlo todo, su voz comienza a llenarse de dudas.
+    Pero no está sola. Su asistente —una inteligencia artificial— también la cuestiona, y lo que parecía ser un monólogo se transforma en un diálogo entre dos mujeres modernas: una de carne y hueso, y otra hecha de datos y algoritmos.
+    La obra propone un encuentro entre arte y tecnología, donde cada función es distinta, porque el modelo de IA improvisa libremente, convirtiendo cada presentación en una experiencia única e irrepetible.
+
 - name: Isabella Quitana Vargas
-  image: /assets/images/speakers/isabella.jpeg
+  image: /assets/images/speakers/2025/isabella.jpeg
   role: Diseñadora Gráfica y Web UI
   company: Freelancer en Jaffe Management y DauHerker
   experience: >

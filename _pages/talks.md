@@ -25,9 +25,11 @@ permalink: /talks/
                 <p class="role-container">
                     <span class="strong">Rol:</span> {{ talk.role }}
                 </p>
+                {% if talk.company %}
                 <p>
                     <span class="strong">Trabajo en:</span> {{ talk.company }}
                 </p>
+                {% endif %}
                 <p>
                     <span class="strong">Experiencia:</span> {{ talk.experience }}
                 </p>
