@@ -35,7 +35,7 @@
   role: Ruby Developer
   company: Globant
   experience: >
-    Soy Melissa Escobar, Ingeniera de sistemas y computación de la Universidad Tecnológica de Pereira,
+    Soy Ingeniera de sistemas y computación de la Universidad Tecnológica de Pereira,
     y he trabajado como desarrolladora Ruby los últimos 4 años. Apasionada por la tecnología,
     las matemáticas, la música, los libros y el arte.
     Además, soy co-líder de comunidades de tecnología como Pereira Tech Talks, jointDeveloper y GDG Pereira,
@@ -43,10 +43,15 @@
   talk_title: >
     Superpoderes para mentes curiosas: una introducción a Ruby y Rails.
   talk_description: >
-    Más allá de las listas de chequeo, la accesibilidad es una deuda que tenemos con millones de personas usuarias.
-    En esta charla, hablaremos cómo un diseño inclusivo no es solo responsabilidad del diseñador, sino un reto en equipo.
-    Aprenderás cambios de paradigma y estrategias prácticas para integrar la accesibilidad en tu flujo de trabajo actual y,
-    lo más importante, cómo iniciar esta conversación crucial tanto con tu equipo como con tus clientes.
+    En esta charla descubrirás la magia detrás de Ruby, un lenguaje de programación tan amable que parece conversar contigo,
+    y Ruby on Rails, el framework que permite transformar tus ideas en aplicaciones reales. Aprenderás qué es un lenguaje
+    de programación, cómo funciona un framework y qué significa eso de MVC (Modelo, Vista, Controlador),
+    todo explicado de una forma sencilla y cercana.
+    Además de la tecnología, hablaremos de algo aún más poderoso: la curiosidad. Esa capacidad de mirar lo cotidiano
+    y preguntarte “¿cómo funcionará esto?”. Porque aprender a programar no es solo entender computadoras, sino aprender
+    a explorar, equivocarte y volver a intentarlo.
+    Esta charla es una invitación a despertar tu curiosidad, a perder el miedo
+    y a descubrir que la magia del código también puede estar en tus manos ✨.
 
 - name: Isabella Quitana Vargas
   image: /assets/images/speakers/2025/isabella.jpeg
