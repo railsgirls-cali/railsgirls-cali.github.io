@@ -2,7 +2,7 @@
 layout: inner
 title: Charlas
 lead_text: Nuestras speakers
-permalink: /talks/
+permalink: /charlas/
 ---
 
 <style>
@@ -16,7 +16,7 @@ permalink: /talks/
 </style>
 
 <div class="row">
-    {% for talk in site.data.talks %}
+    {% for talk in site.data.charlas %}
     <div class="col-sm-6 col-md-6">
         <div class="thumbnail">
             <img src="{{ talk.image }}" alt="Speaker {{ talk.name }}" width="150" />
