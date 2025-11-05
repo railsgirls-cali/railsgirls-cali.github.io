@@ -1,24 +1,27 @@
-- name: Abatech
-  image: /assets/images/sponsors/Abatech.jpg
-  url: https://www.abatech.com.co/
-- name: Banteng
-  image: /assets/images/sponsors/banteng.jpg
-  url: https://banteng.pro/
-- name: Bunny Studio
-  image: /assets/images/sponsors/bunnystudio.png
-  url: https://bunnystudio.com/
-- name: Monoku
-  image: /assets/images/sponsors/monoku.png
-  url: https://monoku.com/
-- name: Platzi
-  image: /assets/images/sponsors/platzi.svg
-  url: https://platzi.com/
-- name: Pluralang
-  image: /assets/images/sponsors/pluralang.svg
-  url: https://pluralang.com/
-- name: Rails Foundation
-  image: /assets/images/sponsors/rails_foundation.png
-  url: https://rubyonrails.org/foundation
 - name: UCC
   image: /assets/images/sponsors/ucc.jpg
   url: https://ucc.edu.co/
+- name: Rails Foundation
+  image: /assets/images/sponsors/rails_foundation.jpg
+  url: https://rubyonrails.org/foundation
+- name: Platzi
+  image: /assets/images/sponsors/platzi.svg
+  url: https://platzi.com/
+- name: Banteng
+  image: /assets/images/sponsors/banteng.jpg
+  url: https://banteng.pro/
+- name: Pluralang
+  image: /assets/images/sponsors/pluralang.svg
+  url: https://pluralang.com/
+- name: Abatech
+  image: /assets/images/sponsors/Abatech.jpg
+  url: https://www.abatech.com.co/
+- name: Monoku
+  image: /assets/images/sponsors/monoku.png
+  url: https://monoku.com/
+- name: Bunny Studio
+  image: /assets/images/sponsors/bunnystudio.png
+  url: https://bunnystudio.com/
+- name: Mostacho
+  image: /assets/images/sponsors/mostacho.png
+  url: https://www.instagram.com/mostacho_cafe/
