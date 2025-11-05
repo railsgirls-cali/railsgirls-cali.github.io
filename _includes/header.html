@@ -114,41 +114,38 @@
         />
         <meta name="msapplication-TileColor" content="#ffffff" />
 
-        <!-- Primary Meta Tags -->
-        <meta name="title" content="Rails Girls Cali" />
-        <meta
-            name="description"
-            content="¡Railsmociónate y construye cosas increíbles!"
-        />
+        <!-- SEO: Dynamic Meta, Open Graph, Twitter -->
+        {% assign seo_title = page.title | default: site.data.global.title %}
+        {% assign seo_description = page.description | default: page.excerpt | default: site.data.global.description | strip_newlines | strip %}
+        {% assign raw_image = page.image | default: page.og_image | default: site.data.global.image | default: '/assets/images/logo-railsgirls-red.svg' %}
+        {% if raw_image contains 'http' %}
+            {% assign seo_image = raw_image %}
+        {% else %}
+            {% assign seo_image = site.data.global.url | append: raw_image %}
+        {% endif %}
+        {% assign seo_url = site.data.global.url | append: page.url %}
 
-        <!-- Open Graph / Facebook -->
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://railsgirlscali.com/" />
-        <meta property="og:title" content="Rails Girls Cali" />
-        <meta
-            property="og:description"
-            content="¡Railsmociónate y construye cosas increíbles!"
-        />
-        <meta
-            property="og:image"
-            content="https://railsgirlscali.com/assets/images/logo-railsgirls-red.svg/"
-        />
+        <meta name="description" content="{{ seo_description }}" />
+        <meta name="title" content="{{ seo_title }}" />
+        <link rel="canonical" href="{{ seo_url }}" />
+
+        <!-- Open Graph -->
+        <meta property="og:site_name" content="{{ site.data.global.title }}" />
+        <meta property="og:type" content="{% if page.layout == 'post' or page.collection == 'posts' %}article{% else %}website{% endif %}" />
+        <meta property="og:url" content="{{ seo_url }}" />
+        <meta property="og:title" content="{{ seo_title }}" />
+        <meta property="og:description" content="{{ seo_description }}" />
+        <meta property="og:image" content="{{ seo_image }}" />
 
         <!-- Twitter -->
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta
-            property="twitter:url"
-            content="https://twitter.com/rgcalioficial/"
-        />
-        <meta property="twitter:title" content="Rails Girls Cali" />
-        <meta
-            property="twitter:description"
-            content="¡Railsmociónate y construye cosas increíbles!"
-        />
-        <meta
-            property="twitter:image"
-            content="https://railsgirlscali.com/assets/images/logo-railsgirls-red.svg"
-        />
+        <meta name="twitter:card" content="{% if seo_image %}summary_large_image{% else %}summary{% endif %}" />
+        {% if site.data.global.twitter_username %}
+        <meta name="twitter:site" content="@{{ site.data.global.twitter_username }}" />
+        {% endif %}
+        <meta name="twitter:url" content="{{ seo_url }}" />
+        <meta name="twitter:title" content="{{ seo_title }}" />
+        <meta name="twitter:description" content="{{ seo_description }}" />
+        <meta name="twitter:image" content="{{ seo_image }}" />
 
         <!-- Fonts -->
         <link

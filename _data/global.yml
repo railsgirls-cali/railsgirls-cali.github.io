@@ -3,6 +3,9 @@ title: "Rails Girls Cali"
 description: "Aquí encontrarás las guías de nuestros talleres."
 url: "https://railsgirlscali.com" # the base hostname & protocol for your site
 footer_text: "Rails Girls Cali 2025"
+# Default Social/SEO
+image: "/assets/images/logo-railsgirls-red.svg"
+twitter_username: "rgcalioficial"
 #new_event_message: 'Inscríbete a Rails Girls Cali 2025 <a target="_blank" href="https://forms.gle/qmABhrjA3nSGS8T18">aquí</a>'
 
 # Admin Settings
