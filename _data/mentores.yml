@@ -10,10 +10,6 @@
   image: /assets/images/coaches/sofia.jpg
   role: Web Developer
   company: Univalle
-# - name: Geraldine Caicedo
-#   image: /assets/images/coaches/geraldine.jpeg
-#   role: Sr. Full-stack developer
-#   company: Bunny Studio
 - name: Johan Tique
   image: /assets/images/coaches/johan.jpg
   role: Senior Development Consultant
@@ -50,6 +46,14 @@
   image: /assets/images/coaches/andres_clavijo.jpeg
   role: Software Engineer III
   company: BUK
+- name: Santiago Castañeda
+  image: /assets/images/coaches/santiago_castaneda.jpeg
+  role: Backend Developer
+  company: Ikitech Solution
+- name: Sebastian Pino
+  image: /assets/images/coaches/sebastian_pino.jpeg
+  role: Cloud Engineer
+  company: ABA Technology
 # - name: Victor Cortes
 #   image: /assets/images/coaches/victor.jpg
 #   role: Product Lead
