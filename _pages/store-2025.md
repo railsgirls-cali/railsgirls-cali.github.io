@@ -267,8 +267,8 @@ Imagina que alguien visita tu tienda en línea:
 6. **Persona:** "¡Wow, qué bonito!"
 
 <picture class="flowdiagram">
-  <source srcset="images/mvc_architecture_dark.jpg" media="(prefers-color-scheme:dark)">
-  <img src="images/mvc_architecture_light.jpg">
+  <source srcset="/assets/images/guides/mvc_architecture_dark.jpg" media="(prefers-color-scheme:dark)">
+  <img src="/assets/images/guides/mvc_architecture_light.jpg">
 </picture>
 
 💡 **¿Por qué es genial separar todo así?** Porque cada parte tiene un trabajo específico. Es como en un equipo deportivo: cada persona tiene su posición y todos trabajan juntos. Si necesitas cambiar cómo SE VE algo, solo cambias el View. Si necesitas cambiar cómo se GUARDA la información, solo cambias el Model. ¡Súper organizado!
@@ -338,7 +338,7 @@ Cuando abras tu aplicación en el navegador, verás... ¡la página de bienvenid
 
 Es una página que dice algo como "Yay! You're on Rails!" (¡Sí! ¡Estás en Rails!). ¡Es la prueba de que TODO está funcionando perfectamente!
 
-![Página de bienvenida de Rails](images/rails_welcome.png)
+![Página de bienvenida de Rails](/assets/images/guides/rails_welcome.png)
 
 **¡INCREÍBLE! ¡Lo lograste!** 🎉🎊
 
@@ -1036,8 +1036,8 @@ Cuando alguien visite tu sitio y vaya a `/products`, Rails:
 Los **query parameters** (esos `?sale=true&sort=asc`) son como opciones extra que puedes usar en el controller para filtrar o modificar los datos. Por ejemplo, "muéstrame solo productos en oferta, ordenados alfabéticamente."
 
 <picture class="flowdiagram">
-  <source srcset="images/routing_dark.jpg" media="(prefers-color-scheme:dark)">
-  <img src="images/routing_light.jpg">
+  <source srcset="/assets/images/guides/routing_dark.jpg" media="(prefers-color-scheme:dark)">
+  <img src="/assets/images/guides/routing_light.jpg">
 </picture>
 
 #### Agregando Más Routes
