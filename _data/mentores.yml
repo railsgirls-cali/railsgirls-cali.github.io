@@ -10,10 +10,10 @@
   image: /assets/images/coaches/sofia.jpg
   role: Web Developer
   company: Univalle
-- name: Geraldine Caicedo
-  image: /assets/images/coaches/geraldine.jpeg
-  role: Sr. Full-stack developer
-  company: Bunny Studio
+# - name: Geraldine Caicedo
+#   image: /assets/images/coaches/geraldine.jpeg
+#   role: Sr. Full-stack developer
+#   company: Bunny Studio
 - name: Johan Tique
   image: /assets/images/coaches/johan.jpg
   role: Senior Development Consultant
