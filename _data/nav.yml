@@ -3,7 +3,8 @@ main:
   - { url: "/charlas", text: "Charlas" }
   - { url: "/mentores", text: "Mentoras/es" }
   - { url: "/sponsors", text: "Patrocinadores" }
-  - { url: "/instagram-r7", text: "Instagram 7" }
+  - { url: "/guia", text: "Guía Tienda 2025" }
+  # - { url: "/instagram-r7", text: "Instagram 7" }
   # - { url: '/forum', text: 'Foro' }
   # - { url: '/tienda', text: 'Tienda' }
   # - { url: '/slack', text: 'Railslack' }
@@ -21,9 +22,6 @@ main:
             url: "/politica-de-datos-mentores",
             text: "Política de Datos Mentores/as",
           },
-          {
-            url: "/codigo-de-conducta",
-            text: "Código de conducta",
-          },
+          { url: "/codigo-de-conducta", text: "Código de conducta" },
         ],
     }
