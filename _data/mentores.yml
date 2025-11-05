@@ -46,3 +46,11 @@
   image: /assets/images/coaches/andres_clavijo.jpeg
   role: Software Engineer III
   company: BUK
+- name: Santiago Castañeda
+  image: /assets/images/coaches/santiago_castaneda.jpeg
+  role: Backend Developer
+  company: Ikitech Solution
+- name: Sebastian Pino
+  image: /assets/images/coaches/sebastian_pino.jpeg
+  role: Cloud Engineer
+  company: ABA Technology
