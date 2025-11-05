@@ -117,7 +117,7 @@
         <!-- SEO: Dynamic Meta, Open Graph, Twitter -->
         {% assign seo_title = page.title | default: site.data.global.title %}
         {% assign seo_description = page.description | default: page.excerpt | default: site.data.global.description | strip_newlines | strip %}
-        {% assign raw_image = page.image | default: page.og_image | default: site.data.global.image | default: '/assets/images/logo-railsgirls-red.svg' %}
+        {% assign raw_image = page.image | default: page.og_image | default: site.data.global.image | default: '/assets/images/logo.png' %}
         {% if raw_image contains 'http' %}
             {% assign seo_image = raw_image %}
         {% else %}
