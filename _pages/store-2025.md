@@ -5,6 +5,33 @@ lead_text: ¡Crea tu primera tienda online en Rails!
 permalink: /guia/
 ---
 
+<style>
+/* Make media responsive and prevent horizontal scroll caused by wide images */
+img, picture, video, canvas, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Ensure our flow diagrams scale within the container */
+picture.flowdiagram, picture.flowdiagram img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Defensive: any image inside product sections should not overflow */
+section.product img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Avoid long URLs inside code blocks forcing horizontal scroll on small screens */
+pre, code {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+</style>
+
 ¡Tu Primera Aventura con Rails!
 ==========================
 
