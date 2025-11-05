@@ -34,75 +34,75 @@
             rel="alternate"
             type="application/rss+xml"
             title="{{ site.data.global.title }} ♥ {{ site.data.global.description }}"
-            href="{{ site.data.global.url }}/feed.xml"
+            href="{{ site.url }}/feed.xml"
         />
         <link
             rel="alternate"
             type="application/atom+xml"
             title="{{ site.data.global.title }} ♥ {{ site.data.global.description }}"
-            href="{{ site.data.global.url }}/atom.xml"
+            href="{{ site.url }}/atom.xml"
         />
 
         <!-- Favicons -->
         <link
             rel="shortcut icon"
             sizes="16x16 24x24 32x32 48x48 64x64 96x96"
-            href="{{ site.data.global.url }}/assets/images/favicons/favicon.ico"
+            href="{{ site.url }}/assets/images/favicons/favicon.ico"
         />
         <link
             rel="apple-touch-icon"
             sizes="57x57"
-            href="{{ site.data.global.url }}/assets/images/favicons/favicon-57.png"
+            href="{{ site.url }}/assets/images/favicons/favicon-57.png"
         />
         <link
             rel="apple-touch-icon-precomposed"
             sizes="57x57"
-            href="{{ site.data.global.url }}/assets/images/favicons/favicon-57.png"
+            href="{{ site.url }}/assets/images/favicons/favicon-57.png"
         />
         <link
             rel="apple-touch-icon"
             sizes="60x60"
-            href="{{ site.data.global.url }}/assets/images/favicons/favicon-60.png"
+            href="{{ site.url }}/assets/images/favicons/favicon-60.png"
         />
         <link
             rel="apple-touch-icon"
             sizes="72x72"
-            href="{{ site.data.global.url }}/assets/images/favicons/favicon-72.png"
+            href="{{ site.url }}/assets/images/favicons/favicon-72.png"
         />
         <link
             rel="apple-touch-icon"
             sizes="76x76"
-            href="{{ site.data.global.url }}/assets/images/favicons/favicon-76.png"
+            href="{{ site.url }}/assets/images/favicons/favicon-76.png"
         />
         <link
             rel="apple-touch-icon"
             sizes="96x96"
-            href="{{ site.data.global.url }}/assets/images/favicons/favicon-96.png"
+            href="{{ site.url }}/assets/images/favicons/favicon-96.png"
         />
         <link
             rel="apple-touch-icon"
             sizes="114x114"
-            href="{{ site.data.global.url }}/assets/images/favicons/favicon-114.png"
+            href="{{ site.url }}/assets/images/favicons/favicon-114.png"
         />
         <link
             rel="apple-touch-icon"
             sizes="120x120"
-            href="{{ site.data.global.url }}/assets/images/favicons/favicon-120.png"
+            href="{{ site.url }}/assets/images/favicons/favicon-120.png"
         />
         <link
             rel="apple-touch-icon"
             sizes="144x144"
-            href="{{ site.data.global.url }}/assets/images/favicons/favicon-144.png"
+            href="{{ site.url }}/assets/images/favicons/favicon-144.png"
         />
         <link
             rel="apple-touch-icon"
             sizes="152x152"
-            href="{{ site.data.global.url }}/assets/images/favicons/favicon-152.png"
+            href="{{ site.url }}/assets/images/favicons/favicon-152.png"
         />
         <link
             rel="apple-touch-icon"
             sizes="180x180"
-            href="{{ site.data.global.url }}/assets/images/favicons/favicon-180.png"
+            href="{{ site.url }}/assets/images/favicons/favicon-180.png"
         />
         <meta
             name="application-name"
@@ -110,7 +110,7 @@
         />
         <meta
             name="msapplication-TileImage"
-            content="{{ site.data.global.url }}/assets/images/favicons/favicon-144.png"
+            content="{{ site.url }}/assets/images/favicons/favicon-144.png"
         />
         <meta name="msapplication-TileColor" content="#ffffff" />
 
@@ -121,9 +121,9 @@
         {% if raw_image contains 'http' %}
             {% assign seo_image = raw_image %}
         {% else %}
-            {% assign seo_image = site.data.global.url | append: raw_image %}
+            {% assign seo_image = site.url | append: raw_image %}
         {% endif %}
-        {% assign seo_url = site.data.global.url | append: page.url %}
+        {% assign seo_url = site.url | append: page.url %}
 
         <meta name="description" content="{{ seo_description }}" />
         <meta name="title" content="{{ seo_title }}" />
@@ -160,11 +160,11 @@
         <!-- Styles -->
         <link
             rel="stylesheet"
-            href="{{ site.data.global.url }}/css/style.css"
+            href="{{ site.url }}/css/style.css"
         />
         <!--[if lt IE 9]>
             <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
-            <script src="{{ site.data.global.url }}/js/respond.min.js"></script>
+            <script src="{{ site.url }}/js/respond.min.js"></script>
         <![endif]-->
         <script>
             (function (i, s, o, g, r, a, m) {
