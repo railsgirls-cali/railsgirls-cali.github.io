@@ -1366,12 +1366,16 @@ El formato YAML está bien para depurar, pero queremos que nuestra página se ve
 Actualiza `app/views/products/index.html.erb` para mostrar todos los nombres de productos de una forma más presentable:
 
 ```erb
-<h1>Products</h1>
+<div class="text-center mb-4">
+  <h1 class="text-title">Products</h1>
+</div>
 
-<div id="products">
+<div class="products-grid p-2">
   <% @products.each do |product| %>
-    <div>
-      <%= product.name %>
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title"><%= product.name %></h3>
+      </div>
     </div>
   <% end %>
 </div>
@@ -1470,9 +1474,21 @@ Rails espera que:
 Entonces, crea un nuevo archivo en `app/views/products/show.html.erb` y agrega este contenido:
 
 ```erb
-<h1><%= @product.name %></h1>
+<div class="container--lg">
+  <div class="mb-3">
+    <%= link_to "← Back to Products", products_path, class: "link--secondary" %>
+  </div>
 
-<%= link_to "Back", products_path %>
+  <div class="card">
+    <div class="grid-2">
+      <div class="card-body">
+        <h1 class="text-title">
+          <%= @product.name %>
+        </h1>
+      </div>
+    </div>
+  </div>
+</div>
 ```
 
 ¡Mira ese código! `<%= @product.name %>` muestra el nombre del producto, y `<%= link_to "Back", products_path %>` crea un enlace para regresar a la lista de productos.
@@ -1481,23 +1497,27 @@ Entonces, crea un nuevo archivo en `app/views/products/show.html.erb` y agrega e
 
 Sería súper útil que cuando veas la lista de productos, puedas hacer clic en cualquiera para ver sus detalles, ¿verdad? ¡Vamos a agregar esos enlaces!
 
-Actualiza `app/views/products/index.html.erb` para que cada nombre de producto sea un enlace clickeable:
+Actualiza `app/views/products/index.html.erb` para agregar un botón que enlace a la página de detalles de cada producto:
 
 ```erb
-<h1>Products</h1>
-
-<div id="products">
+<div class="products-grid">
   <% @products.each do |product| %>
-    <div>
-      <a href="/products/<%= product.id %>">
-        <%= product.name %>
-      </a>
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title"><%= product.name %></h3>
+
+        <div class="flex gap-2 mt-3">
+          <a href="/products/<%= product.id %>" class="btn btn--primary btn--block">
+            View details
+          </a>
+        </div>
+      </div>
     </div>
   <% end %>
 </div>
 ```
 
-¡Perfecto! 🎉 Si actualizas la página en tu navegador, verás que funciona. Cada nombre de producto ahora es un enlace clickeable.
+¡Perfecto! 🎉 Si actualizas la página en tu navegador, verás un botón "View details" en cada producto que te llevará a la página de detalles.
 
 Pero espera... hay una forma MÁS elegante de hacer esto usando los helpers mágicos de Rails.
 
@@ -1539,7 +1559,7 @@ Rails automáticamente crea helpers (ayudantes) basados en esos prefijos. Mira e
 Ahora que conocemos los route helpers, podemos usar el helper `link_to` para crear enlaces de forma súper elegante.
 
 `link_to` es como un asistente que crea enlaces HTML por ti. Le das dos cosas:
-1. **El texto que quieres mostrar** (por ejemplo: `product.name`)
+1. **El texto que quieres mostrar** (por ejemplo: `"View details"`)
 2. **A dónde debe llevar el enlace** (por ejemplo: `product_path(product.id)`)
 
 ¡Y listo! Rails crea automáticamente una etiqueta `<a>` con todo lo necesario.
@@ -1547,12 +1567,16 @@ Ahora que conocemos los route helpers, podemos usar el helper `link_to` para cre
 Vamos a refactorizar (mejorar) nuestro código usando estos helpers mágicos:
 
 ```erb
-<h1>Products</h1>
-
-<div id="products">
+<div class="products-grid">
   <% @products.each do |product| %>
-    <div>
-      <%= link_to product.name, product_path(product.id) %>
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title"><%= product.name %></h3>
+
+        <div class="flex gap-2 mt-3">
+          <%= link_to "View details", product_path(product.id), class: "btn btn--primary btn--block" %>
+        </div>
+      </div>
     </div>
   <% end %>
 </div>
@@ -1592,14 +1616,21 @@ Mira lo que hace la action `new`: crea un nuevo objeto Product con `Product.new`
 Ahora agreguemos un enlace en la página de index para llegar a este formulario. Actualiza `app/views/products/index.html.erb`:
 
 ```erb
-<h1>Products</h1>
+<div class="text-center mb-4">
+  <h1 class="text-title">Products</h1>
+  <%= link_to "✚ New product", new_product_path, class: "btn btn--primary" %>
+</div>
 
-<%= link_to "New product", new_product_path %>
-
-<div id="products">
+<div class="products-grid">
   <% @products.each do |product| %>
-    <div>
-      <%= link_to product.name, product_path(product.id) %>
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title"><%= product.name %></h3>
+
+        <div class="flex gap-2 mt-3">
+          <%= link_to "View details", product_path(product), class: "btn btn--primary btn--block" %>
+        </div>
+      </div>
     </div>
   <% end %>
 </div>
@@ -1610,20 +1641,31 @@ Ahora agreguemos un enlace en la página de index para llegar a este formulario.
 Ahora creemos la vista para el formulario. Crea el archivo `app/views/products/new.html.erb` con este contenido:
 
 ```erb
-<h1>New product</h1>
-
-<%= form_with model: @product do |form| %>
-  <div>
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+<div class="container--form">
+  <div class="mb-4">
+    <h1 class="text-subheading">New Product</h1>
   </div>
 
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+  <div class="card">
+    <div class="card-body">
+      <%= form_with model: @product do |form| %>
 
-<%= link_to "Cancel", products_path %>
+        <div class="form-group">
+          <%= form.label :name, class: "form-label" %>
+          <%= form.text_field :name, class: "form-control", placeholder: "Product name" %>
+        </div>
+
+        <div class="form-group">
+          <%= form.submit class: "btn btn--primary btn--block" %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="card-footer">
+      <%= link_to "← Cancel", products_path, class: "btn btn--sm" %>
+    </div>
+  </div>
+</div>
 ```
 
 #### 📋 El Mágico Helper `form_with`
@@ -1869,10 +1911,12 @@ Abre el archivo `app/views/layouts/application.html.erb` y busca el `<body>`. Ju
 <html>
   <!-- ... -->
   <body>
-    <div class="notice"><%= flash[:notice] %></div>
-    <div class="alert"><%= flash[:alert] %></div>
+    <main id="main-content">
+      <div class="notice"><%= flash[:notice] %></div>
+      <div class="alert"><%= flash[:alert] %></div>
 
-    <%= yield %>
+      <%= yield %>
+    </main>
   </body>
 </html>
 ```
@@ -1997,18 +2041,21 @@ También vamos a hacer dos cambios importantes:
 Crea el archivo `_form.html.erb` con este contenido:
 
 ```erb
-<%= form_with model: product do |form| %>
+<%= form_with model: @product do |form| %>
+
   <% if form.object.errors.any? %>
-    <p class="error"><%= form.object.errors.full_messages.first %></p>
+    <div class="alert mb-3">
+      <%= form.object.errors.full_messages.first %>
+    </div>
   <% end %>
 
-  <div>
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+  <div class="form-group">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control", placeholder: "Product name" %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="form-group">
+    <%= form.submit class: "btn btn--primary btn--block" %>
   </div>
 <% end %>
 ```
@@ -2017,7 +2064,9 @@ Fíjate en las líneas que agregamos para mostrar errores:
 
 ```erb
 <% if form.object.errors.any? %>
-  <p class="error"><%= form.object.errors.full_messages.first %></p>
+  <div class="alert mb-3">
+    <%= form.object.errors.full_messages.first %>
+  </div>
 <% end %>
 ```
 
@@ -2032,10 +2081,21 @@ Usar una variable local (sin `@`) hace que el partial sea más flexible. Puedes 
 Ahora que tenemos nuestro partial reutilizable, vamos a usarlo. Actualiza `app/views/products/new.html.erb` para que use el partial en lugar del formulario completo:
 
 ```erb
-<h1>New product</h1>
+<div class="container--form">
+  <div class="mb-4">
+    <h1 class="text-subheading">New Product</h1>
+  </div>
 
-<%= render "form", product: @product %>
-<%= link_to "Cancel", products_path %>
+  <div class="card">
+    <div class="card-body">
+      <%= render "form", product: @product %>
+    </div>
+
+    <div class="card-footer">
+      <%= link_to "← Cancel", products_path, class: "btn btn--sm" %>
+    </div>
+  </div>
+</div>
 ```
 
 Mira esa línea mágica: `<%= render "form", product: @product %>`
@@ -2049,10 +2109,21 @@ Se lee así:
 Ahora vamos a crear la vista de edit, que es casi idéntica gracias a nuestro partial reutilizable. Crea `app/views/products/edit.html.erb` con esto:
 
 ```erb
-<h1>Edit product</h1>
+<div class="container--form">
+  <div class="mb-4">
+    <h1 class="text-subheading">Edit Product</h1>
+  </div>
 
-<%= render "form", product: @product %>
-<%= link_to "Cancel", @product %>
+  <div class="card">
+    <div class="card-body">
+      <%= render "form", product: @product %>
+    </div>
+
+    <div class="card-footer flex-between">
+      <%= link_to "← Cancel", @product, class: "btn btn--sm" %>
+    </div>
+  </div>
+</div>
 ```
 
 ¿Ves? ¡Exactamente el mismo código! Solo cambiamos el título. El mismo partial funciona para crear Y para editar. ✨
@@ -2064,10 +2135,27 @@ Ahora vamos a crear la vista de edit, que es casi idéntica gracias a nuestro pa
 Ahora agreguemos un enlace "Edit" en la página de detalles del producto. Actualiza `app/views/products/show.html.erb`:
 
 ```erb
-<h1><%= @product.name %></h1>
+<div class="container--lg">
+  <div class="mb-3">
+    <%= link_to "← Back to Products", products_path, class: "link--secondary" %>
+  </div>
 
-<%= link_to "Back", products_path %>
-<%= link_to "Edit", edit_product_path(@product) %>
+  <div class="card">
+    <div class="grid-2">
+      <div class="card-body">
+        <h1 class="text-title">
+          <%= @product.name %>
+        </h1>
+
+        <div class="actions-column">
+          <div class="flex gap-2">
+            <%= link_to "✏️ Edit", edit_product_path(@product), class: "btn btn--outline-dark btn--block" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 ```
 
 #### 🔄 Before Actions (¡Más Refactorización!)
@@ -2225,11 +2313,39 @@ end
 Ahora necesitamos darle al usuario una forma de eliminar productos. Agreguemos un botón en la página de detalles. Actualiza `app/views/products/show.html.erb`:
 
 ```erb
-<h1><%= @product.name %></h1>
+<div class="container--lg">
+  <div class="mb-3">
+    <%= link_to "← Back to Products", products_path, class: "link--secondary" %>
+  </div>
 
-<%= link_to "Back", products_path %>
-<%= link_to "Edit", edit_product_path(@product) %>
-<%= button_to "Delete", @product, method: :delete, data: { turbo_confirm: "Are you sure?" } %>
+  <div class="card">
+    <div class="grid-2">
+      <div>
+        <% if @product.featured_image.attached? %>
+          <%= image_tag @product.featured_image, class: "product-image" %>
+        <% else %>
+          <div class="product-image-placeholder">
+            📦
+          </div>
+        <% end %>
+      </div>
+
+      <div class="card-body">
+        <h1 class="text-title">
+          <%= @product.name %>
+        </h1>
+
+        <div class="actions-column">
+          <div class="flex gap-2">
+            <%= link_to "✏️ Edit", edit_product_path(@product), class: "btn btn--outline-dark btn--block" %>
+            <%= button_to "🗑️ Delete", @product, method: :delete, class: "btn btn--negative btn--block",
+            data: { turbo_confirm: "Are you sure?" } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 ```
 
 Aquí hay algo nuevo: **`button_to`**. Es diferente a `link_to`:
@@ -2328,6 +2444,62 @@ Pruébalo visitando: https://TU-CODESPACE.github.dev/products/new
 
 ¡Es como tener un guardia de seguridad en la puerta de tu aplicación! 💂
 
+### 💅 Mejorando la Vista de Login
+
+Seguramente notaste que la pantalla de login se ve un poco... simple, ¿verdad? ¡Vamos a darle un poco de estilo y hacerla más atractiva!
+
+Abre el archivo `app/views/sessions/new.html.erb` y reemplaza TODO su contenido con este código más elaborado:
+
+```erb
+<div class="vh-center">
+  <div class="container--sm">
+    <div class="text-center mb-4">
+      <h1 class="text-heading">🔴 Store</h1>
+      <p class="text-lead">Sign in to your account</p>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <%= form_with url: session_path do |form| %>
+          <div class="form-group">
+            <%= form.label :email_address, "Email", class: "form-label" %>
+            <%= form.email_field :email_address,
+                                 required: true,
+                                 autofocus: true,
+                                 autocomplete: "username",
+                                 placeholder: "your@email.com",
+                                 value: params[:email_address],
+                                 class: "form-control" %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :password, "Password", class: "form-label" %>
+            <%= form.password_field :password,
+                                    required: true,
+                                    autocomplete: "current-password",
+                                    placeholder: "Enter your password",
+                                    maxlength: 72,
+                                    class: "form-control" %>
+          </div>
+
+          <div class="form-group mb-0">
+            <%= form.submit "Sign in", class: "btn btn--primary btn--block btn--lg" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+¡Mucho mejor! 🎨 Ahora tu página de login tiene:
+- Un título con el emoji de la tienda 🔴
+- Campos de formulario con placeholders (texto de ayuda)
+- Un diseño centrado y en una tarjeta elegante
+- Un botón grande y llamativo para iniciar sesión
+
+Actualiza la página en tu navegador y verás la diferencia. ¡Se ve mucho más profesional! ✨
+
 
 ### 👋 Agregando Log Out (Cerrar Sesión)
 
@@ -2344,12 +2516,17 @@ Abre `app/views/layouts/application.html.erb` y agrega una barra de navegación 
 <html>
   <!-- ... -->
   <body>
-    <nav>
-      <%= link_to "Home", root_path %>
-      <%= button_to "Log out", session_path, method: :delete if authenticated? %>
+    <nav id="nav">
+      <%= link_to root_path, class: "store-logo" do %>
+        🔴 Store
+      <% end %>
+
+      <div class="nav-group nav-group--end">
+        <%= button_to "Logout", session_path, method: :delete, class: "btn btn--link" if authenticated? %>
+      </div>
     </nav>
 
-    <main>
+    <main id="main-content">
       <div class="notice"><%= flash[:notice] %></div>
       <div class="alert"><%= flash[:alert] %></div>
 
@@ -2362,7 +2539,7 @@ Abre `app/views/layouts/application.html.erb` y agrega una barra de navegación 
 Mira esa línea del botón Log out:
 
 ```erb
-<%= button_to "Log out", session_path, method: :delete if authenticated? %>
+<%= button_to "Logout", session_path, method: :delete, class: "btn btn--link" if authenticated? %>
 ```
 
 Tiene algo especial al final: `if authenticated?`. Esto dice: "Solo muestra este botón SI el usuario está autenticado (conectado)".
@@ -2408,7 +2585,7 @@ Piénsalo: Si alguien está visitando tu tienda sin iniciar sesión, no tiene se
 Vamos a ocultar ciertos enlaces para usuarios no autenticados. Actualiza `app/views/products/index.html.erb`:
 
 ```erb
-<%= link_to "New product", new_product_path if authenticated? %>
+<%= link_to "✚ New product", new_product_path, class: "btn btn--primary" if authenticated? %>
 ```
 
 ¿Ves el `if authenticated?` al final? Solo muestra el enlace "New product" si el usuario está conectado.
@@ -2422,7 +2599,7 @@ Vamos a ocultar ciertos enlaces para usuarios no autenticados. Actualiza `app/vi
 También puedes agregar un enlace "Login" en la barra de navegación que solo aparezca cuando el usuario NO esté conectado. Agrega esto en el layout:
 
 ```erb
-<%= link_to "Login", new_session_path unless authenticated? %>
+<%= link_to "Login", new_session_path, class: "nav-link" unless authenticated? %>
 ```
 
 `unless authenticated?` es lo opuesto a `if authenticated?`. Dice: "Muestra esto A MENOS QUE el usuario esté autenticado".
@@ -2432,13 +2609,30 @@ También puedes agregar un enlace "Login" en la barra de navegación que solo ap
 De la misma forma, actualiza `app/views/products/show.html.erb` para ocultar los enlaces "Edit" y "Delete" de los visitantes no autenticados:
 
 ```erb
-<h1><%= @product.name %></h1>
+<div class="container--lg">
+  <div class="mb-3">
+    <%= link_to "← Back to Products", products_path, class: "link--secondary" %>
+  </div>
 
-<%= link_to "Back", products_path %>
-<% if authenticated? %>
-  <%= link_to "Edit", edit_product_path(@product) %>
-  <%= button_to "Delete", @product, method: :delete, data: { turbo_confirm: "Are you sure?" } %>
-<% end %>
+  <div class="card">
+    <div class="grid-2">
+      <div class="card-body">
+        <h1 class="text-title">
+          <%= @product.name %>
+        </h1>
+
+        <% if authenticated? %>
+          <div class="actions-column">
+            <div class="flex gap-2">
+              <%= link_to "✏️ Edit", edit_product_path(@product), class: "btn btn--outline-dark btn--block" %>
+              <%= button_to "🗑️ Delete", @product, method: :delete, class: "btn btn--negative btn--block", data: { turbo_confirm: "Are you sure?" } %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
 ```
 
 ## 📸 Carga de Archivos con Active Storage
@@ -2471,13 +2665,13 @@ Ahora agreguemos un campo al formulario para que los usuarios puedan subir imág
 <%= form_with model: product do |form| %>
   <%# ... %>
 
-  <div>
-    <%= form.label :featured_image, style: "display: block" %>
-    <%= form.file_field :featured_image, accept: "image/*" %>
+  <div class="form-group">
+    <%= form.label :featured_image, "Product Image", class: "form-label" %>
+    <%= form.file_field :featured_image, accept: "image/*", class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="form-group">
+    <%= form.submit class: "btn btn--primary btn--block" %>
   </div>
 <% end %>
 ```
@@ -2506,12 +2700,59 @@ Agregamos `:featured_image` a la lista de parámetros permitidos. ✅
 Por último, vamos a mostrar la imagen en la página de detalles del producto. Abre `app/views/products/show.html.erb` y agrega esto en la parte superior:
 
 ```erb
-<%= image_tag @product.featured_image if @product.featured_image.attached? %>
+<div class="container--lg">
+  <div class="mb-3">
+    <%= link_to "← Back to Products", products_path, class: "link--secondary" %>
+  </div>
+
+  <div class="card">
+    <div class="grid-2">
+      <div>
+        <% if @product.featured_image.attached? %>
+          <%= image_tag @product.featured_image, class: "product-image" %>
+        <% else %>
+          <div class="product-image-placeholder">
+            📦
+          </div>
+        <% end %>
+      </div>
+
+      <div class="card-body">
+        <h1 class="text-title">
+          <%= @product.name %>
+        </h1>
+
+        <% if authenticated? %>
+          <div class="actions-column">
+            <div class="flex gap-2">
+              <%= link_to "✏️ Edit", edit_product_path(@product), class: "btn btn--outline-dark btn--block" %>
+              <%= button_to "🗑️ Delete", @product, method: :delete, class: "btn btn--negative btn--block", data: { turbo_confirm: "Are you sure?" } %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
 ```
 
 **¿Qué hace esto?**
 - `image_tag` → Helper de Rails que crea una etiqueta `<img>` HTML
 - `if @product.featured_image.attached?` → Solo muestra la imagen SI hay una imagen adjunta (para no mostrar nada si el producto no tiene imagen)
+
+Ahora también vamos a mostrar las imágenes en la lista de productos. Abre `app/views/products/index.html.erb` y agrega este código dentro del `<div class="card">` de cada producto (antes del `<div class="card-body">`):
+
+```erb
+<% if product.featured_image.attached? %>
+  <%= image_tag product.featured_image, class: "card-image", alt: product.name %>
+<% else %>
+  <div class="card-image image-placeholder">
+    📦 Sin imagen
+  </div>
+<% end %>
+```
+
+¡Genial! 🎨 Ahora cada tarjeta de producto en la lista mostrará su imagen. Si un producto no tiene imagen, aparecerá un placeholder (marcador de posición) con un emoji de caja 📦.
 
 ### 🎉 ¡Pruébalo!
 
@@ -2527,108 +2768,40 @@ Por último, vamos a mostrar la imagen en la página de detalles del producto. A
 
 ✨ **Para aprender más:** Consulta la [Guía de Active Storage](https://guides.rubyonrails.org/active_storage_overview.html) para funciones avanzadas como redimensionar imágenes, subir videos, etc.
 
-## 🎨 Agregando CSS (¡Dale Estilo a Tu Aplicación!)
+## 🎨 CSS y Estilos (¡El Decorador de Tu Aplicación!)
 
-Tu aplicación funciona perfectamente, ¡pero se ve un poco... aburrida! 😅 Es como una casa con todas las habitaciones listas pero sin pintar ni decorar.
+¿Notaste que tu aplicación se ve súper bonita y profesional? 🌟 Eso no es magia... ¡es **CSS**!
 
-**CSS** (Cascading Style Sheets - Hojas de Estilo en Cascada) es el lenguaje que usa para darle estilo, color y diseño a las páginas web. Es como el decorador de interiores de tu aplicación. 🎨
+**CSS** (Cascading Style Sheets - Hojas de Estilo en Cascada) es el lenguaje que se usa para darle estilo, color y diseño a las páginas web. Es como el decorador de interiores de tu aplicación. 🎨
+
+Piensa en HTML como la estructura de una casa (las paredes, ventanas, puertas), y CSS como la decoración (los colores, muebles, cuadros en la pared). Juntos crean una experiencia hermosa y funcional.
+
+**¿Qué puede hacer CSS?**
+- Cambiar colores de texto y fondos
+- Ajustar tamaños y fuentes
+- Crear layouts (diseños) para organizar el contenido
+- Agregar espacios, bordes y sombras
+- Hacer que tu aplicación se vea profesional ✨
+
+**¡Buenas noticias!** 🎉 La plantilla de Codespaces que usaste para crear tu aplicación ya incluye todos los estilos CSS necesarios. Por eso tu tienda se ve tan bien desde el principio. No tienes que preocuparte por escribir CSS ahora mismo.
+
+Pero si quieres explorar los estilos existentes, puedes encontrarlos en la carpeta `app/assets/stylesheets/`. ¡Siéntete libre de abrirlos y ver cómo funcionan!
 
 ### 📦 Propshaft: El Organizador de Assets
 
-Rails tiene un sistema llamado **Propshaft** que organiza todos tus archivos de CSS, JavaScript, imágenes y otros "assets" (recursos).
+Seguramente te preguntarás: "¿Cómo sabe Rails dónde están todos esos archivos CSS?" ¡Aquí es donde entra **Propshaft**!
 
-Piensa en Propshaft como un asistente súper organizado que:
-- Toma todos tus archivos de CSS y JavaScript
-- Los prepara y optimiza
-- Los sirve al navegador de forma eficiente
-- En producción, hasta los guarda en caché para que tu aplicación sea más rápida ⚡
+Rails incluye un sistema llamado **Propshaft** que organiza todos tus archivos de CSS, JavaScript, imágenes y otros "assets" (recursos).
 
-No necesitas preocuparte mucho por cómo funciona Propshaft, ¡simplemente hace su trabajo en segundo plano!
+Piensa en Propshaft como un bibliotecario súper organizado que:
+- 📚 Encuentra todos tus archivos de CSS y JavaScript
+- 🔧 Los prepara y optimiza
+- 🚀 Los sirve al navegador de forma eficiente
+- ⚡ En producción, hasta los guarda en caché para que tu aplicación sea súper rápida
+
+**Lo mejor de todo:** No necesitas preocuparte por cómo funciona Propshaft. ¡Simplemente hace su trabajo en segundo plano mientras tú te enfocas en crear cosas increíbles! 🎯
 
 ✨ **Para aprender más:** Consulta la [Guía del Asset Pipeline](https://guides.rubyonrails.org/asset_pipeline.html).
-
-### ✏️ Agregando Estilos
-
-Vamos a darle un poco de estilo a nuestra tienda. Abre `app/assets/stylesheets/application.css` y agrega este CSS:
-
-```css
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  padding: 1rem;
-}
-
-nav {
-  justify-content: flex-end;
-  display: flex;
-  font-size: 0.875em;
-  gap: 0.5rem;
-  max-width: 1024px;
-  margin: 0 auto;
-  padding: 1rem;
-}
-
-nav a {
-  display: inline-block;
-}
-
-main {
-  max-width: 1024px;
-  margin: 0 auto;
-}
-
-.alert,
-.error {
-  color: red;
-}
-
-.notice {
-  color: green;
-}
-
-section.product {
-  display: flex;
-  gap: 1rem;
-  flex-direction: row;
-}
-
-section.product img {
-  border-radius: 8px;
-  flex-basis: 50%;
-  max-width: 50%;
-}
-```
-
-¡Este CSS hace que tu aplicación se vea mucho mejor! 🎉
-
-**¿Qué hacen estos estilos?**
-- `body` → Establece la fuente y agrega un poco de espacio alrededor
-- `nav` → Hace que la barra de navegación se vea ordenada
-- `main` → Centra el contenido principal
-- `.alert`, `.error`, `.notice` → Da colores a los mensajes (rojo para errores, verde para éxitos)
-- `section.product` → Organiza la página de producto con la imagen al lado de la información
-
-Ahora actualiza `app/views/products/show.html.erb` para usar estos nuevos estilos:
-
-```erb
-<p><%= link_to "Back", products_path %></p>
-
-<section class="product">
-  <%= image_tag @product.featured_image if @product.featured_image.attached? %>
-
-  <section class="product-info">
-    <h1><%= @product.name %></h1>
-
-    <% if authenticated? %>
-      <%= link_to "Edit", edit_product_path(@product) %>
-      <%= button_to "Delete", @product, method: :delete, data: { turbo_confirm: "Are you sure?" } %>
-    <% end %>
-  </section>
-</section>
-```
-
-¡Recarga tu página en el navegador! 🔄 ¿Ves la diferencia? Tu aplicación ahora se ve mucho más profesional y organizada. La imagen del producto aparece al lado de la información, todo está bien alineado y los colores hacen que sea más fácil de leer.
-
-**¡Felicidades!** Ahora tienes una aplicación con estilo. 🎨✨
 
 ---
 
