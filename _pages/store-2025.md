@@ -143,13 +143,9 @@ Antes que nada, necesitas una cuenta de GitHub. Es como crear una cuenta en cual
 Sigue estos pasos (¡es más fácil de lo que parece!):
 
 1. **Abre la plantilla:** Ve a [store-template](https://github.com/railsgirls-cali/store-template)
-
 2. **Crea tu copia:** Busca el botón verde que dice "Use this template" (Usar esta plantilla). Haz clic ahí y selecciona "Create a new repository" (Crear un nuevo repositorio).
-
 3. **Dale un nombre:** Ponle un nombre a tu proyecto. Puedes usar `store` o `mi-tienda` o lo que quieras. Luego haz clic en "Create repository" (Crear repositorio).
-
 4. **Abre tu taller en la nube:** En tu nuevo repositorio, busca el botón verde "Code" (Código). Haz clic ahí y verás una pestaña que dice "Codespaces". ¡Haz clic en esa pestaña!
-
 5. **Crea tu Codespace:** Ahora haz clic en "Create codespace on main" (Crear codespace en main).
 
 ¡Listo! GitHub empezará a preparar tu taller de trabajo. Verás muchas cosas cargando - eso es normal. Es como cuando instalas un videojuego y tiene que descargar un montón de archivos. Puede tomar unos minutos la primera vez, así que ten paciencia. ☕
@@ -215,33 +211,30 @@ En Rails, cada carpeta también tiene un trabajo específico. Vamos a conocer la
 
 #### 📂 Las Carpetas Súper Importantes (donde pasarás la mayoría del tiempo):
 
-**🎨 app/** - ¡Esta es TU carpeta estrella!
+- **🎨 app/** - ¡Esta es TU carpeta estrella!
 Aquí es donde pasarás el 90% de tu tiempo. Contiene todo el código que hace funcionar tu aplicación:
-- Los **models** (cómo guardas información)
-- Los **views** (lo que ven las personas en el navegador)
-- Los **controllers** (el cerebro que decide qué hacer)
+    - Los **models** (cómo guardas información)
+    - Los **views** (lo que ven las personas en el navegador)
+    - Los **controllers** (el cerebro que decide qué hacer)
 
-**⚙️ config/** - El cuarto de control
+- **⚙️ config/** - El cuarto de control
 Aquí es donde le dices a Rails cómo debe comportarse tu aplicación. Por ejemplo:
-- Qué rutas (URLs) existen en tu aplicación
-- Cómo conectarse a la base de datos
-- Configuraciones especiales
+   - Qué rutas (URLs) existen en tu aplicación
+   - Cómo conectarse a la base de datos
+   - Configuraciones especiales
 
-**💾 db/** - Tu biblioteca de información
+- **💾 db/** - Tu biblioteca de información
 Aquí vive tu base de datos (donde guardas todos los productos, usuarios, etc.) y las instrucciones para crearla y modificarla.
 
 #### 📂 Otras Carpetas Útiles (las conocerás después):
 
-**📄 public/** - Archivos que todos pueden ver
+- **📄 public/** - Archivos que todos pueden ver
 Como el buzón de tu casa - cualquier persona puede ver lo que está aquí sin necesitar permisos especiales. Imágenes, archivos CSS, etc.
-
-**📝 log/** - El diario de tu aplicación
+- **📝 log/** - El diario de tu aplicación
 Aquí Rails escribe un registro de todo lo que pasa. Si algo sale mal, puedes leer estos archivos para descubrir qué pasó. ¡Como un detective! 🔍
-
-**🧪 test/** - Tu laboratorio de experimentos
+- **🧪 test/** - Tu laboratorio de experimentos
 Donde escribes código para asegurarte de que todo funciona correctamente.
-
-💡 **Consejo de pro:** No te agobies con todas estas carpetas ahora. Por ahora, solo necesitas saber que existe la carpeta **app/** - ahí es donde crearás la magia. Las demás carpetas son como los cuartos de servicio de una casa: están ahí y son importantes, pero no necesitas entrar todo el tiempo.
+- 💡 **Consejo de pro:** No te agobies con todas estas carpetas ahora. Por ahora, solo necesitas saber que existe la carpeta **app/** - ahí es donde crearás la magia. Las demás carpetas son como los cuartos de servicio de una casa: están ahí y son importantes, pero no necesitas entrar todo el tiempo.
 
 ### El Secreto de Rails: Model-View-Controller (MVC) 🎭
 
@@ -295,7 +288,7 @@ Imagina que alguien visita tu tienda en línea:
 
 <picture class="flowdiagram">
   <source srcset="/assets/images/guides/mvc_architecture_dark.jpg" media="(prefers-color-scheme:dark)">
-  <img src="/assets/images/guides/mvc_architecture_light.jpg">
+  <img src="/assets/images/guides/mvc_architecture_light.jpg" alt="Diagrama de arquitectura MVC mostrando la interacción entre Model, View y Controller">
 </picture>
 
 💡 **¿Por qué es genial separar todo así?** Porque cada parte tiene un trabajo específico. Es como en un equipo deportivo: cada persona tiene su posición y todos trabajan juntos. Si necesitas cambiar cómo SE VE algo, solo cambias el View. Si necesitas cambiar cómo se GUARDA la información, solo cambias el Model. ¡Súper organizado!
@@ -482,24 +475,20 @@ end
 
 **¡Wow! ¿Qué es todo eso?** Vamos a descifrarlo línea por línea:
 
-🏷️ **`class CreateProducts`**
+- 🏷️ **`class CreateProducts`**
 Es el nombre de tu migration. "CreateProducts" significa "Crear Productos".
-
-📋 **`def change`**
+- 📋 **`def change`**
 Aquí es donde defines QUÉ cambios quieres hacer.
-
-🏗️ **`create_table :products do |t|`**
+- 🏗️ **`create_table :products do |t|`**
 "Crea una tabla nueva en la base de datos llamada 'products'". ¿Notaste? El model es `Product` (singular) pero la tabla es `products` (PLURAL). Rails hace esto automáticamente porque:
-- Un model representa UN producto
-- Una tabla contiene MUCHOS productos
-
-✏️ **`t.string :name`**
+    - Un model representa UN producto
+    - Una tabla contiene MUCHOS productos
+- ✏️ **`t.string :name`**
 "Crea una columna llamada 'name' que guarda texto (strings)". Es como agregar una casilla en una ficha que dice "Nombre del producto: ___________"
-
-⏰ **`t.timestamps`**
+- ⏰ **`t.timestamps`**
 Este es un truco mágico que crea automáticamente DOS columnas:
-- `created_at` - "¿Cuándo se creó este producto?"
-- `updated_at` - "¿Cuándo se modificó por última vez?"
+    - `created_at` - "¿Cuándo se creó este producto?"
+    - `updated_at` - "¿Cuándo se modificó por última vez?"
 
 Rails las mantiene actualizadas automáticamente. ¡Ni siquiera tienes que pensar en ellas!
 
@@ -992,11 +981,8 @@ https://example.org/products?sale=true&sort=asc
 Cada parte tiene un nombre y un propósito. Es como una dirección postal completa:
 
 - 🔒 **`https`** - El **protocolo**: Es como el tipo de transporte (correo normal, correo certificado). Define cómo se envía la información de forma segura.
-
 - 🏢 **`example.org`** - El **host** (anfitrión): Es como el nombre de la ciudad. Dice A QUÉ servidor conectarse.
-
 - 📍 **`/products`** - El **path** (camino): Es como la dirección de la calle. Dice QUÉ página específica quieres dentro del sitio web.
-
 - 🔍 **`?sale=true&sort=asc`** - Los **query parameters** (parámetros de consulta): Es como notas extras. "Muéstrame solo productos en oferta, ordenados alfabéticamente."
 
 Rails se enfoca principalmente en el **path** (`/products`). Esa es la parte que defines en tus routes.
@@ -1064,7 +1050,7 @@ Los **query parameters** (esos `?sale=true&sort=asc`) son como opciones extra qu
 
 <picture class="flowdiagram">
   <source srcset="/assets/images/guides/routing_dark.jpg" media="(prefers-color-scheme:dark)">
-  <img src="/assets/images/guides/routing_light.jpg">
+  <img src="/assets/images/guides/routing_light.jpg" alt="Diagrama del sistema de enrutamiento de Rails mostrando cómo las URLs se conectan con controllers">
 </picture>
 
 #### Agregando Más Routes
@@ -1497,7 +1483,7 @@ Sería súper útil que cuando veas la lista de productos, puedas hacer clic en 
 
 Actualiza `app/views/products/index.html.erb` para que cada nombre de producto sea un enlace clickeable:
 
-```erb#6,8
+```erb
 <h1>Products</h1>
 
 <div id="products">
@@ -1534,17 +1520,17 @@ Rails automáticamente crea helpers (ayudantes) basados en esos prefijos. Mira e
 
 #### 🤔 ¿Cuál es la diferencia entre `_path` y `_url`?
 
-**`_path`** (con path):
-- Genera una ruta relativa (solo la parte después del dominio)
-- Ejemplo: `"/products"`
-- Usa esto cuando estás dentro de tu aplicación (enlaces internos)
-- Es como decir "ve al cuarto de al lado" sin especificar toda la dirección de la casa
+- **`_path`** (con path):
+    - Genera una ruta relativa (solo la parte después del dominio)
+    - Ejemplo: `"/products"`
+    - Usa esto cuando estás dentro de tu aplicación (enlaces internos)
+    - Es como decir "ve al cuarto de al lado" sin especificar toda la dirección de la casa
 
-**`_url`** (con url):
-- Genera la URL completa (con https:// y todo)
-- Ejemplo: `"https://TU-CODESPACE.github.dev/products"`
-- Usa esto para emails o cuando necesitas la URL completa
-- Es como dar la dirección completa de tu casa: calle, número, ciudad, etc.
+- **`_url`** (con url):
+    - Genera la URL completa (con https:// y todo)
+    - Ejemplo: `"https://TU-CODESPACE.github.dev/products"`
+    - Usa esto para emails o cuando necesitas la URL completa
+    - Es como dar la dirección completa de tu casa: calle, número, ciudad, etc.
 
 **Regla general:** Usa `_path` para enlaces dentro de tu app, y `_url` para emails o compartir fuera de la app. 💡
 
@@ -1560,7 +1546,7 @@ Ahora que conocemos los route helpers, podemos usar el helper `link_to` para cre
 
 Vamos a refactorizar (mejorar) nuestro código usando estos helpers mágicos:
 
-```erb#6
+```erb
 <h1>Products</h1>
 
 <div id="products">
@@ -1605,7 +1591,7 @@ Mira lo que hace la action `new`: crea un nuevo objeto Product con `Product.new`
 
 Ahora agreguemos un enlace en la página de index para llegar a este formulario. Actualiza `app/views/products/index.html.erb`:
 
-```erb#3
+```erb
 <h1>Products</h1>
 
 <%= link_to "New product", new_product_path %>
@@ -1684,7 +1670,7 @@ Si abres esta página en tu navegador y ves el código fuente (clic derecho → 
 
 Ahora nuestro formulario está listo, pero cuando alguien presione "Submit", necesitamos una action en el controller que reciba los datos y los guarde. Agrega la action `create` al controller:
 
-```ruby#14-26
+```ruby
 class ProductsController < ApplicationController
   def index
     @products = Product.all
@@ -1741,7 +1727,7 @@ Es como decir: "Oye, del formulario solo voy a aceptar el nombre del producto. S
 
 **¡Este es un patrón de seguridad súper importante que usan todos los programadores profesionales de Rails!**
 
-#### ✅❌ Manejando Errores (¿Se Guardó o No?)
+#### Manejando Errores (¿Se Guardó ✅ o No ❌?)
 
 Ahora fíjate en la lógica de la action `create`. Hay un `if` muy importante:
 
@@ -1934,7 +1920,7 @@ El proceso de editar es MUY similar a crear. Fíjate en el patrón:
 
 ¡Es como un espejo! 🪞 Vamos a implementar estas actions en el controller:
 
-```ruby#23-34
+```ruby
 class ProductsController < ApplicationController
   def index
     @products = Product.all
@@ -2010,7 +1996,7 @@ También vamos a hacer dos cambios importantes:
 
 Crea el archivo `_form.html.erb` con este contenido:
 
-```erb#1-4
+```erb
 <%= form_with model: product do |form| %>
   <% if form.object.errors.any? %>
     <p class="error"><%= form.object.errors.full_messages.first %></p>
@@ -2045,7 +2031,7 @@ Usar una variable local (sin `@`) hace que el partial sea más flexible. Puedes 
 
 Ahora que tenemos nuestro partial reutilizable, vamos a usarlo. Actualiza `app/views/products/new.html.erb` para que use el partial en lugar del formulario completo:
 
-```erb#3
+```erb
 <h1>New product</h1>
 
 <%= render "form", product: @product %>
@@ -2062,7 +2048,7 @@ Se lee así:
 
 Ahora vamos a crear la vista de edit, que es casi idéntica gracias a nuestro partial reutilizable. Crea `app/views/products/edit.html.erb` con esto:
 
-```erb#3
+```erb
 <h1>Edit product</h1>
 
 <%= render "form", product: @product %>
@@ -2077,7 +2063,7 @@ Ahora vamos a crear la vista de edit, que es casi idéntica gracias a nuestro pa
 
 Ahora agreguemos un enlace "Edit" en la página de detalles del producto. Actualiza `app/views/products/show.html.erb`:
 
-```erb#4
+```erb
 <h1><%= @product.name %></h1>
 
 <%= link_to "Back", products_path %>
@@ -2102,7 +2088,7 @@ Vamos a crear un método privado llamado `set_product` que busca el producto, y 
 
 Mira cómo queda el controller refactorizado:
 
-```ruby#2,8-9,24-25,27-33,36-38
+```ruby
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show edit update ]
 
@@ -2158,7 +2144,8 @@ Esto dice: "Antes de ejecutar `show`, `edit` o `update`, llama primero al métod
 
 Este método hace la búsqueda del producto. Como se ejecuta automáticamente antes de las actions que lo necesitan, podemos eliminar esa línea de `show`, `edit` y `update`.
 
-**¡Resultado:** Código más limpio y organizado. Si algún día necesitas cambiar cómo buscas productos, solo lo cambias en UN lugar. 🎯
+**¡Resultado:** Código más limpio y organizado. Si algún día necesitas cambiar cómo buscas productos, solo lo cambias en UN  
+lugar. 🎯
 
 ### 🗑️ Eliminando Products (¡La Letra D de CRUD!)
 
@@ -2168,7 +2155,7 @@ Vamos a agregar la action `destroy` al controller para manejar peticiones `DELET
 
 Como `destroy` también necesita buscar un producto existente (igual que `show`, `edit` y `update`), lo agregamos al `before_action`. ¡Así Rails automáticamente ejecuta `set_product` antes de `destroy` también!
 
-```ruby#2,35-38
+```ruby
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show edit update destroy ]
 
@@ -2228,9 +2215,8 @@ def destroy
 end
 ```
 
-**1. `@product.destroy`** → Elimina el producto de la base de datos (gracias al `before_action`, `@product` ya está definido)
-
-**2. `redirect_to products_path`** → Redirige al usuario a la lista de productos
+1. **`@product.destroy`** → Elimina el producto de la base de datos (gracias al `before_action`, `@product` ya está definido)
+2. **`redirect_to products_path`** → Redirige al usuario a la lista de productos
 
 ¡Y ya! El producto desaparece de la base de datos. 💨
 
@@ -2238,7 +2224,7 @@ end
 
 Ahora necesitamos darle al usuario una forma de eliminar productos. Agreguemos un botón en la página de detalles. Actualiza `app/views/products/show.html.erb`:
 
-```erb#5
+```erb
 <h1><%= @product.name %></h1>
 
 <%= link_to "Back", products_path %>
@@ -2271,7 +2257,8 @@ Tenemos un pequeño problema de seguridad. 😱 En este momento, ¡CUALQUIER per
 
 Necesitamos agregar **autenticación**. Autenticación significa verificar quién eres, como cuando muestras tu identificación o ingresas tu contraseña.
 
-**La buena noticia:** ¡Rails hace esto súper fácil! Rails tiene un generador que crea todo un sistema de autenticación automáticamente. 🎁
+**La buena noticia:** ¡Rails hace esto súper fácil! Rails tiene un generador que crea todo un sistema de autenticación  
+automáticamente. 🎁
 
 Este generador va a crear:
 - Un **modelo User** (para guardar usuarios en la base de datos)
@@ -2352,7 +2339,7 @@ Vamos a agregarlo en un lugar donde aparezca en TODAS las páginas. Para esto, e
 
 Abre `app/views/layouts/application.html.erb` y agrega una barra de navegación con un enlace a "Home" y un botón "Log out":
 
-```erb#5-8,10,12
+```erb
 <!DOCTYPE html>
 <html>
   <!-- ... -->
@@ -2444,7 +2431,7 @@ También puedes agregar un enlace "Login" en la barra de navegación que solo ap
 
 De la misma forma, actualiza `app/views/products/show.html.erb` para ocultar los enlaces "Edit" y "Delete" de los visitantes no autenticados:
 
-```erb#4,7
+```erb
 <h1><%= @product.name %></h1>
 
 <%= link_to "Back", products_path %>
@@ -2480,7 +2467,7 @@ Rails hace todo el trabajo pesado automáticamente. No necesitas crear una tabla
 
 Ahora agreguemos un campo al formulario para que los usuarios puedan subir imágenes. Actualiza `app/views/products/_form.html.erb` y agrega esto antes del botón de envío:
 
-```erb#4-7
+```erb
 <%= form_with model: product do |form| %>
   <%# ... %>
 
@@ -2505,10 +2492,10 @@ El `accept: "image/*"` le dice al navegador: "Solo acepta archivos de imagen (jp
 
 Actualiza `app/controllers/products_controller.rb` en el método `product_params`:
 
-```ruby#3
+```ruby
     # Only allow a list of trusted parameters through.
     def product_params
-      params.expect(product: [ :name, :description, :featured_image ])
+      params.expect(product: [ :name, :featured_image ])
     end
 ```
 
@@ -2622,7 +2609,7 @@ section.product img {
 
 Ahora actualiza `app/views/products/show.html.erb` para usar estos nuevos estilos:
 
-```erb#1,3,6,18-19
+```erb
 <p><%= link_to "Back", products_path %></p>
 
 <section class="product">
@@ -2630,7 +2617,6 @@ Ahora actualiza `app/views/products/show.html.erb` para usar estos nuevos estilo
 
   <section class="product-info">
     <h1><%= @product.name %></h1>
-    <%= @product.description %>
 
     <% if authenticated? %>
       <%= link_to "Edit", edit_product_path(@product) %>
@@ -2652,15 +2638,15 @@ Ahora actualiza `app/views/products/show.html.erb` para usar estos nuevos estilo
 
 ¡Acabas de construir tu primera aplicación Rails completa! Mira todo lo que has logrado:
 
-✅ Creaste una aplicación Rails desde cero
-✅ Entendiste MVC (Model-View-Controller)
-✅ Trabajaste con bases de datos y migraciones
-✅ Implementaste un CRUD completo (Create, Read, Update, Delete)
-✅ Agregaste validaciones para proteger tus datos
-✅ Creaste formularios interactivos
-✅ Implementaste autenticación de usuarios
-✅ Subiste archivos con Active Storage
-✅ Diseñaste tu aplicación con CSS
+- ✅ Creaste una aplicación Rails desde cero
+- ✅ Entendiste MVC (Model-View-Controller)
+- ✅ Trabajaste con bases de datos y migraciones
+- ✅ Implementaste un CRUD completo (Create, Read, Update, Delete)
+- ✅ Agregaste validaciones para proteger tus datos
+- ✅ Creaste formularios interactivos
+- ✅ Implementaste autenticación de usuarios
+- ✅ Subiste archivos con Active Storage
+- ✅ Diseñaste tu aplicación con CSS
 
 **¡Eso es INCREÍBLE!** 💪 Muchos adultos no saben hacer todo esto. Deberías estar súper orgullosa de ti misma.
 
@@ -2681,7 +2667,7 @@ Ahora actualiza `app/views/products/show.html.erb` para usar estos nuevos estilo
 - Agrega más campos a Product (precio, descripción, categoría)
 - Crea un carrito de compras
 - Agrega comentarios o reseñas de productos
-- Mejora el diseño con más CSS o usa frameworks como Tailwind o Bootstrap
+- Mejora el diseño con más CSS o usa frameworks como [Tailwind](https://tailwindcss.com/) o [Bootstrap](https://getbootstrap.com/)
 
 ### 💡 Recuerda
 
