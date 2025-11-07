@@ -217,21 +217,17 @@ Aquí es donde pasarás el 90% de tu tiempo. Contiene todo el código que hace f
     - Los **views** (lo que ven las personas en el navegador)
     - Los **controllers** (el cerebro que decide qué hacer)
 
-- **⚙️ config/** - El cuarto de control
-Aquí es donde le dices a Rails cómo debe comportarse tu aplicación. Por ejemplo:
+- **⚙️ config/** - El cuarto de control, Aquí es donde le dices a Rails cómo debe comportarse tu aplicación. Por ejemplo:
    - Qué rutas (URLs) existen en tu aplicación
    - Cómo conectarse a la base de datos
    - Configuraciones especiales
 
-- **💾 db/** - Tu biblioteca de información
-Aquí vive tu base de datos (donde guardas todos los productos, usuarios, etc.) y las instrucciones para crearla y modificarla.
+- **💾 db/** - Tu biblioteca de información, Aquí vive tu base de datos (donde guardas todos los productos, usuarios, etc.) y las instrucciones para crearla y modificarla.
 
 #### 📂 Otras Carpetas Útiles (las conocerás después):
 
-- **📄 public/** - Archivos que todos pueden ver
-Como el buzón de tu casa - cualquier persona puede ver lo que está aquí sin necesitar permisos especiales. Imágenes, archivos CSS, etc.
-- **📝 log/** - El diario de tu aplicación
-Aquí Rails escribe un registro de todo lo que pasa. Si algo sale mal, puedes leer estos archivos para descubrir qué pasó. ¡Como un detective! 🔍
+- **📄 public/** - Archivos que todos pueden ver Como el buzón de tu casa - cualquier persona puede ver lo que está aquí sin necesitar permisos especiales. Imágenes, archivos CSS, etc.
+- **📝 log/** - El diario de tu aplicación, Aquí Rails escribe un registro de todo lo que pasa. Si algo sale mal, puedes leer estos archivos para descubrir qué pasó.  ¡Como un detective! 🔍
 - **🧪 test/** - Tu laboratorio de experimentos
 Donde escribes código para asegurarte de que todo funciona correctamente.
 - 💡 **Consejo de pro:** No te agobies con todas estas carpetas ahora. Por ahora, solo necesitas saber que existe la carpeta **app/** - ahí es donde crearás la magia. Las demás carpetas son como los cuartos de servicio de una casa: están ahí y son importantes, pero no necesitas entrar todo el tiempo.
@@ -1491,7 +1487,7 @@ Entonces, crea un nuevo archivo en `app/views/products/show.html.erb` y agrega e
 </div>
 ```
 
-¡Mira ese código! `<%= @product.name %>` muestra el nombre del producto, y `<%= link_to "Back", products_path %>` crea un enlace para regresar a la lista de productos.
+¡Mira ese código! `<%= @product.name %>` muestra el nombre del producto, y `<%= link_to "← Back to Products", products_path, class: "link--secondary" %>` crea un enlace para regresar a la lista de productos.
 
 #### 🔗 Conectando las Páginas
 
@@ -2336,8 +2332,7 @@ Ahora necesitamos darle al usuario una forma de eliminar productos. Agreguemos u
         <div class="actions-column">
           <div class="flex gap-2">
             <%= link_to "✏️ Edit", edit_product_path(@product), class: "btn btn--outline-dark btn--block" %>
-            <%= button_to "🗑️ Delete", @product, method: :delete, class: "btn btn--negative btn--block",
-            data: { turbo_confirm: "Are you sure?" } %>
+            <%= button_to "🗑️ Delete", @product, method: :delete, class: "btn btn--negative btn--block", data: { turbo_confirm: "Are you sure?" } %>
           </div>
         </div>
       </div>
@@ -2745,7 +2740,7 @@ Ahora también vamos a mostrar las imágenes en la lista de productos. Abre `app
   <%= image_tag product.featured_image, class: "card-image", alt: product.name %>
 <% else %>
   <div class="card-image image-placeholder">
-    📦 Sin imagen
+    📦 No image
   </div>
 <% end %>
 ```
