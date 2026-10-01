@@ -1,6 +1,6 @@
 ---
 layout: inner
-title: Nuestros patrocinadores
+title: Nuestros patrocinadores 2025
 permalink: /patrocinadores/
 ---
 

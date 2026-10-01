@@ -1,27 +1,27 @@
 - name: UCC
-  image: /assets/images/sponsors/ucc.jpg
+  image: /assets/images/sponsors/ucc.webp
   url: https://ucc.edu.co/
 - name: Rails Foundation
-  image: /assets/images/sponsors/rails_foundation.jpg
+  image: /assets/images/sponsors/rails_foundation.webp
   url: https://rubyonrails.org/foundation
 - name: Platzi
   image: /assets/images/sponsors/platzi.svg
   url: https://platzi.com/
 - name: Banteng
-  image: /assets/images/sponsors/banteng.jpg
+  image: /assets/images/sponsors/banteng.webp
   url: https://bantengconsultores.com/
 - name: Pluralang
   image: /assets/images/sponsors/pluralang.svg
   url: https://pluralang.com/
 - name: Abatech
-  image: /assets/images/sponsors/Abatech.jpg
+  image: /assets/images/sponsors/Abatech.webp
   url: https://www.linkedin.com/company/aba-tech/
 - name: Monoku
-  image: /assets/images/sponsors/monoku.png
+  image: /assets/images/sponsors/monoku.webp
   url: https://monoku.com/
 - name: Bunny Studio
-  image: /assets/images/sponsors/bunnystudio.png
+  image: /assets/images/sponsors/bunnystudio.webp
   url: https://bunnystudio.com/
 - name: Mostacho
-  image: /assets/images/sponsors/mostacho.png
+  image: /assets/images/sponsors/mostacho.webp
   url: https://www.instagram.com/mostacho_cafe/

@@ -1,56 +1,56 @@
 - name: Nathaly Sotomayor
-  image: /assets/images/coaches/nathaly.jpg
+  image: /assets/images/coaches/nathaly.webp
   role: Backend Developer
   company: ABA Tech
 - name: Melissa Escobar
-  image: /assets/images/coaches/melissa.jpg
+  image: /assets/images/coaches/melissa.webp
   role: Ruby on Rails Developer
   company: Globant
 - name: Sofia Cantillo
-  image: /assets/images/coaches/sofia.jpg
+  image: /assets/images/coaches/sofia.webp
   role: Web Developer
   company: Univalle
 - name: Johan Tique
-  image: /assets/images/coaches/johan.jpg
+  image: /assets/images/coaches/johan.webp
   role: Senior Development Consultant
   company: Endava
 - name: David Vanegas
-  image: /assets/images/coaches/david.jpg
+  image: /assets/images/coaches/david.webp
   role: Senior Fullstack Engineer
   company: Pluralang
 - name: Segundo España
-  image: /assets/images/coaches/segundo.jpg
+  image: /assets/images/coaches/segundo.webp
   role: Senior Developer
   company: Ideardev LLC
 - name: Brandon Lopez
-  image: /assets/images/coaches/brandon.jpg
+  image: /assets/images/coaches/brandon.webp
   role: Desarrollador de back-end
   company: Wompi
 - name: Juan David Mazuera
-  image: /assets/images/coaches/juan_david_mazuera.jpg
+  image: /assets/images/coaches/juan_david_mazuera.webp
   role: Software Engineer
   company: LF Technologies
 - name: Julian Castaño
-  image: /assets/images/coaches/julian.jpg
+  image: /assets/images/coaches/julian.webp
   role: Instructor en Desarrollo de Software
   company: Enyoi
 - name: Pedro Rivera
-  image: /assets/images/coaches/pedro_rivera.jpeg
+  image: /assets/images/coaches/pedro_rivera.webp
   role: Senior Python Developer
   company: Globant
 - name: Juan Felipe Díaz
-  image: /assets/images/coaches/juan_felipe.jpeg
+  image: /assets/images/coaches/juan_felipe.webp
   role: Software engineer II
   company: Recurly
 - name: Andrés Clavijo
-  image: /assets/images/coaches/andres_clavijo.jpeg
+  image: /assets/images/coaches/andres_clavijo.webp
   role: Software Engineer III
   company: BUK
 - name: Santiago Castañeda
-  image: /assets/images/coaches/santiago_castaneda.jpeg
+  image: /assets/images/coaches/santiago_castaneda.webp
   role: Backend Developer
   company: Ikitech Solution
 - name: Sebastian Pino
-  image: /assets/images/coaches/sebastian_pino.jpeg
+  image: /assets/images/coaches/sebastian_pino.webp
   role: Cloud Engineer
   company: ABA Technology
