@@ -36,7 +36,7 @@ If you aren't editing the code blocks, you can safely ignore this. If you want p
 
 ## Website
 
-Official website for Rails Girls Cali movement can be found at http://railsgirls-cali.github.io
+Official website for Rails Girls Cali movement can be found at https://railsgirlscali.org
 
 ## Contributors
 

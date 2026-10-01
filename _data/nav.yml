@@ -1,6 +1,6 @@
 main:
-  - { url: "/registro", text: "Inscríbete" }
-  - { url: "/charlas", text: "Charlas" }
+  # - { url: "/registro", text: "Inscríbete" }
+  # - { url: "/charlas", text: "Charlas" }
   - { url: "/mentores", text: "Mentoras/es" }
   - { url: "/patrocinadores", text: "Patrocinadores" }
   - { url: "/guia", text: "Guía Tienda 2025" }
